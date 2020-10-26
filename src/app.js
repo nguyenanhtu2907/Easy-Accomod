@@ -5,10 +5,10 @@ const handlebars = require('express-handlebars');
 // const session = require('express-session');
 // const methodOverride = require('method-override');
 // var bodyParser = require('body-parser');
-// const route = require('./resources/app/routes');
-// const db = require('./resources/config/db');
+const route = require('./resources/app/routes');
+const db = require('./resources/config/db');
 
-// db.connect();
+db.connect();
 const app = express();
 const port = 3000;
 
@@ -33,10 +33,6 @@ app.engine('hbs', handlebars({
     extname: '.hbs',
 }));
 
-app.get('/', function (req, res, next) {
-    res.render('home');
-})
-
 app.use(express.urlencoded({
     limit: '50mb', extended: true
 }));
@@ -47,7 +43,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'))
 
 
-// route(app);
+route(app);
 
 
 app.listen(port, () => {
