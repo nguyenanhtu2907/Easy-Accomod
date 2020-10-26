@@ -1,0 +1,19 @@
+{
+  "name": "web_tim_phong_tro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyenanhtu2907/Web_Tim_Phong_Tro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nguyenanhtu2907/Web_Tim_Phong_Tro/issues"
+  },
+  "homepage": "https://github.com/nguyenanhtu2907/Web_Tim_Phong_Tro#readme"
+}
