@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
 const Post = new Schema({
     owner: { type: String, default: '' },
     title: { type: String },
@@ -20,5 +21,9 @@ const Post = new Schema({
     viewed: { type: Number, default: 0 },
     statusrent: { type: Boolean, default: false },
     fulfill: { type: Boolean, default: false },
+    rates: { type: Array, default: [] },
+    slug: {type: String, slug: 'title', unique: true},
+}, {
+    timestamps: true,
 })
 module.exports = mongoose.model('Post', Post);
