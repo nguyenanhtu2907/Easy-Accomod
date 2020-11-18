@@ -19,8 +19,8 @@ class AccountController {
             address: req.body.address,
             phone: req.body.phone,
             email: req.body.email,
-            password_hash, 
-            avatar: req.body.avatar, 
+            password_hash,
+            avatar: req.body.avatar,
             level: req.body.level, //renter, owner
         }
         User.findOne({ username: req.params.username }, function (err, user) {
@@ -61,35 +61,54 @@ class AccountController {
                 message: 'Tên đăng nhập hoặc mật khẩu không đúng!',
                 values: req.body,
             }))
+
+        delete user.password_hash;
+        req.session.isAuthenticated = true;
+        req.session.authUser = user;
+
+        //url lay duoc tu restrict
+        const url = req.query.retUrl || '/';
+
+        res.redirect(url)
     }
 
     profile(req, res, next) {
         User.findOne({ _id: req.params.id })
             .then(account => {
-                Post.find({ owner: req.params.id })
+                Post.find({ owner: req.params.id }).limit(10)
                     .then(posts => res.json({ account, posts }))
             })
-    }
-
-    profileNav(req,res, next){
+            .catch(() => res.send('Khong ton tai nguoi dung'))
 
     }
 
-    editProfile(req, res, next){
-
-    }
-    changePasswordDB(req, res, next){
-
-    }
-
-    changeInfoDB(req, res, next){
-
-    }
-    
-    logout(req, res, next){
-
+    profileNav(req, res, next) {
+        User.findOne({ _id: req.params.id })
+            .then(account => {
+                Post.find({ owner: req.params.id }).limit(10)
+                    .then(posts => res.json({ account, posts }))
+            })
+            .catch(() => res.send('Khong ton tai nguoi dung'))
     }
 
-    
+    editProfile(req, res, next) {
+
+    }
+    changePasswordDB(req, res, next) {
+
+    }
+
+    changeInfoDB(req, res, next) {
+
+    }
+
+    logout(req, res, next) {
+
+    }
+
+    restrict(req, res, next) {
+
+    }
+
 }
 module.exports = new AccountController;
