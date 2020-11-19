@@ -1,5 +1,5 @@
 const homeRouter = require('./home');
-// const accountRouter = require('./account');
+const accountRouter = require('./account');
 // const postRouter = require('./post');
 
 function route(app) {
@@ -14,7 +14,7 @@ function route(app) {
     //     next();
     // })
 
-    // app.use('/account', accountRouter);
+    app.use('/account', accountRouter);
 
     // app.use('/post', postRouter);
 

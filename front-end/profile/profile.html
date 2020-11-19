@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang cá nhân</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+    <div class="avatar-background">
+        <img src="../avatar.jpg" alt="">
+    </div>
+    <div class="info-user">
+        <div class="avatar">
+            <img src="../avatar.jpg" alt="">
+        </div>
+        <p>Nguyễn Anh Tú</p>
+        <div class="fa fa-cog option"></div>
+        <div class="menu-option">
+            <ul>
+                <li><a href="#">Chỉnh sửa trang cá nhân</a></li>
+                <li><a href="#">Đổi mật khẩu</a></li>
+            </ul>
+        </div>
+        <div class="description">
+            <span>Địa chỉ: phường Xuân Đỉnh, quận Bắc Từ Liêm, TP. Hà Nội</span><br>
+            <span>Email: nguyenanhtuxx@gmail.com</span><br>
+            <span>Số điện thoại: 0987654321</span><br>
+            <span>Giới tính: Nam</span>
+            <!-- <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo accusamus cum numquam laborum
+                doloribus,
+                nihil libero nostrum possimus dicta obcaecati architecto. Laborum vitae quas perspiciatis dolor esse
+                facilis, accusantium repellat! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus amet
+                sapiente aspernatur quod ullam velit magnam, asperiores ipsa omnis cum laborum rem assumenda esse? Enim
+                maiores rerum vitae! Sequi, autem.</span> -->
+        </div>
+    </div>
+    <div class="content">
+        <div class="posts ">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#posted">Đã đăng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#waiting">Chờ duyệt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#saved">Đã lưu</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="posted" class="container tab-pane active"><br>
+                    <div class="line">
+                        <h6>Tổng số: 100 bài viết</h6>
+                    </div>
+                    <div class="list-posts">
+                        <ul>
+                            <li class="line">
+                                <a href="#" class="thumbnail">
+                                    <img src="../avatar.jpg" alt="">
+                                </a>
+                                <div class="props">
+                                    <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được kéo dài cho hết dòng
+                                            để test css</a></p>
+
+                                    <div class="text">Đây là nơi mà thằng ml back đổ địa chỉ vào và nó cũng cần kéo dài
+                                        cho hết dòng
+                                        để test css</div>
+                                    <div class="equi">
+                                        <ul>
+                                            <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
+                                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                        d="M1.5 2.5A1.5 1.5 0 0 1 3 1h10a1.5 1.5 0 0 1 1.5 1.5v3.563a2 2 0 0 1 0 3.874V13.5A1.5 1.5 0 0 1 13 15H3a1.5 1.5 0 0 1-1.5-1.5V9.937a2 2 0 0 1 0-3.874V2.5zm1 3.563a2 2 0 0 1 0 3.874V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V9.937a2 2 0 0 1 0-3.874V2.5A.5.5 0 0 0 13 2H3a.5.5 0 0 0-.5.5v3.563zM2 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm12 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                                </svg> 50 m <sup>2</sup>
+                                            </li>
+                                            <li>
+                                                <div class="fa fa-bed"></div>1
+                                            </li>
+                                            <li>
+                                                <div class="fa fa-tv"></div>1
+                                            </li>
+                                            <li> <img class="fa" src="./air-conditioner.png" width="18px" height="18px"
+                                                    alt=""> 1</li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="cost">100.000vnđ</h3>
+                                    <div class="update text">Ngày đăng: 20/11/2020</div>
+                                    <div class="contact">
+                                        <div class="phone">
+                                            <div class="fa fa-phone"></div>0987654321
+                                        </div>
+                                        <div class="fa fa-heart default" onclick="saved(event)"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <nav aria-label="page navigation example" class="next_page">
+                        <ul class="pagination">
+                            <li class="page-item disabled" id="1"><a class="page-link" href="#"
+                                    onclick="routePage(event)" aria-label="Previous"><span
+                                        aria-hidden="true">&laquo;</span> Trang đầu</a></li>
+                            <li class="page-item num active" id="pre"><a class="page-link" onclick="routePage(event)"
+                                    href="?page=1">1</a></li>
+                            <li class="page-item num " id="current"><a class="page-link" onclick="routePage(event)"
+                                    href="?page=2">2</a></li>
+                            <li class="page-item num" id="next"><a class="page-link" onclick="routePage(event)"
+                                    href="?page=3">3</a></li>
+                            <li class="page-item last" id="20">
+                                <a class="page-link " onclick="routePage(event)" href="#" aria-label="Next">
+                                    Trang cuối <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div id="waiting" class="container tab-pane fade"><br>
+
+                </div>
+                <div id="saved" class="container tab-pane fade"><br>
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+        <div class="news">
+            <h6 class="line" style="margin: 10px 0; font-size: 1.2rem;">Bài viết có lượt xem cao nhất</h6>
+            <div class="list-news">
+                <ul>
+                    <li class="line">
+                        <a href="#" class="thumbnail">
+                            <img src="./thumbnail.jpg" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được ....</a></p>
+                            <h3 class="cost">100.000vnđ</h3>
+                            <span class="update">Ngày đăng: 20/11/2020</span>
+                            <span class="update" style="margin-left: 1rem;">222 lượt xem</span>
+                        </div>
+                    </li>
+                    <li class="line">
+                        <a href="#" class="thumbnail">
+                            <img src="./thumbnail.jpg" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được ....</a></p>
+                            <h3 class="cost">100.000vnđ</h3>
+                            <span class="update">Ngày đăng: 20/11/2020</span>
+                            <span class="update" style="margin-left: 1rem;">222 lượt xem</span>
+                        </div>
+                    </li>
+                    <li class="line">
+                        <a href="#" class="thumbnail">
+                            <img src="./thumbnail.jpg" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được ....</a></p>
+                            <h3 class="cost">100.000vnđ</h3>
+                            <span class="update">Ngày đăng: 20/11/2020</span>
+                            <span class="update" style="margin-left: 1rem;">222 lượt xem</span>
+                        </div>
+                    </li>
+                    <li class="line">
+                        <a href="#" class="thumbnail">
+                            <img src="./thumbnail.jpg" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được ....</a></p>
+                            <h3 class="cost">100.000vnđ</h3>
+                            <span class="update">Ngày đăng: 20/11/2020</span>
+                            <span class="update" style="margin-left: 1rem;">222 lượt xem</span>
+                        </div>
+                    </li>
+                    <li class="line">
+                        <a href="#" class="thumbnail">
+                            <img src="./thumbnail.jpg" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được ....</a></p>
+                            <h3 class="cost">100.000vnđ</h3>
+                            <span class="update">Ngày đăng: 20/11/2020</span>
+                            <span class="update" style="margin-left: 1rem;">222 lượt xem</span>
+                        </div>
+                    </li>
+                    <li class="line">
+                        <a href="#" class="thumbnail">
+                            <img src="./thumbnail.jpg" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được ....</a></p>
+                            <h3 class="cost">100.000vnđ</h3>
+                            <span class="update">Ngày đăng: 20/11/2020</span>
+                            <span class="update" style="margin-left: 1rem;">222 lượt xem</span>
+                        </div>
+                    </li>
+                    <li class="line">
+                        <a href="#" class="thumbnail">
+                            <img src="./thumbnail.jpg" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được ....</a></p>
+                            <h3 class="cost">100.000vnđ</h3>
+                            <span class="update">Ngày đăng: 20/11/2020</span>
+                            <span class="update" style="margin-left: 1rem;">222 lượt xem</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+
+</html>
