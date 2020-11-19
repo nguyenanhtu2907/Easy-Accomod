@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>account</title>
+    <link rel="stylesheet"  href="./font/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="host_account.css">
+    <link rel="stylesheet" href="cus_account.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box_account">
+          <h3 class="title">Đăng ký</h3>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#chu_tro">Chủ trọ </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " data-toggle="tab" href="#nguoi_thue">Người thuê trọ</a>
+                </li>
+                
+              </ul>
+            
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div id="chu_tro" class=" tab-pane active">
+                  <form action="" id="host_signup-form">
+                    <!-- <h3>Chủ trọ</h3> -->
+                    <div class="form-group">
+
+                      <div class="input_item">
+                        <input type="text" id="username" name="username" placeholder="tên đăng nhập"> 
+                      </div>
+                        
+                      <div class="alert"></div>
+
+                      
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item-pass">
+                        <input type="password" id="password" class="pass"name="password" placeholder="Mật khẩu" onfocus="focus_in(this)" onfocusout="focus_out(this)">
+                        <i class="fas fa-eye fa-eye-slash" id="togglePassword"></i>
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item-pass">
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Nhập lại mật khẩu" onfocus="focus_in(this)" onfocusout="focus_out(this)">
+                        
+                        <i class=" fas fa-eye fa-eye-slash" id="confirm_togglePassword"></i>
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item full_name-input">
+                        <!-- <div class="title">Họ và tên:</div> -->
+                        <input type="text" id="fullname" name="full_name"placeholder="Họ tên của bạn">
+                      </div>
+                      <div class="alert"></div>
+  
+
+                    </div>
+                    <!-- <div class="title">Giới tính: </div> -->
+                            <div class="form-group">
+                              <div class="form-gender">
+                                
+                                  <span>Giới tính: </span>
+                                  <div class="gender">
+                                      <input type="radio" name="gender" class="form-control" value="male" >Nam
+                                  </div>
+                                  <div class="gender">
+                                      <input type="radio" name="gender" class="form-control" value="female" >Nữ
+                                  </div>
+                                  <div class="gender">
+                                      <input type="radio" name="gender" class="form-control" value="other" >Khác
+                                  </div>
+                                  
+                              </div>
+
+                            </div>
+                      <div class="form-group">
+                        <div class="input_item identity_input">
+                          <!-- <div class="title">Số CMND:</div> -->
+                          <input type="text" id="identity" name="identity"placeholder="Số CMND">
+    
+                        </div>
+                        <div class="alert"></div>
+                      </div>    
+                      <div class="form-group">
+                        <div class="input_item address">
+                          <!-- <div class="title">Địa chỉ:</div> -->
+                          <input type="text" id="address" name="address" placeholder="Địa chỉ">
+                        </div>
+                        <div class="alert"></div>
+                      </div>        
+                      <div class="form-group">
+                        <div class="input_item">
+                          <input type="tel" id="phone" name="phone" placeholder="Số điện thoại" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+    
+                        </div>
+                        <div class="alert"></div>
+
+                      </div>
+                      <div class="form-group">
+                        <div class="input_item">
+                          <input type="email" id="email" name="email"placeholder="email">
+    
+                        </div>
+                        <div class="alert"></div>
+                      </div>
+                    
+
+                      <input type="submit" id="submit" value="Đăng ký">
+
+                    
+                  </form>
+
+                </div>
+                <div id="nguoi_thue" class=" tab-pane fade">
+                  <!-- <h3>Người thuê trọ</h3> -->
+                  <form action="" id="cus_signup-form">
+                    <div class="form-group">
+                      <div class="input_item">
+                        <input type="text" id="cus_username" name="cus_username" placeholder="tên đăng nhập">
+  
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item-pass">
+                        <input type="password" id="cus_password" name="cus_password" placeholder="Mật khẩu" onfocus="focus_in(this)" onfocusout="focus_out(this)">
+                        <i class="fas fa-eye fa-eye-slash" id="cus_togglePassword"></i>
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item-pass">
+                        <input type="password" id="cus_confirm_password" name="cus_confirm_password" placeholder="Nhập lại mật khẩu" onfocus="focus_in(this)" onfocusout="focus_out(this)">
+                        
+                        <i class=" fas fa-eye fa-eye-slash" id="cus_confirm_togglePassword"></i>
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item full_name-input">
+                        <!-- <div class="title">Họ và tên:</div> -->
+                        <input type="text" id="cus_fullname" name="cus_full_name"placeholder="Họ tên của bạn">
+  
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+
+                    <!-- <div class="title">Giới tính: </div> -->
+                    <div class="form-group">
+                      <div class="form-gender">
+                        
+                          <span>Giới tính: </span>
+                          <div class="gender">
+                              <input type="radio" name="gender" class="form-control" value="male">Nam
+                          </div>
+                          <div class="gender">
+                              <input type="radio" name="gender" class="form-control" value="female">Nữ
+                          </div>
+                          <div class="gender">
+                              <input type="radio" name="gender" class="form-control" value="other">Khác
+                          </div>
+                         
+                      </div>
+                     
+                    </div>
+
+                    <div class="form-group">
+                      <div class="input_item identity_input">
+                        <!-- <div class="title">Số CMND:</div> -->
+                        <input type="text" id="cus_identity" name="cus_identity"placeholder="Số CMND">
+  
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item address">
+                        <!-- <div class="title">Địa chỉ:</div> -->
+                        <input type="text" id="cus_address" name="cus_address" placeholder="Địa chỉ">
+                        
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input_item">
+                        <input type="tel" id="cus_phone" name="cus_phone" placeholder="Số điện thoại" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+  
+                      </div>
+                      <div class="alert"></div>
+                    </div>
+
+                    <!-- <div class="input_item">
+                      <input type="email" id="email" name="email"placeholder="email">
+
+                    </div> -->
+                    
+
+                      <input type="submit" id="cus_submit" value="Đăng ký">
+
+                    
+                  </form>
+
+                </div>
+                
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="validator.js"></script>
+    <script src="account.js"></script>
+    <script>
+      Validator({
+        form:'#host_signup-form',
+        formMessage:'.alert',
+        formGroupSelector: ".form-group",
+         rules:[
+           Validator.isRequired('#username'),
+          Validator.isRequired('#fullname'),
+          Validator.isRequired('#identity'),
+          Validator.isRequired('#address'),
+          Validator.isRequired('#email'),
+          Validator.isRequired('#phone'),
+          Validator.isEmail('#email'),
+          Validator.isRequired('#password'),
+          Validator.minLen('#password', 6),
+          Validator.isRequired('#confirm_password'),
+
+          
+          Validator.isConfirm('#confirm_password', function(){
+            return document.querySelector('#host_signup-form #password').value;
+          }, 'Mật khẩu đã nhập không chính xác'),
+          // Validator.isRequired('input[name="gender"]', 'Trường này là bắt buộc!!!!'),
+       
+    
+    ],
+       }
+       )
+
+       Validator({
+        form:'#cus_signup-form',
+        formMessage:'.alert',
+        formGroupSelector: ".form-group",
+         rules:[
+           Validator.isRequired('#cus_username'),
+          Validator.isRequired('#cus_fullname'),
+          Validator.isRequired('#cus_identity'),
+          Validator.isRequired('#cus_address'),
+          Validator.isRequired('#cus_email'),
+          Validator.isRequired('#cus_phone'),
+          Validator.isEmail('#cus_email'),
+          Validator.isRequired('#cus_password'),
+          Validator.minLen('#cus_password', 6),
+          Validator.isRequired('#cus_confirm_password'),
+
+          
+          Validator.isConfirm('#cus_confirm_password', function(){
+            return document.querySelector('#cus_signup-form #cus_password').value;
+          }, 'Mật khẩu đã nhập không chính xác'),
+          // Validator.isRequired('input[name="gender"]', 'Trường này là bắt buộc!!!!'),
+       
+    
+    ],
+       }
+       )
+    </script>
+</body>
+</html>
