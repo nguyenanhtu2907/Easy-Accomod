@@ -1,7 +1,7 @@
 :root{
     font-size: 1.2rem;
     font-family: roboto sans-serif;
-    background-image: linear-gradient(0,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+    background-image: linear-gradient(0,rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
     url("./image/hotel.jpg") ;
     background-size: cover;
     background-size:100%;
@@ -14,10 +14,12 @@ body{
 .title{
     text-align: center;
 }
+
 .container{
     margin-top: 80px;
     
 }  
+
 #signin_form{
     padding: 10px 0 ;
 }
@@ -27,7 +29,7 @@ body{
 }
 .box_account{
     padding: 1rem 0;
-    background-color: white;
+    background-color: rgba(255,255,255,0.85);
     width: 500px;
     height: auto;
     box-shadow:0 2px 7px 0 rgba(0,0,0,.1);
@@ -45,6 +47,7 @@ body{
     border: 1px solid #ccc;
 }
 .input_item-pass{
+    background-color: white;
     height: 1.8rem;
     display: flex;
     width: 70%;
@@ -56,6 +59,7 @@ i{
     margin: auto;
     font-size: 0.8rem;
     cursor: pointer;
+    background-color: ;
 }
 .form-group{
 
