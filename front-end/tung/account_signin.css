@@ -62,7 +62,7 @@ i{
     background-color: ;
 }
 .form-group{
-
+    margin-bottom:0.7rem ;
 }
 .form-group input{
     flex:1;
@@ -89,6 +89,20 @@ i{
 
 .focus{
     box-shadow:0px 0px 2px 1px rgb(16,75,140); 
+}
+.forget{
+    text-align: right;
+    width: 88%;
+    font-size: 0.85rem;
+    text-decoration: underline;  
+    margin-bottom:0.7rem ;
+    
+      
+      
+}
+
+.forget a{
+    color: rgb(22, 85, 179);
 }
 #signin_submit{
     font-size: 0.8rem;
