@@ -1,6 +1,10 @@
 :root{
     font-size: 1.2rem;
     font-family: roboto sans-serif;
+    background-image: linear-gradient(0,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+    url("./image/hotel.jpg") ;
+    background-size: cover;
+    background-size:100%;
 }
 .title{
     text-align: center;
