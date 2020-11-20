@@ -20,7 +20,6 @@ class AccountController {
             phone: req.body.phone,
             email: req.body.email,
             password_hash,
-            avatar: req.body.avatar,
             level: req.body.level, //renter, owner
         }
         User.findOne({ username: req.params.username }, function (err, user) {
