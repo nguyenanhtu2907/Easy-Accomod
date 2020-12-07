@@ -5,11 +5,11 @@ const AccountController = require('../controllers/AccountController');
 
 router.get('/register', AccountController.register);
 
-router.post('/registerDB', AccountController.registerDB);
+router.post('/register', AccountController.registerDB);
 
 router.get('/login', AccountController.login);
 
-router.post('/loginDB', AccountController.loginDB);
+router.post('/login', AccountController.loginDB);
 
 router.get('/:id', AccountController.profile);
 

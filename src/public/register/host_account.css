@@ -1,0 +1,172 @@
+:root{
+    font-size: 1.2rem;
+    font-family: roboto sans-serif;
+    background-image: linear-gradient(to right, #00000052, #918f8f47, #00000052),
+    url('/image/bg-register.jpg');
+
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* background-size:100%; */
+}
+body{
+    background-color: transparent;
+}
+.title{
+    text-align: center;
+    color: white;
+}
+.success{
+    width: 70%;
+    padding: 0px !important;
+    margin: auto;
+    color: rgb(69 208 13);
+    font-size: 0.7rem;
+}
+.container{
+    margin-top: 50px;
+    margin-bottom:50px ;
+}
+.box_account{
+    padding: 10px 0 10px 0;
+    background-color: rgba(255,255,255,0.92);
+    border-radius: 2px;
+    width: 500px;
+    height: auto;
+    box-shadow:0 2px 7px 0 rgba(0,0,0,.1);
+    margin: auto;
+}
+.nav-link{
+    font-weight: 500;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+    color: black;
+    border-top: 3px solid rgb(0,222,182);
+}
+a{
+    color: rgb(15, 95, 80);
+    
+}
+
+#host_signup-form{
+    display: block;
+    align-items: center;
+    padding-bottom: 20px ;
+}
+
+#host_signup-form input{
+    /* font-size: 0.8rem; */
+    border-radius: 2px;
+    color: #555;
+    flex: 1;
+    outline: none;
+    border: none;
+    padding:2px 12px;
+}
+#host_signup-form input:focus{
+    
+    /* box-shadow: 0px 0px 2px 1px rgb(36, 85, 136); */
+}
+
+
+.form-gender{
+    margin: 1.1rem 0px 0; 
+    display: flex;
+    font-size: 0.8rem;
+    justify-content: center;
+}
+.gender{
+    display: flex;
+    position: relative; 
+    left: 20px;
+    margin-right: 45px;
+}
+.gender input{
+   
+    font-size: 1px;
+    width: 15px;
+    cursor: pointer;
+    margin-top: 4px;
+    margin-right: 3px;
+}
+
+.input_item{
+    height: 1.8rem;
+    display: flex;
+    width: 70%;
+    margin: 1rem auto 0;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+
+.input_item-pass{
+    background-color: white;
+    height: 1.8rem;
+    display: flex;
+    width: 70%;
+    margin: 1rem auto 0;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+
+.input_item input:focus{
+    box-shadow: 0px 0px 2px 1px rgb(16,75,140);
+
+}
+
+.input_item-pass i{
+    font-size: 0.8rem;
+    margin: auto;
+}
+.focus{
+    box-shadow: 0px 0px 2px 1px rgb(16,75,140);
+
+}
+.pass:focus{
+   box-shadow: none;
+}
+#fullname{
+    
+    flex: 1;
+    outline: none;
+    border: none;
+}
+#togglePassword{
+    cursor: pointer;
+}
+#confirm_password:focus{
+    box-shadow: none;
+}
+#confirm_togglePassword{
+    cursor: pointer;
+    
+}
+#identity{
+ 
+}
+
+#address{
+
+}
+
+
+
+.submit{
+    height: 2rem;
+    background-color: rgb(0,222,182);
+    color: rgb(8, 8, 8);
+    font-weight: 500;
+    display: flex;
+    margin: auto;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    transition: 0.1s;
+}
+
+.submit:hover{
+    background-color: rgba(4, 180, 148, 0.8);
+    color: white;
+    transition: 0.1s;
+}

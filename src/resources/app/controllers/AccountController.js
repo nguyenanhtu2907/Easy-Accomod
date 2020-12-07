@@ -1,12 +1,14 @@
-const User = require('../models/Post');
-const Post = require('../models/User');
+const User = require('../models/User');
+const Post = require('../models/Post');
 const bcrypt = require('bcryptjs');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
 
 class AccountController {
 
     register(req, res, next) {
-        res.send('Day la trang danh ky');
+        res.render('register',{
+            layout:false,
+        });
     }
 
     registerDB(req, res, next) {
@@ -20,56 +22,70 @@ class AccountController {
             phone: req.body.phone,
             email: req.body.email,
             password_hash,
-            avatar: req.body.avatar,
             level: req.body.level, //renter, owner
         }
-        User.findOne({ username: req.params.username }, function (err, user) {
+        User.findOne({ username: req.body.username }, function (err, user) {
             if (user) {
+                console.log(req.body.level=='renter'?true:false)
                 return res.render('register', {
                     layout: false,
                     message: 'Tên đăng nhập đã tồn tại!!!',
                     values: req.body,
+                    tab: req.body.level=='renter'?true:false,
                 })
 
             } else {
-                const user = new User(entity);
-                user.save()
-                    .then(() => res.redirect('/login'))
-                    .catch(error => { })
+                if(entity.level == 'owner'){
+                    const user = new User(entity);
+                    user.save()
+                        .then(() => res.render('register', {
+                            layout: false,
+                            messageSuccess: '*Đăng ký thành công!!! Hãy chờ admin phê duyệt yêu cầu của bạn.',
+                            values: req.body,
+                        }))
+                        .catch(error => { })
+                }else{
+                    const user = new User(entity);
+                    user.save()
+                        .then(() => res.redirect('/account/login'))
+                        .catch(error => { })
+                }
             }
         })
     }
 
     login(req, res, next) {
-        res.send('Day la trang dang nhap')
+        res.render('login',{
+            layout:false,
+        })
     }
 
     loginDB(req, res, next) {
-        User.findOne({ username: req.body.username })
-            .then(user => {
-                const compare = bcrypt.compareSync(req.body.password, user.password_hash);
-                if (!compare) {
+        User.findOne({ username: req.body.username }, function (err, user) {
+            if (user) {
+                const rs = bcrypt.compareSync(req.body.password, user.password_hash);
+                if (!rs) {
                     return res.render('login', {
                         layout: false,
                         message: 'Tên đăng nhập hoặc mật khẩu không đúng!',
                         values: req.body,
                     })
                 }
-            })
-            .catch(() => res.render('login', {
-                layout: false,
-                message: 'Tên đăng nhập hoặc mật khẩu không đúng!',
-                values: req.body,
-            }))
+            } else {
+                return res.render('login', {
+                    layout: false,
+                    message: 'Tên đăng nhập hoặc mật khẩu không đúng!',
+                    values: req.body,
+                })
+            }
+            delete user.password_hash;
+            req.session.isAuthenticated = true;
+            req.session.authUser = user;
+            //url lay duoc tu restrict
+            const url = req.query.retUrl || '/';
 
-        delete user.password_hash;
-        req.session.isAuthenticated = true;
-        req.session.authUser = user;
-
-        //url lay duoc tu restrict
-        const url = req.query.retUrl || '/';
-
-        res.redirect(url)
+            res.redirect(url)
+        })
     }
 
     profile(req, res, next) {

@@ -13,9 +13,10 @@ const User = new Schema({
     user_description: { type: String, default: '' },
     avatar: { type: String, default: 'https://scontent.fhan4-1.fna.fbcdn.net/v/t1.15752-9/52911767_415619089012411_4488307855874588672_n.png?_nc_cat=108&ccb=2&_nc_sid=ae9488&_nc_ohc=ZMIxVCZW87sAX9-cskz&_nc_ht=scontent.fhan4-1.fna&oh=dbb64f20bb30b2d2df283e87f11b949b&oe=5FB8FE52' },
     post: { type: Array, default: [] },
+    notifications: { type: Array, default: [] },
     saved: { type: Array, default: [] },
     level: {type: String, default:''},
-    checked: {type: Boolean, default: false},
+    checked: {type: Number, default: 0},
     
 })
 module.exports = mongoose.model('User', User);

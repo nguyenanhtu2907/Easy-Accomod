@@ -22,6 +22,7 @@ const Post = new Schema({
     statusrent: { type: Boolean, default: false },
     fulfill: { type: Boolean, default: false },
     rates: { type: Array, default: [] },
+    key: { type: String, default: '' },
     slug: {type: String, slug: 'title', unique: true},
 }, {
     timestamps: true,
