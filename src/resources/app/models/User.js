@@ -16,7 +16,7 @@ const User = new Schema({
     notifications: { type: Array, default: [] },
     saved: { type: Array, default: [] },
     level: {type: String, default:''},
-    checked: {type: Boolean, default: false},
+    checked: {type: Number, default: 0},
     
 })
 module.exports = mongoose.model('User', User);

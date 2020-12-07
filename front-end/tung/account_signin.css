@@ -1,0 +1,121 @@
+:root{
+    font-size: 1.2rem;
+    font-family: roboto sans-serif;
+    background-image: linear-gradient(0,rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+    url("./image/hotel.jpg") ;
+    background-size: cover;
+    background-size:100%;
+    /* background-position: 0%; Center the image */
+
+}
+body{
+    background-color: transparent;
+}
+.title{
+    text-align: center;
+}
+
+.container{
+    margin-top: 80px;
+    
+}  
+
+#signin_form{
+    padding: 10px 0 ;
+}
+#signin_form input{
+    padding: 5px 12px;
+    color: #555;
+}
+.box_account{
+    padding: 1rem 0;
+    background-color: rgba(255,255,255,0.85);
+    width: 500px;
+    height: auto;
+    box-shadow:0 2px 7px 0 rgba(0,0,0,.1);
+    margin: auto;
+    
+}
+
+.input_item{
+    font-size: 1rem;
+    height: 1.8rem;
+    display: flex;
+    width: 70%;
+    margin: 1rem auto 0;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+.input_item-pass{
+    background-color: white;
+    height: 1.8rem;
+    display: flex;
+    width: 70%;
+    margin: 1rem auto 0;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+i{
+    margin: auto;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: ;
+}
+.form-group{
+    margin-bottom:0.7rem ;
+}
+.form-group input{
+    flex:1;
+    outline: none;
+    border:none;
+    border-radius:2px;
+}
+.input_item input:focus{
+    box-shadow: 0px 0px 2px 1px rgb(16,75,140);
+
+}
+
+
+.alert{
+    color: red;
+    padding:0;
+    font-size: 0.7rem;
+    width: 70%;
+    padding: 0px !important;
+    margin: auto;
+ 
+
+}
+
+.focus{
+    box-shadow:0px 0px 2px 1px rgb(16,75,140); 
+}
+.forget{
+    text-align: right;
+    width: 88%;
+    font-size: 0.85rem;
+    text-decoration: underline;  
+    margin-bottom:0.7rem ;
+    
+      
+      
+}
+
+.forget a{
+    color: rgb(22, 85, 179);
+}
+#signin_submit{
+    font-size: 0.8rem;
+    display: flex;
+    margin: auto;
+    background-color: rgb(0,222,182);
+    color: rgb(8, 8, 8);
+    font-weight: 400;
+    border: none;
+    
+}
+
+#signin_submit:hover{
+    background-color: rgba(4, 180, 148, 0.8);
+    color:white;
+}
