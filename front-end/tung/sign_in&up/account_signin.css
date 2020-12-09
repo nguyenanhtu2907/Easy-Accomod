@@ -2,7 +2,7 @@
     font-size: 1.2rem;
     font-family: roboto sans-serif;
     background-image: linear-gradient(0,rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-    url("./image/hotel.jpg") ;
+    url("../image/hotel.jpg") ;
     background-size: cover;
     background-size:100%;
     /* background-position: 0%; Center the image */
@@ -59,7 +59,7 @@ i{
     margin: auto;
     font-size: 0.8rem;
     cursor: pointer;
-    background-color: ;
+    background-color: white;
 }
 .form-group{
     margin-bottom:0.7rem ;
