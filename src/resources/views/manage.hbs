@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/manage/manage.css">
+    <link rel="stylesheet" href="/header/header.css">
+</head>
+
+<body>
+    {{>header}}
+    <div class="content">
+        <div class="option">
+            <h2>Trang điều hành Admin</h2>
+            <ul>
+                <li class="list-option account">
+                    <h4 onclick="showOption(event)">Quản lý tài khoản </h4>
+                    <div onclick="showOption(event)" class="fa fa-angle-down"></div>
+                    <ul class="list-inner drop-down-option">
+                        <li>
+                            <span onclick="chooseOption('Danh sách chủ trọ chờ phê duyệt', 0, 0)">Chủ trọ chờ phê duyệt</span>
+                        </li>
+                        <li>
+                            <span onclick="chooseOption('Danh sách chủ trọ đã phê duyệt ', 0, 1)">Chủ trọ đã duyệt</span>
+                        </li>
+                        <li>
+                            <span onclick="chooseOption('Danh sách chủ trọ đã từ chối ', 0, 2)">Chủ trọ đã từ chối</span>
+                        </li>
+                        <li>
+                            <span onclick="chooseOption('Danh sách người thuê trọ ', 0, 3)">Người thuê trọ</span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-option post">
+                    <h4 onclick="showOption(event)">Quản lý bài viết</h4>
+                    <div onclick="showOption(event)" class="fa fa-angle-down"></div>
+                    <ul class="list-inner">
+                        <li>
+                            <span onclick="chooseOption('Danh sách bài viết chờ duyệt ', 0, 4)">Bài viết chờ
+                                duyệt</span>
+                        </li>
+                        <li>
+                            <span onclick="chooseOption('Danh sách bài viết đã duyệt ', 0, 5)">Bài viết đã duyệt</span>
+                        </li>
+                        <li>
+                            <span onclick="chooseOption('Danh sách bài viết đã từ chối ', 0, 6)">Bài viết đã xóa</span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <h4 onclick="chooseOption('Thống kê', 0, 7)">Thống kê</h4>
+                </li>
+                <li class="message">
+                    <h4 onclick="chooseOption('Message', 1, 8)">Tin nhắn</h4>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="list-side">
+            <div class="tab-option">
+                <div class="table-side">
+                    <div class="title">
+                        <h1></h1>
+                    </div>
+                    <div class="list-items">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="detail-side">
+                </div>
+            </div>
+
+            <div class="tab-option none">
+                <div class="message-side">
+                    <div class="title">
+                        <h1>Message</h1>
+                    </div>
+                    <div class="room-chat">
+                        <div class="accounts">
+                            <div class="search">
+                                <i class="fa fa-search"></i>
+                                <input type="text" placeholder="TÌm kiếm với tên đăng nhập" name="search">
+                            </div>
+                            <ul>
+                                <li class="chosen ">
+                                    <div class="avatar-chat">
+                                        <img src="/image/avatar.jpg" alt="">
+                                    </div>
+                                    <div class="info-chat">
+                                        <p>Nguyễn Anh Tú</p>
+                                        <span>nguyenanhtuxx</span>
+                                    </div>
+                                </li>
+                                <li class="">
+                                    <div class="avatar-chat">
+                                        <img src="/image/avatar.jpg" alt="">
+                                    </div>
+                                    <div class="info-chat">
+                                        <p>Nguyễn Anh Tú</p>
+                                        <span>nguyenanhtuxx</span>
+                                    </div>
+
+                                </li>
+                                
+                            </ul>
+
+
+                        </div>
+                        <div class="chat-side">
+                            <h3>Nguyễn Anh Tú</h3>
+                            <div class="chat-area">
+                                <ul>
+                                    <li >
+                                        <div class="a-message admin-message"><span > Đây là dòng chat của admin Đây là dòng chat của admin Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li >
+                                        <div class="a-message admin-message"><span >Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li class="">
+                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div> 
+                                    </li>
+                                    <li >
+                                        <div class="a-message admin-message"><span > Đây là dòng chat của admin Đây là dòng chat của admin Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li >
+                                        <div class="a-message admin-message"><span >Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li class="">
+                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div> 
+                                    </li>
+                                    <li >
+                                        <div class="a-message admin-message"><span > Đây là dòng chat của admin Đây là dòng chat của admin Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li >
+                                        <div class="a-message admin-message"><span >Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li class="">
+                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div> 
+                                    </li>
+                                    <li >
+                                        <div class="a-message admin-message"><span > Đây là dòng chat của admin Đây là dòng chat của admin Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li >
+                                        <div class="a-message admin-message"><span >Đây là dòng chat của admin</span></div>
+                                        
+                                    </li>
+                                    <li class="">
+                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div> 
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="input-chat">
+                                <input autocomplete="off" type="text" onkeydown="getEnter(event)" placeholder="Nhập đoạn chat" name="message">
+                                <i onclick="submitMessage(event)" class="fa fa-paper-plane"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="detail-side">
+                    <h1>Thông tin tài khoản</h1>
+                    <ul id="info-chat">
+                        <li>
+                            <b>ID người dùng</b> <span>: 1234</span>
+                        </li>
+                        <li>
+                            <b>Tên đăng nhập </b> <span>: nguyenanhtuxx</span>
+                        </li>
+                        <li>
+                            <b>Họ và tên </b> <span>: Nguyễn Anh Tú</span>
+                        </li>
+                        <li>
+                            <b>Giới tính </b> <span>: Nam</span>
+                        </li>
+                        <li>
+                            <b>Số điện thoại </b> <span>: 0123456789</span>
+                        </li>
+                        <li>
+                            <b>Email </b> <span>: 123@gmail.com</span>
+                        </li>
+                        <li>
+                            <b>CCCD/CMND </b> <span>: 1234456789</span>
+                        </li>
+                        <li>
+                            <b>Địa chỉ </b> <span>: Xuy Xá, Mỹ Đức, Hà Nội</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/manage/manage.js"></script>
+    <script src="/header/header.js"></script>
+
+</body>
+
+</html>

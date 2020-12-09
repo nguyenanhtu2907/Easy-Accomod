@@ -1,1 +1,90 @@
-<h3>Day la header</h3>
+<div class="header">
+    <div class="content-header">
+        <div class="logo">
+            <a href="/">
+                <img src="/image/logo/cover.png" alt="">
+            </a>
+        </div>
+        <div class="menu">
+            <ul>
+                {{#ifCond localAuthUser.level "renter"}}
+                {{else}}
+                <li>
+                    <a href="/post/create">Đăng bài</a>
+                </li>
+                {{/ifCond}}
+                <li>
+                    <a href="/post/search">Tìm kiếm nâng cao</a>
+                </li>
+                <li>
+                    <a href="/post/rank">Thống kê phòng trọ</a>
+                </li>
+                {{#if localAuthUser}}
+                <li>
+                    <div class="notification">
+                        <i class="alerted fa fa-bell" onclick="showList(event,'.show-noti')"></i>
+                        <div class="show-noti none">
+                            <ul>
+                                <h3>Thông báo</h3>
+                                {{!-- <li>
+                                    <div class="avatar">
+                                        <img src="../avatar.jpg" alt="">
+                                    </div>
+                                    <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                    <i class="fa fa-circle"></i>
+                                </li> --}}
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                {{#ifCond localAuthUser.level "admin"}}
+                <li>
+                    <a href="/account/{{localAuthUser._id}}/manage"><i class="fa fa-comment"></i></a>
+                </li>
+                {{/ifCond}}
+                <li>
+                    <div class="account" onclick="showList(event, '.account .show-info-option')">
+                        <div class="info-account">
+                            <span><b>{{localAuthUser.fullname}}</b> </span>
+                            <img src="{{localAuthUser.avatar}}" alt="">
+                        </div>
+                        <div class="show-info-option none">
+                            <ul>
+                                <li>
+                                    <a href="/account/{{localAuthUser._id}}"> <i class="fa fa-long-arrow-right"></i> Bài viết của bạn</a>
+                                </li>
+                                <li>
+                                    <a href="/account/{{localAuthUser._id}}/edit?type=info"> <i class="fa fa-long-arrow-right"></i> Sửa thông tin </a>
+                                </li>
+                                <li>
+                                    <a href="/account/{{localAuthUser._id}}/edit?type=password"> <i class="fa fa-long-arrow-right"></i> Đổi mật khẩu</a>
+                                </li>
+                                {{#ifCond localAuthUser.level "admin"}}
+                                <li>
+                                    <a href="/account/{{localAuthUser._id}}/manage"> <i class="fa fa-long-arrow-right"></i> Quản lý người dùng</a>
+                                </li>
+                                <li>
+                                    <a href="/account/{{localAuthUser._id}}/manage"> <i class="fa fa-long-arrow-right"></i> Quản lý bài viết</a>
+                                </li>
+                                {{/ifCond}}
+                                <li class="option-line">
+                                    <a href="/account/logout"> <i class="fa fa-long-arrow-right"></i> Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                {{else}}
+                <li>
+                    <a href="/account/register">Đăng ký</a>
+                </li>
+
+                <li>
+                    <a href="/account/login">Đăng nhập</a>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+
+</div>

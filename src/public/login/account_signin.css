@@ -124,3 +124,10 @@ i{
     color: white;
     transition: 0.1s;
 }
+.link{
+    font-size: 0.9rem;
+    margin-left: 1rem
+}
+.link a{
+    color: rgb(56, 155, 241);
+}
