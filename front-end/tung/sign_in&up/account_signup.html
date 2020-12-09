@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>account</title>
-    <link rel="stylesheet"  href="./font/css/all.css">
+    <link rel="stylesheet"  href="../font/css/all.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="../base.css">
     <link rel="stylesheet" href="host_account.css">
     <link rel="stylesheet" href="cus_account.css">
 </head>
@@ -81,9 +81,9 @@
                                   <div class="gender">
                                       <input type="radio" name="gender" class="form-control" value="other" >Khác
                                   </div>
-                                  
+                                 
                               </div>
-
+                              <div class="alert"></div>
                             </div>
                       <div class="form-group">
                         <div class="input_item identity_input">
@@ -173,7 +173,7 @@
                           </div>
                          
                       </div>
-                     
+                      <div class="alert"></div>
                     </div>
 
                     <div class="form-group">
@@ -237,7 +237,7 @@
           Validator.isRequired('#password'),
           Validator.minLen('#password', 6),
           Validator.isRequired('#confirm_password'),
-
+          Validator.isRequired('.form-gender'),
           
           Validator.isConfirm('#confirm_password', function(){
             return document.querySelector('#host_signup-form #password').value;
@@ -264,7 +264,7 @@
           Validator.isRequired('#cus_password'),
           Validator.minLen('#cus_password', 6),
           Validator.isRequired('#cus_confirm_password'),
-
+          Validator.isRequired('.form-gender'),
           
           Validator.isConfirm('#cus_confirm_password', function(){
             return document.querySelector('#cus_signup-form #cus_password').value;
