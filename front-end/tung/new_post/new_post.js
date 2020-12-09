@@ -24,7 +24,7 @@ function showTab(n) {
 
 function nextPrev(n) {
   var x = document.getElementsByClassName("tab");
- 
+  if (n == 1 && !validateForm()) return false;
   x[currentTab].style.display = "none";
   currentTab = currentTab + n;
   if (currentTab >= x.length) {
@@ -36,7 +36,37 @@ function nextPrev(n) {
   showTab(currentTab);
 }
 
-
+function validateForm() {
+  // This function deals with validation of the form fields
+  var x, y, i, valid = true;
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByTagName("input");
+  z = x[currentTab].getElementsByTagName("select")
+  // A loop that checks every input field in the current tab:
+  for (i = 0; i < y.length; i++) {
+    // If a field is empty...
+    if (y[i].value == "") {
+      // add an "invalid" class to the field:
+      y[i].className += " invalid";
+      // and set the current valid status to false
+      valid = false;
+    }
+  }
+  for (i = 0; i < z.length; i++) {
+    // If a field is empty...
+    if (z[i].value == "") {
+      // add an "invalid" class to the field:
+     
+      // and set the current valid status to false
+      valid = false;
+    }
+  }
+  // If the valid status is true, mark the step as finished and valid:
+  if (valid) {
+    document.getElementsByClassName("step")[currentTab].className += " finish";
+  }
+  return valid; // return the valid status
+}
 
 function fixStepIndicator(n) {
   var i, x = document.getElementsByClassName("step");
@@ -171,3 +201,35 @@ fetch(districtApi, object)
          
     })
    
+
+    //fetch ward
+    var districtInput = document.getElementById('district')
+
+   var wardApi = "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id";
+   fetch(wardApi, object)
+    .then(res => res.json())
+    .then(posts => {
+      districtInput.onchange = function(){
+        var districtValue = document.getElementById('district').value;
+        // console.log(typeof (provinceValue));
+        var htmls = posts.data.map(function(post){
+          // console.log(typeof(post.DistrictID))
+          // console.log(post.ProvinceID == Number(provinceValue))
+            if(post.DistrictID == Number(districtValue)){
+              return ` <option value="${post.WardCode}">
+                   ${post.WardName}
+                  </option>`
+            }
+          })
+          
+          
+      //  console.log(posts)
+      htmls.join('');
+      document.getElementById('ward').innerHTML = htmls;
+      }
+                 
+                      
+              
+          
+          
+        })
