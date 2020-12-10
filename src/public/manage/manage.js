@@ -15,45 +15,61 @@ function changeList(e, element) {
     document.querySelector('.title-option span').innerHTML += '<div class="fa fa-angle-down"></div>'
     document.querySelector('.title-option ul').classList.add('none');
 }
-function showInfo(e, type, element){
+function showInfo(e, type, element) {
     let items = e.target.parentNode;
-    let url ='';
-    if(type == 0){
-        url=`/account/get-info?key=${items.querySelectorAll('td')[0].innerText}`
+    let url = '';
+    if (type == 0) {
+        url = `/account/get-info?key=${items.querySelectorAll('td')[0].innerText}`
         fetch(url)
-        .then(res=>res.json())
-        .then(user => {
-            let spans=document.querySelectorAll(element + ' li span');
-            spans[0].innerText=': '+user._id;
-            spans[1].innerText=': '+user.username;
-            spans[2].innerText=': '+user.fullname;
-            spans[3].innerText=': '+user.gender;
-            spans[4].innerText=': '+user.phone;
-            spans[5].innerText=': '+user.email;
-            spans[6].innerText=': '+user.identity;
-            spans[7].innerText=': '+user.address;
-        })
-    }else{
-        url=`/post/get-info?key=${items.querySelectorAll('td')[0].innerText}`
+            .then(res => res.json())
+            .then(user => {
+                let spans = document.querySelectorAll(element + ' li span');
+                spans[0].innerText = user._id;
+                spans[1].innerText = user.username;
+                spans[2].innerText = user.fullname;
+                spans[3].innerText = user.gender;
+                spans[4].innerText = user.phone;
+                spans[5].innerText = user.email;
+                spans[6].innerText = user.identity;
+                spans[7].innerText = user.address;
+            })
+    } else if (type == 1) {
+        url = `/post/get-info?key=${items.querySelectorAll('td')[0].innerText}`
         fetch(url)
-        .then(res=>res.json())
-        .then(post => {
-            let spans=document.querySelectorAll(element + ' li span');
-            spans[0].innerText=': '+user._id;
-            spans[1].innerText=': '+user.authorName;
-            spans[2].innerText=': '+user.title;
-            spans[3].innerText=': '+user.address;
-            spans[4].innerText=': '+user.contact;
-            spans[5].innerText=': '+user.createdDate;
-            spans[6].innerText=': '+user.rentcost;
-            spans[7].innerText=': '+user.roomtype;
-            spans[8].innerText=': '+user.area;
-            spans[9].innerText=': '+user.equiments.join(', ');
-        })
+            .then(res => res.json())
+            .then(post => {
+                let spans = document.querySelectorAll(element + ' li span');
+                spans[0].innerText = user._id;
+                spans[1].innerText = user.authorName;
+                spans[2].innerText = user.title;
+                spans[3].innerText = user.address;
+                spans[4].innerText = user.contact;
+                spans[5].innerText = user.createdDate;
+                spans[6].innerText = user.rentcost;
+                spans[7].innerText = user.roomtype;
+                spans[8].innerText = user.area;
+                spans[9].innerText = user.equiments.join(', ');
+            })
+    } else {
+        console.log(items)
+        // url = `/account/get-info?key=${items.querySelectorAll('td')[0].innerText}`
+        // fetch(url)
+        //     .then(res => res.json())
+        //     .then(user => {
+        //         let spans = document.querySelectorAll(element + ' li span');
+        //         spans[0].innerText = user._id;
+        //         spans[1].innerText = user.username;
+        //         spans[2].innerText = user.fullname;
+        //         spans[3].innerText = user.gender;
+        //         spans[4].innerText = user.phone;
+        //         spans[5].innerText = user.email;
+        //         spans[6].innerText = user.identity;
+        //         spans[7].innerText = user.address;
+        //     })
     }
-    
+
 }
-function chooseOption(title, bigOption, innerOption) {
+function chooseOption(bigOption, innerOption) {
     //bigOption: option to: quản lý bài viết, tài khoản, chat, thống kê
     //innerOption: các option nhỏ trong bigOption
     var bigOptions = Array.from(document.querySelectorAll('.content .list-side .tab-option'))
@@ -67,13 +83,12 @@ function chooseOption(title, bigOption, innerOption) {
             option.classList.add('none')
         } else if (index == bigOption) {
             option.classList.remove('none')
-            option.querySelector('.title h1').innerText = title;
             switch (innerOption) {
                 case 0: {
                     fetch(window.location.pathname + '?option=0')
                         .then(users => users.json())
                         .then(users => {
-                            option.querySelector('.title h1').innerText += ' (' + users.length + ')';
+                            option.querySelector('.title h1').innerText = 'Danh sách chủ trọ chờ phê duyệt (' + users.length + ')';
                             option.querySelector('.list-items thead tr').innerHTML = `
                                 <th>Tên đăng nhập</th>
                                 <th>Họ và tên</th>
@@ -97,35 +112,35 @@ function chooseOption(title, bigOption, innerOption) {
                                 <h1>Thông tin tài khoản</h1>
                                 <ul id="info-user">
                                     <li>
-                                        <b>ID người dùng</b> <span>: </span>
+                                        <b>ID người dùng</b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Tên đăng nhập </b> <span>: </span>
+                                        <b>Tên đăng nhập </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Họ và tên </b> <span>: </span>
+                                        <b>Họ và tên </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Giới tính </b> <span>: </span>
+                                        <b>Giới tính </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Số điện thoại </b> <span>: </span>
+                                        <b>Số điện thoại </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Email </b> <span>: </span>
+                                        <b>Email </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>CCCD/CMND </b> <span>: </span>
+                                        <b>CCCD/CMND </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Địa chỉ </b> <span>: </span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                 </ul>
                                 <div class="button-admin">
-                                    <div class="button accept disabled">
+                                    <div onclick="actionAdmin('user', 'accept', 0, 0)" class="button accept disabled">
                                         <span>Duyệt</span>
                                     </div>
-                                    <div class="button reject">
+                                    <div onclick="actionAdmin('user', 'reject', 0, 0)" class="button reject">
                                         <span>Từ chối</span>
                                     </div>
                                 </div>
@@ -138,7 +153,7 @@ function chooseOption(title, bigOption, innerOption) {
                     fetch(window.location.pathname + '?option=1')
                         .then(users => users.json())
                         .then(users => {
-                            option.querySelector('.title h1').innerText += ' (' + users.length + ')';
+                            option.querySelector('.title h1').innerText = 'Danh sách chủ trọ đã phê duyệt (' + users.length + ')';
 
 
                             option.querySelector('.list-items thead tr').innerHTML = `
@@ -164,28 +179,28 @@ function chooseOption(title, bigOption, innerOption) {
                                 <h1>Thông tin tài khoản</h1>
                                 <ul id="info-user">
                                     <li>
-                                        <b>ID người dùng</b> <span>: </span>
+                                        <b>ID người dùng</b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Tên đăng nhập </b> <span>: </span>
+                                        <b>Tên đăng nhập </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Họ và tên </b> <span>: </span>
+                                        <b>Họ và tên </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Giới tính </b> <span>: </span>
+                                        <b>Giới tính </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Số điện thoại </b> <span>: </span>
+                                        <b>Số điện thoại </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Email </b> <span>: </span>
+                                        <b>Email </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>CCCD/CMND </b> <span>: </span>
+                                        <b>CCCD/CMND </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Địa chỉ </b> <span>: </span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                 </ul>
                             `;
@@ -197,7 +212,7 @@ function chooseOption(title, bigOption, innerOption) {
                     fetch(window.location.pathname + '?option=2')
                         .then(users => users.json())
                         .then(users => {
-                            option.querySelector('.title h1').innerText += ' (' + users.length + ')';
+                            option.querySelector('.title h1').innerText = 'Danh sách chủ trọ đã từ chối (' + users.length + ')';
                             option.querySelector('.list-items thead tr').innerHTML = `
                                 <th>Tên đăng nhập</th>
                                 <th>Họ và tên</th>
@@ -221,31 +236,31 @@ function chooseOption(title, bigOption, innerOption) {
                                 <h1>Thông tin tài khoản</h1>
                                 <ul id="info-user">
                                     <li>
-                                        <b>ID người dùng</b> <span>: </span>
+                                        <b>ID người dùng</b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Tên đăng nhập </b> <span>: </span>
+                                        <b>Tên đăng nhập </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Họ và tên </b> <span>: </span>
+                                        <b>Họ và tên </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Giới tính </b> <span>: </span>
+                                        <b>Giới tính </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Số điện thoại </b> <span>: </span>
+                                        <b>Số điện thoại </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Email </b> <span>: </span>
+                                        <b>Email </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>CCCD/CMND </b> <span>: </span>
+                                        <b>CCCD/CMND </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Địa chỉ </b> <span>: </span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                     <div class="button-admin">
-                                        <div class="button accept disabled">
+                                        <div onclick="actionAdmin('user', 'restore', 0, 2)" class="button accept disabled">
                                             <span>Khôi phục</span>
                                         </div>
                                     </div>
@@ -259,7 +274,7 @@ function chooseOption(title, bigOption, innerOption) {
                     fetch(window.location.pathname + '?option=3')
                         .then(users => users.json())
                         .then(users => {
-                            option.querySelector('.title h1').innerText += ' (' + users.length + ')';
+                            option.querySelector('.title h1').innerText = 'Danh sách người thuê trọ (' + users.length + ')';
                             option.querySelector('.list-items thead tr').innerHTML = `
                                 <th>Tên đăng nhập</th>
                                 <th>Họ và tên</th>
@@ -283,28 +298,28 @@ function chooseOption(title, bigOption, innerOption) {
                                 <h1>Thông tin tài khoản</h1>
                                 <ul id="info-user">
                                     <li>
-                                        <b>ID người dùng</b> <span>: </span>
+                                        <b>ID người dùng</b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Tên đăng nhập </b> <span>: </span>
+                                        <b>Tên đăng nhập </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Họ và tên </b> <span>: </span>
+                                        <b>Họ và tên </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Giới tính </b> <span>: </span>
+                                        <b>Giới tính </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Số điện thoại </b> <span>: </span>
+                                        <b>Số điện thoại </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Email </b> <span>: </span>
+                                        <b>Email </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>CCCD/CMND </b> <span>: </span>
+                                        <b>CCCD/CMND </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Địa chỉ </b> <span>: </span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                 </ul>
                             `;
@@ -316,7 +331,7 @@ function chooseOption(title, bigOption, innerOption) {
                     fetch(window.location.pathname + '?option=4')
                         .then(posts => posts.json())
                         .then(posts => {
-                            option.querySelector('.title h1').innerText += ' (' + posts.length + ')';
+                            option.querySelector('.title h1').innerText = 'Danh sách bài viết chờ duyệt (' + posts.length + ')';
                             option.querySelector('.list-items thead tr').innerHTML = `
                                 <th>ID bài viết</th>
                                 <th>Tiêu đề</th>
@@ -340,41 +355,41 @@ function chooseOption(title, bigOption, innerOption) {
                                 <h1>Thông tin bài viết</h1>
                                 <ul id="info-post">
                                     <li>
-                                        <b>ID bài viết </b> <span>: </span>
+                                        <b>ID bài viết </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Người viết </b> <span>: </span>
+                                        <b>Người viết </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Tiêu đề </b> <span>: </span>
+                                        <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b> <span>: </span>
+                                        <b>Vị trí </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Liên hệ </b> <span>: </span>
+                                        <b>Liên hệ </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Thời gian tạo </b> <span>: </span>
+                                        <b>Thời gian tạo </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Giá tiền </b> <span>: </span>
+                                        <b>Giá tiền </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Loại trọ </b> <span>: </span>
+                                        <b>Loại trọ </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Diện tích </b> <span>: </span>
+                                        <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b> <span>: </span>
+                                        <b>Trang thiết bị </b>: <span></span>
                                     </li>
                                 </ul>
                                 <div class="button-admin">
-                                    <div class="button accept disabled">
+                                    <div onclick="actionAdmin('post', 'accept', 0, 4)" class="button accept disabled">
                                         <span>Duyệt</span>
                                     </div>
-                                    <div class="button reject">
+                                    <div onclick="actionAdmin('post', 'reject', 0, 4)" class="button reject">
                                         <span>Từ chối</span>
                                     </div>
                                 </div>
@@ -387,7 +402,7 @@ function chooseOption(title, bigOption, innerOption) {
                     fetch(window.location.pathname + '?option=5')
                         .then(posts => posts.json())
                         .then(posts => {
-                            option.querySelector('.title h1').innerText += ' (' + posts.length + ')';
+                            option.querySelector('.title h1').innerText = 'Danh sách bài viết đã duyệt (' + posts.length + ')';
                             option.querySelector('.list-items thead tr').innerHTML = `
                                 <th>ID bài viết</th>
                                 <th>Tiêu đề</th>
@@ -411,34 +426,34 @@ function chooseOption(title, bigOption, innerOption) {
                                 <h1>Thông tin bài viết</h1>
                                 <ul id="info-post">
                                     <li>
-                                        <b>ID bài viết </b> <span>: </span>
+                                        <b>ID bài viết </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Người viết </b> <span>: </span>
+                                        <b>Người viết </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Tiêu đề </b> <span>: </span>
+                                        <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b> <span>: </span>
+                                        <b>Vị trí </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Liên hệ </b> <span>: </span>
+                                        <b>Liên hệ </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Thời gian tạo </b> <span>: </span>
+                                        <b>Thời gian tạo </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Giá tiền </b> <span>: </span>
+                                        <b>Giá tiền </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Loại trọ </b> <span>: </span>
+                                        <b>Loại trọ </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Diện tích </b> <span>: </span>
+                                        <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b> <span>: </span>
+                                        <b>Trang thiết bị </b>: <span></span>
                                     </li>
                                 </ul>
                             `;
@@ -450,7 +465,7 @@ function chooseOption(title, bigOption, innerOption) {
                     fetch(window.location.pathname + '?option=6')
                         .then(posts => posts.json())
                         .then(posts => {
-                            option.querySelector('.title h1').innerText += ' (' + posts.length + ')';
+                            option.querySelector('.title h1').innerText = 'Danh sách bài viết đã từ chối (' + posts.length + ')';
                             option.querySelector('.list-items thead tr').innerHTML = `
                                 <th>ID bài viết</th>
                                 <th>Tiêu đề</th>
@@ -474,38 +489,38 @@ function chooseOption(title, bigOption, innerOption) {
                                 <h1>Thông tin bài viết</h1>
                                 <ul id="info-post">
                                     <li>
-                                        <b>ID bài viết </b> <span>: </span>
+                                        <b>ID bài viết </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Người viết </b> <span>: </span>
+                                        <b>Người viết </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Tiêu đề </b> <span>: </span>
+                                        <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b> <span>: </span>
+                                        <b>Vị trí </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Liên hệ </b> <span>: </span>
+                                        <b>Liên hệ </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Thời gian tạo </b> <span>: </span>
+                                        <b>Thời gian tạo </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Giá tiền </b> <span>: </span>
+                                        <b>Giá tiền </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Loại trọ </b> <span>: </span>
+                                        <b>Loại trọ </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Diện tích </b> <span>: </span>
+                                        <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b> <span>: </span>
+                                        <b>Trang thiết bị </b>: <span></span>
                                     </li>
                                 </ul>
                                 <div class="button-admin">
-                                    <div class="button accept disabled">
+                                    <div onclick="actionAdmin('post', 'restore', 0, 6)" class="button accept disabled">
                                         <span>Khôi phục</span>
                                     </div>
                                 </div>
@@ -515,6 +530,7 @@ function chooseOption(title, bigOption, innerOption) {
                         .catch(() => { })
                     break;
                 } case 7: {
+                    option.querySelector('.title h1').innerText = 'Thống kê';
                     option.querySelector('.list-items thead tr').innerHTML = `
                     <th>ID bài viết</th>
                     <th>Tiêu đề</th>
@@ -529,10 +545,51 @@ function chooseOption(title, bigOption, innerOption) {
                     fetch(window.location.pathname + '?option=8')
                         .then(messages => messages.json())
                         .then(messages => {
-
+                            option.querySelector('.title h1').innerText = 'Message';
+                            let html = '';
+                            messages.forEach((message, index) => {
+                                html += `
+                                    <li class="${'chosen'}" onclick="showMessage(event)">
+                                        <div class="avatar-chat">
+                                            <img src="${message.avatar}" alt="">
+                                        </div>
+                                        <div class="info-chat">
+                                            <p>${message.fullname}</p>
+                                            <span>${message.username}</span>
+                                        </div>
+                                    </li>
+                                `
+                            })
+                            document.querySelector('.message-side .room-chat .accounts>ul').innerHTML = html;
+                            document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
+                            option.querySelector('#info-chat').innerHTML = `
+                                    <li>
+                                        <b>ID người dùng</b>: <span></span>
+                                    </li>
+                                    <li>
+                                        <b>Tên đăng nhập </b>: <span></span>
+                                    </li>
+                                    <li>
+                                        <b>Họ và tên </b>: <span></span>
+                                    </li>
+                                    <li>
+                                        <b>Giới tính </b>: <span></span>
+                                    </li>
+                                    <li>
+                                        <b>Số điện thoại </b>: <span></span>
+                                    </li>
+                                    <li>
+                                        <b>Email </b>: <span></span>
+                                    </li>
+                                    <li>
+                                        <b>CCCD/CMND </b>: <span></span>
+                                    </li>
+                                    <li>
+                                        <b>Địa chỉ </b>: <span></span>
+                                    </li>
+                            `;
                         })
-
-                    document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
+                        .catch(()=>{})
                     break;
                 }
             }
@@ -540,26 +597,35 @@ function chooseOption(title, bigOption, innerOption) {
     })
 }
 
-chooseOption('Danh sách chủ trọ chờ phê duyệt', 0, 0)
+function showMessage(e){
+    showInfo(e, 2, '#info-chat ')
+}
+chooseOption(0, 0)
 function getEnter(e) {
     let chatArea = document.querySelector('.chat-area');
-    if (e.key == 'Enter') {
+    let value = e.target.value;
+    if (e.key == 'Enter' && value.trim()) {
         document.querySelector('.chat-area ul').innerHTML += `
             <li >
-                <div class="a-message admin-message"><span > ${e.target.value}</span></div> 
+                <div class="a-message admin-message"><span > ${value}</span></div> 
             </li>
         `
         chatArea.scrollTop = chatArea.scrollHeight;
+        submitMessageToDB(value);
         chatArea.parentNode.querySelector('.input-chat input').value = '';
     }
 }
 function submitMessage(e) {
     let chatArea = document.querySelector('.chat-area');
-    document.querySelector('.chat-area ul').innerHTML += `
-            <li >
-                <div class="a-message admin-message"><span > ${chatArea.parentNode.querySelector('.input-chat input').value}</span></div> 
-            </li>
-        `
-    chatArea.scrollTop = chatArea.scrollHeight;
+    let value = chatArea.parentNode.querySelector('.input-chat input').value;
+    if (value.trim()) {
+        document.querySelector('.chat-area ul').innerHTML += `
+                <li >
+                    <div class="a-message admin-message"><span > ${value}</span></div> 
+                </li>
+            `
+        chatArea.scrollTop = chatArea.scrollHeight;
+        submitMessageToDB(value);
+    }
     chatArea.parentNode.querySelector('.input-chat input').value = '';
 }

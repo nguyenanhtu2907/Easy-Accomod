@@ -19,10 +19,10 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    cookie: { 
+    cookie: {
         // secure: true 
-    }    
-}))    
+    }
+}))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -48,10 +48,25 @@ handlebars.create({}).handlebars.registerHelper('ifCond', function (v1, v2, opti
 });
 app.set('views', path.join(__dirname, 'resources/views'))
 
+var server = require("http").createServer(app);
+var io = require("socket.io")(server);
 
 route(app);
 
 
-app.listen(port, () => {
+io.on("connection", function (socket) {
+
+    socket.on("disconnect", function () {
+
+    });
+    //server lắng nghe dữ liệu từ client
+    socket.on("Client-sent-notification", function (data) {
+
+        //sau khi lắng nghe dữ liệu, server phát lại dữ liệu này đến các client khác
+        console.log(data)
+        socket.broadcast.emit(`${data}`, data);
+    });
+});
+server.listen(port, () => {
     console.log(`http://localhost:${port}`);
 })

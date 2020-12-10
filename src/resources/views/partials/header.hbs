@@ -20,23 +20,17 @@
                     <a href="/post/rank">Thống kê phòng trọ</a>
                 </li>
                 {{#if localAuthUser}}
+                {{#ifCond localAuthUser.level "owner"}}
                 <li>
                     <div class="notification">
-                        <i class="alerted fa fa-bell" onclick="showList(event,'.show-noti')"></i>
+                        <i class=" fa fa-bell" onclick="showList(event,'.show-noti')"></i>
                         <div class="show-noti none">
                             <ul>
-                                <h3>Thông báo</h3>
-                                {{!-- <li>
-                                    <div class="avatar">
-                                        <img src="../avatar.jpg" alt="">
-                                    </div>
-                                    <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
-                                    <i class="fa fa-circle"></i>
-                                </li> --}}
                             </ul>
                         </div>
                     </div>
                 </li>
+                {{/ifCond}}
                 {{#ifCond localAuthUser.level "admin"}}
                 <li>
                     <a href="/account/{{localAuthUser._id}}/manage"><i class="fa fa-comment"></i></a>
@@ -51,20 +45,25 @@
                         <div class="show-info-option none">
                             <ul>
                                 <li>
-                                    <a href="/account/{{localAuthUser._id}}"> <i class="fa fa-long-arrow-right"></i> Bài viết của bạn</a>
+                                    <a href="/account/{{localAuthUser._id}}"> <i class="fa fa-long-arrow-right"></i> Bài
+                                        viết của bạn</a>
                                 </li>
                                 <li>
-                                    <a href="/account/{{localAuthUser._id}}/edit?type=info"> <i class="fa fa-long-arrow-right"></i> Sửa thông tin </a>
+                                    <a href="/account/{{localAuthUser._id}}/edit?type=info"> <i
+                                            class="fa fa-long-arrow-right"></i> Sửa thông tin </a>
                                 </li>
                                 <li>
-                                    <a href="/account/{{localAuthUser._id}}/edit?type=password"> <i class="fa fa-long-arrow-right"></i> Đổi mật khẩu</a>
+                                    <a href="/account/{{localAuthUser._id}}/edit?type=password"> <i
+                                            class="fa fa-long-arrow-right"></i> Đổi mật khẩu</a>
                                 </li>
                                 {{#ifCond localAuthUser.level "admin"}}
                                 <li>
-                                    <a href="/account/{{localAuthUser._id}}/manage"> <i class="fa fa-long-arrow-right"></i> Quản lý người dùng</a>
+                                    <a href="/account/{{localAuthUser._id}}/manage"> <i
+                                            class="fa fa-long-arrow-right"></i> Quản lý người dùng</a>
                                 </li>
                                 <li>
-                                    <a href="/account/{{localAuthUser._id}}/manage"> <i class="fa fa-long-arrow-right"></i> Quản lý bài viết</a>
+                                    <a href="/account/{{localAuthUser._id}}/manage"> <i
+                                            class="fa fa-long-arrow-right"></i> Quản lý bài viết</a>
                                 </li>
                                 {{/ifCond}}
                                 <li class="option-line">
@@ -85,6 +84,75 @@
                 {{/if}}
             </ul>
         </div>
+
     </div>
+    
 
 </div>
+{{#ifCond localAuthUser.level 'owner'}}
+    <div id="message-window" class="small-chat">
+        <div class="title-window" onclick="toggleChatWindow(event)">
+           <i class="fa fa-comments"></i> <span>Message</span>
+        </div>
+        <div class="body-window none" >
+            <div class="close-window" onclick="toggleChatWindow(event)"><span>Chat với admin</span> <i class="fa fa-window-minimize"></i></div>
+
+            <div class="chat-window">
+                <div class="small-message"><span>Đây là chat của admin</span></div>
+                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
+                <div class="small-message"><span>Đây là chat của admin</span></div>
+                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
+                <div class="small-message"><span>Đây là chat của admin</span></div>
+                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
+                <div class="small-message"><span>Đây là chat của admin</span></div>
+                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
+                <div class="small-message"><span>Đây là chat của admin</span></div>
+                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
+                <div class="small-message"><span>Đây là chat của admin</span></div>
+                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
+                <div class="small-message"><span>Đây là chat của admin</span></div>
+            </div>
+            <div class="input-window">
+                <input type="text" onkeydown="getEnterWindowChat(event)" placeholder="Nhập tin nhắn của bạn.">
+                <i class="fa fa-paper-plane" onclick="submitMessageWindowChat(event)"></i>
+            </div>
+        </div>
+        
+
+    </div>
+    {{/ifCond}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+        integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+        crossorigin="anonymous"></script>
+    <script>
+        function updateNoti(id) {
+            fetch(`/account/${id}/get-noti`)
+                .then(notis => notis.json())
+                .then(notis => {
+                    let html = '<h3>Thông báo</h3>';
+                    notis.forEach((noti, index) => {
+                        html += `
+                            <li>
+                                <div class="avatar">
+                                    <img src="${noti.avatar}" alt="">
+                                </div>
+                                <span class="text-noti"> ${noti.content} </span>
+                                <i class="fa fa-circle ${index==0?'':'hidden'}"></i>
+                            </li>
+                        `;
+                    })
+                    document.querySelector('.show-noti ul').innerHTML = html;
+                })
+        }
+        {{#ifCond localAuthUser.level 'owner'}}
+        updateNoti('{{localAuthUser._id}}')
+        {{/ifCond}}
+
+        var socket = io('http://localhost:3000');
+       
+        socket.on('{{localAuthUser._id}}', function (data) {
+            updateNoti(`{{localAuthUser._id}}`)
+            document.querySelector('.notification .fa-bell').classList.add('alerted')
+
+        });
+    </script>
