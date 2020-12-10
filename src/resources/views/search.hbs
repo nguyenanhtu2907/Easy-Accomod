@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/searchResult/searchResult.css">
+    
+</head>
+
+<body>
+    <div class="search-area">
+        <form class="search-inputs" method="GET" action="">
+            <div class="search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Tên đường, khu vực liền kề, từ khóa..." name="search">
+            </div>
+            <div class="select address">
+                <span onclick="showAddress(event, 0, 0)">
+                    Chọn khu vực <div class="fa fa-angle-down"></div>
+                </span>
+                <div class="option option-address none">
+                    <input class="none" type="text" name="city">
+                    <ul class="list-option">
+                    </ul>
+                </div>
+                <div class="option option-address none">
+                    <input class="none" type="text" name="district">
+                    <ul class="list-option">
+                    </ul>
+                </div>
+                <div class="option option-address none">
+                    <input class="none" type="text" name="ward">
+                    <ul class="list-option">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="select price">
+                <span onclick="showList(event, '.price .option')">
+                    Chọn khoảng giá (tháng) <div class="fa fa-angle-down"></div>
+                </span>
+                <div class="option option-price none">
+                    <div class="group-price">
+                        <ul class="list-option">
+                            <li>Giá thấp nhất</li>
+                            <input type="text" name="minPrice" class="minPrice none">
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="1000000">1
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="2000000">2
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="3000000">3
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="5000000">5
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="7000000">7
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="10000000">10
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="20000000">20
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="50000000">50
+                                    triệu </label></li>
+                        </ul>
+                        <ul class="list-option">
+                            <li>Giá cao nhất</li>
+                            <input type="text" name="maxPrice" class="maxPrice none">
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="2000000">2
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="3000000">3
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="5000000">5
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="7000000">7
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="10000000">10
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="20000000">20
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="50000000">50
+                                    triệu </label></li>
+                            <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="100000000">100
+                                    triệu </label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="select filter">
+                <span onclick="showFilter(event, 0, 0)">
+                    Lọc nâng cao <div class="fa fa-filter"></div>
+                </span>
+                <div class="option-filter none">
+                    <input class="none" type="text" name="advanced">
+                    <ul class="list-option">
+                        <li onclick="showFilter(event)">Bộ lọc <i class="fa fa-times"></i> </li>
+                        <li onclick="nextFilter(event)">Loại phòng <div class="fa fa-angle-right"></div>
+                        </li>
+                        <li onclick="nextFilter(event)">Diện tích <div class="fa fa-angle-right"></div>
+                        </li>
+                        <li onclick="nextFilter(event)">Số phòng <div class="fa fa-angle-right"></div>
+                        </li>
+                        <li onclick="nextFilter(event)">Điều kiện/Cơ sở vật chất <div class="fa fa-angle-right"></div>
+                        </li>
+                        <div class="filter-btn">
+                            <button class="filter-btn-inner" onclick="showFilter(event)">Lưu bộ lọc</button>
+                        </div>
+                    </ul>
+                    <ul class="list-option none">
+                        <li onclick="backFilter(event)">
+                            <div class="fa fa-angle-left"></div> Loại phòng
+                        </li>
+                        <input type="text" class="none" name="roomType">
+                        <li onclick="backFilter(event)">Chung cư mini</li>
+                        <li onclick="backFilter(event)">Nhà nguyên căn</li>
+                        <li onclick="backFilter(event)">Phòng chung cư </li>
+                        <li onclick="backFilter(event)">Phòng trọ</li>
+                    </ul>
+                    <ul class="list-option none">
+                        <li onclick="backFilter(event)">
+                            <div class="fa fa-angle-left"></div> Diện tích (m<sup>2</sup>)
+                        </li>
+                        <input type="text" class="none" name="area">
+                        <li onclick="backFilter(event)">
+                            < 20 </li>
+                        <li onclick="backFilter(event)">20 - 25 </li>
+                        <li onclick="backFilter(event)">25 - 30 </li>
+                        <li onclick="backFilter(event)">30 - 35 </li>
+                        <li onclick="backFilter(event)">35 - 40 </li>
+                        <li onclick="backFilter(event)">45 - 50 </li>
+                        <li onclick="backFilter(event)">> 50 </li>
+                    </ul>
+                    <ul class="list-option none">
+                        <li onclick="backFilter(event)">
+                            <div class="fa fa-angle-left"></div> Số phòng
+                        </li>
+                        <input type="text" class="none" name="rooms">
+                        <li onclick="backFilter(event)"> 1 phòng ngủ </li>
+                        <li onclick="backFilter(event)">1 phòng khách, 1 phòng ngủ </li>
+                        <li onclick="backFilter(event)">1 phòng khách, 2 phòng ngủ </li>
+                        <li onclick="backFilter(event)">1 phòng khách, 3 phòng ngủ </li>
+                    </ul>
+                    <ul class="list-option none">
+                        <li onclick="backFilter(event)">
+                            <div class="fa fa-angle-left"></div> Điều kiện/Cơ sở vật chất
+                        </li>
+                        <input type="text" class="none" name="equiments">
+                        <li><label><input type="checkbox" value="tivi" name="equi"> Ti Vi </label></li>
+                        <li><label><input type="checkbox" value="tulanh" name="equi"> Tủ lạnh </label></li>
+                        <li><label><input type="checkbox" value="dieuhoa" name="equi"> Điều hòa </label></li>
+                        <li><label><input type="checkbox" value="nonglanh" name="equi"> Nóng lạnh </label></li>
+                        <li><label><input type="checkbox" value="bepga" name="equi"> Bếp gas </label></li>
+                        <li><label><input type="checkbox" value="chungchu" name="equi"> Chung chủ </label></li>
+                        <li><label><input type="checkbox" value="khepkin" name="equi"> Khép kín </label></li>
+                    </ul>
+                </div>
+
+            </div>
+            <button class="search-btn" type="submit">Tìm kiếm</button>
+        </form>
+        <div class="background-filter none"></div>
+    </div>
+    <div class="content">
+        <div class="posts-area">
+            <div class="text-result">
+                <h4>
+                    {{#if posts}}
+                    Kết quả tìm kiếm cho: "{{text}}"
+                    {{else}}
+                    Chúng tôi sẽ mang lại thông tin các phòng trọ phù hợp nhất với tiêu chí tìm trọ của bạn. Hãy nhập các lựa chọn ở bộ tìm kiếm nâng cao ở trên!!!
+                    {{/if}}
+                </h4>
+            </div>
+            <div class="option-result">
+                <span><b>1-15</b> trong tổng số <b>{{total}}</b> bài viết</span>
+                
+                <div class="sort" onclick="showList(event, '.sort .sort-option')">
+                    <label><i class="fa fa-sort"></i><span>Sắp xếp</span></label>
+                    <ul class="sort-option none">
+                        <li>Mới nhất </li>
+                        <li>Cũ nhất </li>
+                        <li>Giá tăng dần</li>
+                        <li>Giá giảm dần</li>
+                    </ul>
+                </div>
+                <div class="sort" style="margin-right: 30px;" onclick="resetFilter(event)"> <i class="fa fa-times-circle"></i> Xóa bộ lọc</div>
+            </div>
+            <div class="posts">
+                <div class="list-posts">
+                    <ul>
+                        {{!-- <li class="line">
+                            <a href="#" class="thumbnail">
+                                <img src="../avatar.jpg" alt="">
+                            </a>
+                            <div class="props">
+                                <p><a class="title" href="#">Một chiếc tiêu đề nho nhỏ cần được kéo dài cho hết dòng
+                                        để test css</a></p>
+
+                                <div class="text">Đây là nơi mà thằng ml back đổ địa chỉ vào và nó cũng cần kéo dài
+                                    cho hết dòng
+                                    để test css</div>
+                                <div class="equi">
+                                    <ul>
+                                        <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M1.5 2.5A1.5 1.5 0 0 1 3 1h10a1.5 1.5 0 0 1 1.5 1.5v3.563a2 2 0 0 1 0 3.874V13.5A1.5 1.5 0 0 1 13 15H3a1.5 1.5 0 0 1-1.5-1.5V9.937a2 2 0 0 1 0-3.874V2.5zm1 3.563a2 2 0 0 1 0 3.874V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V9.937a2 2 0 0 1 0-3.874V2.5A.5.5 0 0 0 13 2H3a.5.5 0 0 0-.5.5v3.563zM2 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm12 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                            </svg> 50 m <sup>2</sup>
+                                        </li>
+                                        <li>
+                                            <div class="fa fa-bed"></div>1
+                                        </li>
+                                        <li>
+                                            <div class="fa fa-tv"></div>1
+                                        </li>
+                                        <li> <img class="fa" src="../profile/air-conditioner.png" width="18px" height="18px"
+                                                alt=""> 1</li>
+                                    </ul>
+                                </div>
+                                <h3 class="cost">100.000vnđ</h3>
+                                <div class="update text">Ngày đăng: 20/11/2020</div>
+                                <div class="contact">
+                                    <div class="phone">
+                                        <div class="fa fa-phone"></div>0987654321
+                                    </div>
+                                    <div class="fa fa-heart default" onclick="saved(event)"></div>
+                                </div>
+                            </div>
+                        </li> --}}
+                    </ul>
+                </div>
+                
+                <nav aria-label="page navigation example" class="next_page">
+                    <ul class="pagination">
+                        <li class="page-item disabled" id="1"><a class="page-link" href="#" onclick="routePage(event)"
+                                aria-label="Previous"><span aria-hidden="true">&laquo;</span> Trang đầu</a></li>
+                        <li class="page-item num active" id="pre"><a class="page-link" onclick="routePage(event)"
+                                href="?page=1">1</a></li>
+                        <li class="page-item num " id="current"><a class="page-link" onclick="routePage(event)"
+                                href="?page=2">2</a></li>
+                        <li class="page-item num" id="next"><a class="page-link" onclick="routePage(event)"
+                                href="?page=3">3</a></li>
+                        <li class="page-item last" id="20">
+                            <a class="page-link " onclick="routePage(event)" href="#" aria-label="Next">
+                                Trang cuối <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="news-area">
+            <div class="list-news">
+                <div class="count-room">
+                    <h6 class="line">Thống kê loại trọ (theo số bài viết)</h6>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> Chung cư mi-ni: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> Nhà nguyên căn: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> Phòng chung cư: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> Phòng trọ: <span>(123)</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="for-adver">
+                    <img src="/searchResult/adver.jpg" alt="">
+                </div>
+                <div class="count-room">
+                    <h6 class="line">Top 10 khu vực với số bài viết</h6>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 1. Hà Nội: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 2. Hải Phòng: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 3. Vĩnh Phúc: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 4. Hòa Bình: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 5. Đà Nẵng: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 6. Bắc Ninh: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 7. Đà Lạt: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 8. Ninh Bình: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 9. Nam Định: <span>(123)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-long-arrow-right"></i> 10. Thanh Hóa: <span>(123)</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/searchResult/searchResult.js"></script>
+    <script>
+
+
+
+    </script>
+</body>
+
+</html>
