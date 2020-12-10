@@ -306,6 +306,8 @@ input:focus, select:focus{
 }
 .bolder{
     font-weight: 500;
+    background-color: #ffc3c3;
+    border-radius: 29px;
 }
 .room-chat .accounts{
     overflow: scroll;
@@ -313,6 +315,8 @@ input:focus, select:focus{
 }
 .room-chat .accounts ul li{
     margin-top: 10px;
+}
+.room-chat .accounts ul li>div{
     display: flex;
 }
 .avatar-chat{
@@ -326,6 +330,7 @@ input:focus, select:focus{
     width: 59px;
     height: 59px;
     object-fit: cover;
+    
 }
 .room-chat .accounts ul li .info-chat{
     margin-left: 10px;

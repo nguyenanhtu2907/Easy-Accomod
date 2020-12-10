@@ -15,6 +15,10 @@ router.get('/logout', accountController.logout);
 
 router.get('/get-info', accountController.getInfo);
 
+router.put('/seen-message/:index', accountController.seenMessage);
+
+router.get('/get-info/:id', accountController.getInfoById);
+
 router.post('/submit-message', accountController.submitMessage);
 
 router.post('/action-admin',accountController.restrictLogin, accountController.actionAdmin);

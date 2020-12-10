@@ -35,9 +35,30 @@ function toggleChatWindow(e) {
     document.querySelector('#message-window').classList.toggle('small-chat')
     document.querySelector('#message-window .title-window').classList.toggle('none')
     document.querySelector('#message-window .body-window').classList.toggle('none')
-    document.querySelector('#message-window .body-window .chat-window').scrollTop = document.querySelector('#message-window .body-window .chat-window').scrollHeight;
-
+    document.querySelector('#message-window .title-window .fa-comments').classList.remove('alerted')
+    refreshWindowChat();
 }
+
+
+function refreshWindowChat() {
+    var idOwner = document.querySelector('.show-info-option>ul>li>a').href.slice(30);
+    fetch('/account/get-info/' + idOwner)
+        .then(owner => owner.json())
+        .then(owner => {
+            let html = '';
+            owner.messages.forEach(message => {
+                html += `
+                <div class="small-message ${message.author == 'owner' ? 'owner-message' : ''}">
+                    <span>${message.message}</span>
+                </div>
+            `
+            })
+            document.querySelector('.chat-window').innerHTML = html;
+            document.querySelector('#message-window .body-window .chat-window').scrollTop = document.querySelector('#message-window .body-window .chat-window').scrollHeight;
+
+        })
+}
+
 function getEnterWindowChat(e) {
     let chatArea = document.querySelector('.chat-window');
     let value = e.target.value;
@@ -46,30 +67,38 @@ function getEnterWindowChat(e) {
         <div class="small-message owner-message"><span>${value}</span></div>
         `
         chatArea.scrollTop = chatArea.scrollHeight;
-        submitMessageToDB(value)
+        submitMessageToDB(value, 'toAdmin')
         chatArea.parentNode.querySelector('.input-window input').value = '';
     }
 }
 function submitMessageWindowChat(e) {
     let chatArea = document.querySelector('.chat-window');
     let value = chatArea.parentNode.querySelector('.input-window input').value;
-    if(value.trim()){
+    if (value.trim()) {
         document.querySelector('.chat-window').innerHTML += `
             <div class="small-message owner-message"><span>${value}</span></div>
             `
         chatArea.scrollTop = chatArea.scrollHeight;
-        submitMessageToDB(value)
+        submitMessageToDB(value, 'toAdmin')
     }
     chatArea.parentNode.querySelector('.input-window input').value = '';
 }
-function submitMessageToDB(value){
-    var ownerID = document.querySelector('.show-info-option>ul>li>a').href.slice(30);
-    var type = 'owner'
-    var ownerFullname = document.querySelector('.info-account span b').innerText;
-    if(!ownerID){
+
+var socket = io('http://localhost:3000');
+
+function submitMessageToDB(value, to) {
+    var ownerID = '';
+    var type = '';
+    if (document.querySelectorAll('#info-chat li span')[0]) {
         ownerID = document.querySelectorAll('#info-chat li span')[0].innerText;
-        type = 'admin'
+        type = 'admin';
+    } else {
+        ownerID = document.querySelector('.show-info-option>ul>li>a').href.slice(30);
+        type = 'owner'
     }
+
+    var ownerFullname = document.querySelector('.info-account span b').innerText;
+
     let data = {
         owner: {
             id: ownerID,
@@ -87,9 +116,26 @@ function submitMessageToDB(value){
         },
         body: JSON.stringify(data),
     })
-    .then(()=>{
-        //real-time socket.io
-    })
-    .catch(()=>{})
+        .then(() => {
+            //real-time socket.io
+        })
+        .catch(() => { })
+
+    setTimeout(()=>{
+        if(to == 'toOwner'){
+            socket.emit(`messageToOwner`, ownerID)
+            refreshListChat()
+        }else{
+            socket.emit(`messageToAdmin`, ownerID)
+        }
+    }, 100)
 }
+
+socket.on(`${document.querySelector('.show-info-option>ul>li>a').href.slice(30)}toOwner`, data => {
+    if(document.querySelector('#message-window').classList.contains('big-chat')){
+        refreshWindowChat()
+    }else{
+        document.querySelector('#message-window .title-window .fa-comments').classList.add('alerted')
+    }
+})
 

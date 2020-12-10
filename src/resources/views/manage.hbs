@@ -105,58 +105,6 @@
                             <h3>Nguyễn Anh Tú</h3>
                             <div class="chat-area">
                                 <ul>
-                                    <li>
-                                        <div class="a-message admin-message"><span> Đây là dòng chat của admin Đây là
-                                                dòng chat của admin Đây là dòng chat của admin</span></div>
-
-                                    </li>
-                                    <li>
-                                        <div class="a-message admin-message"><span>Đây là dòng chat của admin</span>
-                                        </div>
-
-                                    </li>
-                                    <li class="">
-                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div>
-                                    </li>
-                                    <li>
-                                        <div class="a-message admin-message"><span> Đây là dòng chat của admin Đây là
-                                                dòng chat của admin Đây là dòng chat của admin</span></div>
-
-                                    </li>
-                                    <li>
-                                        <div class="a-message admin-message"><span>Đây là dòng chat của admin</span>
-                                        </div>
-
-                                    </li>
-                                    <li class="">
-                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div>
-                                    </li>
-                                    <li>
-                                        <div class="a-message admin-message"><span> Đây là dòng chat của admin Đây là
-                                                dòng chat của admin Đây là dòng chat của admin</span></div>
-
-                                    </li>
-                                    <li>
-                                        <div class="a-message admin-message"><span>Đây là dòng chat của admin</span>
-                                        </div>
-
-                                    </li>
-                                    <li class="">
-                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div>
-                                    </li>
-                                    <li>
-                                        <div class="a-message admin-message"><span> Đây là dòng chat của admin Đây là
-                                                dòng chat của admin Đây là dòng chat của admin</span></div>
-
-                                    </li>
-                                    <li>
-                                        <div class="a-message admin-message"><span>Đây là dòng chat của admin</span>
-                                        </div>
-
-                                    </li>
-                                    <li class="">
-                                        <div class="a-message"><span>Đây là dòng chat của chủ trọ</span> </div>
-                                    </li>
                                 </ul>
                             </div>
                             <div class="input-chat">
@@ -185,7 +133,7 @@
         crossorigin="anonymous"></script>
     
     <script>
-        var socket = io();
+        var socket = io('http://localhost:3000');
         function actionAdmin(type, action, bigOption, innerOption) {
             var checked = 0;
             if (action == 'accept') {

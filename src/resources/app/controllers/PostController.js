@@ -3,6 +3,11 @@ const Post = require('../models/Post');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
 
 class PostController {
+    createPost(req, res, next){
+        res.render('create',{
+            
+        })
+    }
 
     searchResult(req, res, next) {
         res.render('search', {

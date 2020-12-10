@@ -92,26 +92,14 @@
 {{#ifCond localAuthUser.level 'owner'}}
     <div id="message-window" class="small-chat">
         <div class="title-window" onclick="toggleChatWindow(event)">
-           <i class="fa fa-comments"></i> <span>Message</span>
+           <i class="fa fa-comments "></i> <span>Message</span>
         </div>
         <div class="body-window none" >
             <div class="close-window" onclick="toggleChatWindow(event)"><span>Chat với admin</span> <i class="fa fa-window-minimize"></i></div>
 
             <div class="chat-window">
-                <div class="small-message"><span>Đây là chat của admin</span></div>
-                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
-                <div class="small-message"><span>Đây là chat của admin</span></div>
-                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
-                <div class="small-message"><span>Đây là chat của admin</span></div>
-                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
-                <div class="small-message"><span>Đây là chat của admin</span></div>
-                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
-                <div class="small-message"><span>Đây là chat của admin</span></div>
-                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
-                <div class="small-message"><span>Đây là chat của admin</span></div>
-                <div class="small-message owner-message"><span>Đây là chat của chủ trọ</span></div>
-                <div class="small-message"><span>Đây là chat của admin</span></div>
             </div>
+
             <div class="input-window">
                 <input type="text" onkeydown="getEnterWindowChat(event)" placeholder="Nhập tin nhắn của bạn.">
                 <i class="fa fa-paper-plane" onclick="submitMessageWindowChat(event)"></i>
@@ -155,4 +143,7 @@
             document.querySelector('.notification .fa-bell').classList.add('alerted')
 
         });
+
+
+
     </script>

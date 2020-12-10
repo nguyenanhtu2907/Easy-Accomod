@@ -165,27 +165,46 @@ class AccountController {
             .then(owner => {
                 owner.messages.push(message.content);
                 message.owner.avatar = owner.avatar;
+                message.owner.seen = false;
                 message.owner.username = owner.username;
                 owner.save()
                     .then(() => {
                         User.findOne({ level: 'admin' })
                             .then(admin => {
+                                let loca = 0;
                                 let check = 0;
-                                admin.messages.forEach(message =>{
-                                    if(message.id == owner.id){
+                                admin.messages.forEach((message, index) => {
+                                    if (message.id == owner.id) {
                                         check = 1;
+                                        loca = index;
                                     }
                                 })
-                                if (check==0) {
-                                    admin.messages.push(message.owner);
+                                if (check == 0) {
+                                    admin.messages.unshift(message.owner);
                                     admin.save()
-                                        .then(() => {})
+                                        .then(() => {res.json('success')})
+                                } else {
+                                    let arr = admin.messages.splice(loca, 1);
+                                    admin.messages.unshift(arr[0]);
+                                    admin.messages[0].seen = false;
+                                    admin.save()
+                                        .then(() => {res.json('success')})
                                 }
                             })
                     })
             })
-            .catch(()=>{})
+            .catch(() => { })
 
+    }
+
+    seenMessage(req, res, next) {
+        User.findOne({ level: 'admin' }, (err, admin)=>{
+            admin.messages[req.params.index].seen = true;
+            admin.markModified('messages')
+            admin.save()
+            .then(()=>res.json('success'))
+        })
+            
     }
 
     actionAdmin(req, res, next) {
@@ -230,10 +249,22 @@ class AccountController {
         }
     }
 
+    getInfoById(req, res, next) {
+        User.findOne({ _id: req.params.id })
+            .then(user => mongooseToObj(user))
+            .then(user => {
+                user.password_hash = '';
+                res.json(user)
+            })
+    }
+
     getInfo(req, res, next) {
         User.findOne({ username: req.query.key })
             .then(user => mongooseToObj(user))
-            .then(user => res.json(user))
+            .then(user => {
+                user.password_hash = '';
+                res.json(user)
+            })
     }
     getNoti(req, res, next) {
         User.findOne({ _id: req.params.id })

@@ -51,23 +51,57 @@ function showInfo(e, type, element) {
                 spans[9].innerText = user.equiments.join(', ');
             })
     } else {
-        console.log(items)
-        // url = `/account/get-info?key=${items.querySelectorAll('td')[0].innerText}`
-        // fetch(url)
-        //     .then(res => res.json())
-        //     .then(user => {
-        //         let spans = document.querySelectorAll(element + ' li span');
-        //         spans[0].innerText = user._id;
-        //         spans[1].innerText = user.username;
-        //         spans[2].innerText = user.fullname;
-        //         spans[3].innerText = user.gender;
-        //         spans[4].innerText = user.phone;
-        //         spans[5].innerText = user.email;
-        //         spans[6].innerText = user.identity;
-        //         spans[7].innerText = user.address;
-        //     })
-    }
+        let li = e.target;
+        while (li.tagName != 'LI') {
+            li = li.parentNode;
+        }
+        Array.from(li.parentNode.querySelectorAll('li')).forEach((ele, index) => {
+            if (li === ele) {
+                li.classList.add('chosen')
+                if (li.classList.contains('bolder')) {
+                    li.classList.remove('bolder')
+                    fetch('/account/seen-message/' + index, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                        .then(() => { })
+                        .catch(() => { })
+                }
 
+            } else {
+                ele.classList.remove('chosen')
+            }
+        });
+
+        url = `/account/get-info?key=${li.querySelector('.info-chat span').innerText}`
+        fetch(url)
+            .then(res => res.json())
+            .then(user => {
+                let spans = document.querySelectorAll(element + ' li span');
+                spans[0].innerText = user._id;
+                spans[1].innerText = user.username;
+                spans[2].innerText = user.fullname;
+                spans[3].innerText = user.gender;
+                spans[4].innerText = user.phone;
+                spans[5].innerText = user.email;
+                spans[6].innerText = user.identity;
+                spans[7].innerText = user.address;
+
+                let chatHtml = '';
+                user.messages.forEach(message => {
+                    chatHtml += `
+                        <li>
+                            <div class="a-message ${message.author == 'admin' ? 'admin-message' : ''}"><span> ${message.message}</span></div>
+                        </li>
+                    `
+                })
+                document.querySelector('.chat-area ul').innerHTML = chatHtml;
+                document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
+
+            })
+    }
 }
 function chooseOption(bigOption, innerOption) {
     //bigOption: option to: quản lý bài viết, tài khoản, chat, thống kê
@@ -542,54 +576,35 @@ function chooseOption(bigOption, innerOption) {
 
                     break;
                 } default: {
-                    fetch(window.location.pathname + '?option=8')
-                        .then(messages => messages.json())
-                        .then(messages => {
-                            option.querySelector('.title h1').innerText = 'Message';
-                            let html = '';
-                            messages.forEach((message, index) => {
-                                html += `
-                                    <li class="${'chosen'}" onclick="showMessage(event)">
-                                        <div class="avatar-chat">
-                                            <img src="${message.avatar}" alt="">
-                                        </div>
-                                        <div class="info-chat">
-                                            <p>${message.fullname}</p>
-                                            <span>${message.username}</span>
-                                        </div>
-                                    </li>
-                                `
-                            })
-                            document.querySelector('.message-side .room-chat .accounts>ul').innerHTML = html;
-                            document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
-                            option.querySelector('#info-chat').innerHTML = `
-                                    <li>
-                                        <b>ID người dùng</b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Tên đăng nhập </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Họ và tên </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Giới tính </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Số điện thoại </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Email </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>CCCD/CMND </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Địa chỉ </b>: <span></span>
-                                    </li>
-                            `;
-                        })
-                        .catch(()=>{})
+                    option.querySelector('.title h1').innerText = 'Message';
+                    document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
+                    option.querySelector('#info-chat').innerHTML = `
+                        <li>
+                            <b>ID người dùng</b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Tên đăng nhập </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Họ và tên </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Giới tính </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Số điện thoại </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Email </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>CCCD/CMND </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Địa chỉ </b>: <span></span>
+                        </li>
+                    `;
+                    refreshListChat();
                     break;
                 }
             }
@@ -597,10 +612,8 @@ function chooseOption(bigOption, innerOption) {
     })
 }
 
-function showMessage(e){
-    showInfo(e, 2, '#info-chat ')
-}
 chooseOption(0, 0)
+
 function getEnter(e) {
     let chatArea = document.querySelector('.chat-area');
     let value = e.target.value;
@@ -611,7 +624,8 @@ function getEnter(e) {
             </li>
         `
         chatArea.scrollTop = chatArea.scrollHeight;
-        submitMessageToDB(value);
+        submitMessageToDB(value, 'toOwner');
+
         chatArea.parentNode.querySelector('.input-chat input').value = '';
     }
 }
@@ -625,7 +639,44 @@ function submitMessage(e) {
                 </li>
             `
         chatArea.scrollTop = chatArea.scrollHeight;
-        submitMessageToDB(value);
+        submitMessageToDB(value, 'toOwner');
     }
+
     chatArea.parentNode.querySelector('.input-chat input').value = '';
 }
+
+function refreshListChat() {
+    var choosing;
+    if (document.querySelector('.message-side .room-chat .accounts>ul>li.chosen .info-chat p')) {
+        choosing = document.querySelector('.message-side .room-chat .accounts>ul>li.chosen .info-chat p').innerText;
+    }
+    fetch('/account/get-info?key=admin')
+        .then(admin => admin.json())
+        .then(admin => {
+            let html = '';
+            admin.messages.forEach(message => {
+                html += `
+                <li class="${message.seen == false ? 'bolder' : ''}" >
+                    <div onclick="showInfo(event, 2, '#info-chat ')">
+                        <div class="avatar-chat">
+                            <img src="${message.avatar}" alt="">
+                        </div>
+                        <div class="info-chat">
+                            <p>${message.fullname}</p>
+                            <span>${message.username}</span>
+                        </div>
+                    </div>
+                </li>
+            `
+            })
+            document.querySelector('.message-side .room-chat .accounts>ul').innerHTML = html;
+            if (document.querySelector('.message-side .room-chat .accounts>ul>li.bolder .info-chat p') && document.querySelector('.message-side .room-chat .accounts>ul>li.bolder .info-chat p').innerText == choosing) {
+                document.querySelector('.message-side .room-chat .accounts>ul>li.bolder div').click();
+            };
+        })
+}
+
+socket.on(`5fb7e2f7662281052c43df98toAdmin`, data => {
+    refreshListChat()   
+    document.querySelector('.fa-comment').classList.add('alerted')
+})
