@@ -143,11 +143,11 @@ Validator.isConfirm = function (selector, confirmValue, typeMess) {
         }
     }
 }
-Validator.isChecked = function (selector, takeChecked, typeMess) {
-    return {
-        selector,
-        test: function () {
-            return takeChecked() ? undefined : typeMess || 'Trường này là bắt buộc!!!'
-        }
-    }
-}
+// Validator.isChecked = function (selector, takeChecked, typeMess) {
+//     return {
+//         selector,
+//         test: function () {
+//             return takeChecked() ? undefined : typeMess || 'Trường này là bắt buộc!!!'
+//         }
+//     }
+// }
