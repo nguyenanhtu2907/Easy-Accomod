@@ -67,7 +67,8 @@ fetch(districtApi, object)
       provinceInput.onchange = function(){
         var provinceValue = document.getElementById('province').value;
         // console.log(typeof (provinceValue));
-        var htmls = posts.data.map(function(post){
+        var htmls = `<option selected  value="" disabled >Phường/Xã </option>`;
+         var htmls = posts.data.map(function(post){
           // console.log(typeof(post.DistrictID))
           // console.log(post.ProvinceID == Number(provinceValue))
             if(post.ProvinceID == Number(provinceValue)){
@@ -75,15 +76,51 @@ fetch(districtApi, object)
                    ${post.DistrictName}
                   </option>`
             }
+           
+          })
+          htmls.join('')
+        //   console.log(a);
+        // htmls+=a;
+          
+          
+      //  console.log(posts)
+      var a=`<option selected  value="" disabled >Quận huyện </option>`;
+      document.getElementById('district').innerHTML = a;
+      document.getElementById('district').innerHTML += htmls;
+      }
+         
+    })
+
+    var districtInput = document.getElementById('district')
+
+   var wardApi = "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id";
+   fetch(wardApi, object)
+    .then(res => res.json())
+    .then(posts => {
+      districtInput.onchange = function(){
+        var districtValue = document.getElementById('district').value;
+        // console.log(typeof (provinceValue));
+        var htmls = posts.data.map(function(post){
+          // console.log(typeof(post.DistrictID))
+          // console.log(post.ProvinceID == Number(provinceValue))
+            if(post.DistrictID == Number(districtValue)){
+              return ` <option value="${post.WardCode}">
+                   ${post.WardName}
+                  </option>`
+            }
           })
           
           
       //  console.log(posts)
       htmls.join('');
-      document.getElementById('district').innerHTML = htmls;
+      document.getElementById('ward').innerHTML = htmls;
       }
-         
-    })
+                 
+                      
+              
+          
+          
+        })
 
 
 

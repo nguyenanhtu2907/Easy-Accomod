@@ -59,8 +59,8 @@ input[type="file"]{
 }
 
 label.image{
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
 }
 .avatar > p{
     font-size: 1.3rem;
@@ -69,9 +69,9 @@ label.image{
     font-weight: 400;
 }
 label.image img{
-    width: 150px;
+    width: 160px;
     border-radius: 50%;
-    height: 150px;
+    height: 160px;
     object-fit: cover;
 } 
 
@@ -95,10 +95,10 @@ label.image img{
 }
 .change_info-input--content{
     border-radius: 5px;
-    width: 100%;
+    width: calc(100% - 500px);
 }
 .change_info-input--input{
-    width: 70%;
+    width: 100%;
     padding: 5px 10px;
     border-radius: 5px;
     border: 1px solid #dfdfe1;
@@ -126,4 +126,32 @@ label.image img{
 }
 .focus{
     border: 2px solid rgb(34, 212, 180);
+}
+
+@media screen and (max-width:1000px){
+    .change_info-input--content{
+        width: 100%;
+        margin-right: 10px;
+    }
+    .change_info-input{
+        display: block;
+    }
+    .change_info-input--title{
+        text-align: left;
+        width: 100%;
+    }
+}
+
+@media (max-width: 580px){
+.container {
+    max-width: 100%;
+}
+.change_info-input--title{
+    text-align: left;
+    padding: 0 0 0 10px;
+    width: 100%;
+}
+.change_info-input--content{
+   
+}
 }
