@@ -12,7 +12,7 @@ const Post = new Schema({
     rentcost: { type: String, default: '' },
     roomtype: { type: String, default: '' },
     area: { type: String, default: '' },
-    withowner: { type: Boolean, default: false },
+    withowner: { type: String, default: '' },
     equipments: { type: Array, default: [] },
     images: { type: Array, default: [] },
     comments: { type: Array, default: [] },

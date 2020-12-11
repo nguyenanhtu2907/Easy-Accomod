@@ -3,10 +3,43 @@ const Post = require('../models/Post');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
 
 class PostController {
-    createPost(req, res, next){
-        res.render('create',{
-            
+    createPost(req, res, next) {
+        res.render('createPost', {
+            layout: false,
         })
+    }
+    createPostDB(req, res, next) {
+
+        req.body.author = req.session.authUser._id;
+
+        const entity = {
+            title: req.body.title,
+            owner: req.body.author,
+            address: req.body.ward+', '+req.body.district +', '+req.body.convice,
+            contact: req.session.authUser.phone,
+            nearby: req.body.ddress_description,
+            description: req.body.description,
+            rentcost: req.body.rentcost,
+            roomtype: req.body.rent,
+            area: req.body.area,
+            withowner: req.body.info-owner,
+            // equipments:[]
+            // images: []
+            // key:
+            thumbnail: req.body.thumbnail,
+
+            postdescription: req.body.postdescription,
+
+
+        }
+
+        const post = new Post(entity);
+        post.save()
+            .then(() => res.render('createPost', {
+                layout: false,
+                message: "Bạn đã tạo bài viết thành công. Hãy chờ admin phê duyệt bài viết của bạn."
+            }))
+            .catch(error => { })
     }
 
     searchResult(req, res, next) {
@@ -56,13 +89,13 @@ async function getPostInfo(post) {
     var user = await User.findOne({ _id: post.author });
     post.authorName = user.fullname;
     post.authorAvatar = user.avatar;
-    
+
     let updatedTime = post.updatedAt;
     let date = ("0" + updatedTime.getDate()).slice(-2);
     let month = ("0" + (updatedTime.getMonth() + 1)).slice(-2);
     let year = updatedTime.getFullYear();
     post.updatedTime = date + '/' + month + '/' + year;
-    
+
     let createdTime = post.createdAt;
     date = ("0" + createdTime.getDate()).slice(-2);
     month = ("0" + (createdTime.getMonth() + 1)).slice(-2);
@@ -75,13 +108,13 @@ async function getPostsInfo(posts) {
         var user = await User.findOne({ _id: post.author });
         post.authorName = user.fullname;
         post.authorAvatar = user.avatar;
-        
+
         let updatedTime = post.updatedAt;
         let date = ("0" + updatedTime.getDate()).slice(-2);
         let month = ("0" + (updatedTime.getMonth() + 1)).slice(-2);
         let year = updatedTime.getFullYear();
         post.updatedTime = date + '/' + month + '/' + year;
-        
+
         let createdTime = post.createdAt;
         date = ("0" + createdTime.getDate()).slice(-2);
         month = ("0" + (createdTime.getMonth() + 1)).slice(-2);
