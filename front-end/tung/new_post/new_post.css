@@ -38,7 +38,7 @@ body{
   padding-bottom: 50px;
 }
 .tab{
-  /* display:none; */
+  display:none;
 }
 .tab input{
   /* margin-bottom:1.3rem ; */

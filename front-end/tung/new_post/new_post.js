@@ -17,7 +17,7 @@ function showTab(n) {
     document.getElementById("submit_btn").style.display = "inline";
   } else {
     document.getElementById("nextBtn").innerHTML = "Next";
-    // document.getElementById("submit_btn").style.display = "none";
+    document.getElementById("submit_btn").style.display = "none";
   }
   fixStepIndicator(n)
 }
