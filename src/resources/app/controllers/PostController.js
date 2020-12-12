@@ -11,33 +11,46 @@ class PostController {
     createPostDB(req, res, next) {
 
         req.body.author = req.session.authUser._id;
-
+        var address = req.body.ward + ', ' + req.body.district + ', ' + req.body.province;
+        var images = [];
+        for (var i = 0; i < req.body.images_room.length; i++) {
+            images.push(req.body.images_room[i]);
+        }
+        var equipments = [
+            req.body.airconditional == 'Yes' ? 'Điều hòa' : '',
+            req.body.bathroom == 'Yes' ? 'Phòng tắm' : '',
+            req.body.freazer == 'Yes' ? 'Tủ lạnh' : '',
+            req.body.hottank == 'Yes' ? 'Nóng lạnh' : '',
+            req.body.kitchen,
+            req.body.so_phong_WC == '0' ? '' : 'Số phòng WC: ' + req.body.so_phong_WC,
+            req.body.so_phong_ngu == '0' ? '' : 'Số phòng ngủ: ' + req.body.so_phong_ngu,
+            req.body.so_tang == '0' ? '' : 'Số tầng: ' + req.body.so_tang,
+            req.body.vi_tri_tang == '0' ? '' : 'Vị trí tầng: ' + req.body.vi_tri_tang,
+        ]
         const entity = {
+            checked: req.session.authUser.level == 'admin' ? 1 : 0,
             title: req.body.title,
             owner: req.body.author,
-            address: req.body.ward+', '+req.body.district +', '+req.body.convice,
+            address: address,
             contact: req.session.authUser.phone,
-            nearby: req.body.ddress_description,
+            nearby: req.body.address_description,
             description: req.body.description,
             rentcost: req.body.rentcost,
             roomtype: req.body.rent,
             area: req.body.area,
-            withowner: req.body.info-owner,
-            // equipments:[]
-            // images: []
-            // key:
-            thumbnail: req.body.thumbnail,
-
-            postdescription: req.body.postdescription,
-
-
+            electric: req.body.electric,
+            water: req.body.water,
+            equipments: equipments,
+            images: images,
+            infoOwner: req.body.info_owner,
+            key: removeVietnameseTones(req.body.address_description + ' ' + address + ' ' + equipments.join(' ')),
         }
 
         const post = new Post(entity);
         post.save()
             .then(() => res.render('createPost', {
                 layout: false,
-                message: "Bạn đã tạo bài viết thành công. Hãy chờ admin phê duyệt bài viết của bạn."
+                message: req.session.authUser.level == 'admin' ? "Tạo bài viết thành công" : "Bạn đã tạo bài viết thành công. Hãy chờ admin phê duyệt bài viết của bạn.",
             }))
             .catch(error => { })
     }
@@ -86,7 +99,7 @@ function removeVietnameseTones(str) {
     return str;
 }
 async function getPostInfo(post) {
-    var user = await User.findOne({ _id: post.author });
+    var user = await User.findOne({ _id: post.owner });
     post.authorName = user.fullname;
     post.authorAvatar = user.avatar;
 
@@ -100,12 +113,12 @@ async function getPostInfo(post) {
     date = ("0" + createdTime.getDate()).slice(-2);
     month = ("0" + (createdTime.getMonth() + 1)).slice(-2);
     year = createdTime.getFullYear();
-    post.ceeatedDate = date + '/' + month + '/' + year;
+    post.createdDate = date + '/' + month + '/' + year;
     return post;
 }
 async function getPostsInfo(posts) {
     for (var post of posts) {
-        var user = await User.findOne({ _id: post.author });
+        var user = await User.findOne({ _id: post.owner });
         post.authorName = user.fullname;
         post.authorAvatar = user.avatar;
 
@@ -119,7 +132,7 @@ async function getPostsInfo(posts) {
         date = ("0" + createdTime.getDate()).slice(-2);
         month = ("0" + (createdTime.getMonth() + 1)).slice(-2);
         year = createdTime.getFullYear();
-        post.ceeatedDate = date + '/' + month + '/' + year;
+        post.createdDate = date + '/' + month + '/' + year;
     }
     return posts
 }

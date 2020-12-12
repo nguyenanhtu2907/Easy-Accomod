@@ -20,6 +20,7 @@
 
 <body>
     {{>header}}
+    <p id="message" style="display: none;">{{#if message}}{{message}}{{/if}}</p>
     <div class="newpost_head">
         <h1 class="newpost_title">Đăng tin Phòng trọ</h1>
 
@@ -76,8 +77,9 @@
                     <div class="form-group required">
                         <div class="input_province">
                             <p class="input_title">Tỉnh/thành phố: </p>
-                            <select name="province" id="province" class="address_input">
-                                <option selected value="" disabled style="display: none;">Tỉnh </option>
+                            <select name="province" id="province" class="address_input" aria-label="asd">
+                                <option selected value="" id="1" title="  111" disabled style="display: none;">Tỉnh
+                                </option>
 
                             </select>
                         </div>
@@ -86,7 +88,7 @@
                     <div class="form-group required">
                         <div class="input_district">
                             <p class="input_title">Quận/huyện:</p>
-                            <select name="district" id="district" class="address_input">
+                            <select name="district" id="district" class="address_input" label="aaaa">
                                 <option selected disabled>Quận/Huyện </option>
 
                             </select>
@@ -174,7 +176,7 @@
                     <div class="form-group required">
                         <div class="newpost_heading">
                             <div class="newpost_heading-title input_title">Tiêu đề bài đăng</div>
-                            <input type="text" name="title" id="newpost_heading-input" placeholder="Tiêu đề bài viết">
+                            <input type="text" name="title" autocomplete="off" id="newpost_heading-input" placeholder="Tiêu đề bài viết">
                         </div>
                         <div class="alert"></div>
                     </div>
@@ -196,7 +198,8 @@
                     <div class="form-group required">
                         <div class="direction">
                             <div class="direction_title input_title">Ghi chú về nhà bếp/nấu ăn</div>
-                            <input type="text" name="kitchen" id="direction-input" min="0" placeholder="Nội quy, mô tả về nhà bếp/nấu ăn">
+                            <input type="text" autocomplete="off" name="kitchen" id="direction-input" min="0"
+                                placeholder="Nội quy, mô tả về nhà bếp/nấu ăn">
                         </div>
                         <div class="alert"></div>
 
@@ -314,7 +317,7 @@
                     <div class="form-group required">
                         <div class="floorsdirection">
                             <div class="floorsdirection-title input_title">Chủ nhà</div>
-                            <input name="info-owner" type="text" id="floordirection_input" min="0"
+                            <input name="info_owner" autocomplete="off" type="text" id="floordirection_input" min="0"
                                 placeholder="Ghi chú về chủ nhà">
                         </div>
                         <div class="alert"></div>
@@ -359,6 +362,11 @@
     <script src="/header/header.js"></script>
     <script src="/create-post/new_post.js"></script>
     <script>
+
+        if (document.querySelector('#message').innerText) {
+            alert(document.querySelector('#message').innerText)
+        }
+
         Validator({
             form: '#regForm',
             formMessage: '.alert',
@@ -384,7 +392,7 @@
         }
         )
 
-        {{#if message}}alert({{message}}){{/if}}
+
     </script>
 </body>
 

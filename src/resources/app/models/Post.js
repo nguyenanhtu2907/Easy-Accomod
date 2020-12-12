@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const slug = require('mongoose-slug-generator');
+
 mongoose.plugin(slug);
+
 const Post = new Schema({
-    owner: { type: Object},
+    owner: { type: String},
     title: { type: String },
     address: { type: String, default: '' },
     contact: { type: String, default: '' },
     nearby: { type: String, default: '' },
     description: { type: String, default: '' },
     rentcost: { type: String, default: '' },
+    electric: {type: String, default: ''},
+    water: {type: String, default: ''},
     roomtype: { type: String, default: '' },
     area: { type: String, default: '' },
-    withowner: { type: String, default: '' },
+    infoOwner: { type: String, default: '' },
     equipments: { type: Array, default: [] },
     images: { type: Array, default: [] },
     comments: { type: Array, default: [] },
@@ -29,4 +33,5 @@ const Post = new Schema({
 }, {
     timestamps: true,
 })
+Post.index({slug: 'text'});
 module.exports = mongoose.model('Post', Post);

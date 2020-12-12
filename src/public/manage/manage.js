@@ -39,16 +39,17 @@ function showInfo(e, type, element) {
             .then(res => res.json())
             .then(post => {
                 let spans = document.querySelectorAll(element + ' li span');
-                spans[0].innerText = user._id;
-                spans[1].innerText = user.authorName;
-                spans[2].innerText = user.title;
-                spans[3].innerText = user.address;
-                spans[4].innerText = user.contact;
-                spans[5].innerText = user.createdDate;
-                spans[6].innerText = user.rentcost;
-                spans[7].innerText = user.roomtype;
-                spans[8].innerText = user.area;
-                spans[9].innerText = user.equiments.join(', ');
+                spans[0].innerText = post._id;
+                spans[1].innerText = post.authorName;
+                spans[2].innerText = post.title;
+                spans[3].innerText = post.address;
+                spans[4].innerText = post.contact;
+                spans[5].innerText = post.createdDate;
+                spans[6].innerText = post.rentcost;
+                spans[7].innerText = post.roomtype;
+                spans[8].innerText = post.area;
+                spans[9].innerText = post.equipments.join(', ');
+                spans[10].innerText = post.owner;
             })
     } else {
         let li = e.target;
@@ -380,7 +381,7 @@ function chooseOption(bigOption, innerOption) {
                                         <td>${post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
-                                        <td>${post.createDate}</td>
+                                        <td>${post.createdDate}</td>
                                     </tr>
                                 `;
                             });
@@ -416,7 +417,10 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b>: <span></span>
+                                        <b>Thông tin thêm </b>: <span></span>
+                                    </li>
+                                    <li style="display:none">
+                                        <b>ID chủ trọ </b>: <span></span>
                                     </li>
                                 </ul>
                                 <div class="button-admin">
@@ -442,7 +446,7 @@ function chooseOption(bigOption, innerOption) {
                                 <th>Tiêu đề</th>
                                 <th>Người đăng</th>
                                 <th>Liên hệ</th>
-                                <th>Thời gian tạo</th>
+                                <th>Thời gian cập nhật</th>
                             `;
                             posts.forEach(post => {
                                 html += `
@@ -451,7 +455,7 @@ function chooseOption(bigOption, innerOption) {
                                         <td>${post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
-                                        <td>${post.createDate}</td>
+                                        <td>${post.updatedTime}</td>
                                     </tr>
                                 `;
                             });
@@ -487,7 +491,10 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b>: <span></span>
+                                        <b>Thông tin thêm </b>: <span></span>
+                                    </li>
+                                    <li style="display:none">
+                                        <b>ID chủ trọ </b>: <span></span>
                                     </li>
                                 </ul>
                             `;
@@ -514,7 +521,7 @@ function chooseOption(bigOption, innerOption) {
                                         <td>${post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
-                                        <td>${post.createDate}</td>
+                                        <td>${post.createdDate}</td>
                                     </tr>
                                 `;
                             });
@@ -550,7 +557,10 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b>: <span></span>
+                                        <b>Thông tin thêm </b>: <span></span>
+                                    </li>
+                                    <li style="display:none">
+                                        <b>ID chủ trọ </b>: <span></span>
                                     </li>
                                 </ul>
                                 <div class="button-admin">

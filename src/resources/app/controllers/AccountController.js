@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
+
 const bcrypt = require('bcryptjs');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
 
@@ -27,7 +28,7 @@ class AccountController {
         }
         User.findOne({ username: req.body.username }, function (err, user) {
             if (user) {
-                console.log(req.body.level == 'renter' ? true : false)
+
                 return res.render('register', {
                     layout: false,
                     message: 'Tên đăng nhập đã tồn tại!!!',
@@ -123,15 +124,18 @@ class AccountController {
             } else if (option == 4) {
                 Post.find({ checked: 0 })
                     .then(posts => multipleMongooseToObj(posts))
+                    .then(posts => getPostsInfo(posts))
                     .then(posts => res.json(posts))
                     .catch(() => { })
             } else if (option == 5) {
                 Post.find({ checked: 1 })
                     .then(users => multipleMongooseToObj(users))
+                    .then(posts => getPostsInfo(posts))
                     .then(users => res.json(users))
                     .catch(() => { })
             } else if (option == 6) {
                 Post.find({ checked: -1 })
+                    .then(posts => getPostsInfo(posts))
                     .then(users => multipleMongooseToObj(users))
                     .then(users => res.json(users))
                     .catch(() => { })
@@ -182,13 +186,13 @@ class AccountController {
                                 if (check == 0) {
                                     admin.messages.unshift(message.owner);
                                     admin.save()
-                                        .then(() => {res.json('success')})
+                                        .then(() => { res.json('success') })
                                 } else {
                                     let arr = admin.messages.splice(loca, 1);
                                     admin.messages.unshift(arr[0]);
                                     admin.messages[0].seen = false;
                                     admin.save()
-                                        .then(() => {res.json('success')})
+                                        .then(() => { res.json('success') })
                                 }
                             })
                     })
@@ -198,13 +202,13 @@ class AccountController {
     }
 
     seenMessage(req, res, next) {
-        User.findOne({ level: 'admin' }, (err, admin)=>{
+        User.findOne({ level: 'admin' }, (err, admin) => {
             admin.messages[req.params.index].seen = true;
             admin.markModified('messages')
             admin.save()
-            .then(()=>res.json('success'))
+                .then(() => res.json('success'))
         })
-            
+
     }
 
     actionAdmin(req, res, next) {
@@ -225,21 +229,22 @@ class AccountController {
             } else if (req.body.type == 'post') {
                 Post.findOne({ _id: req.body.id })
                     .then(post => {
-                        User.findOne({ _id: post.author })
-                            .then(user => {
-                                user.notifications.push({
-                                    avatar: user.avatar,
-                                    id: user._id,
-                                    content: req.body.status == 1 ? 'Admin đã phê duyệt bài viết của bạn.' : 'Admin đã từ chối bài viết của bạn.'
-                                })
-                                user.save()
-                                    .then(() => { })
-                                    .catch(() => { })
-                            })
                         post.checked = req.body.status;
                         post.save()
-                            .then(() => res.json(user._id))
-                            .catch(() => { })
+                            .then(() => {
+                                User.findOne({ _id: post.owner })
+                                    .then(user => {
+                                        user.notifications.push({
+                                            avatar: user.avatar,
+                                            id: user._id,
+                                            content: req.body.status == 1 ? 'Admin đã phê duyệt bài viết của bạn.' : 'Admin đã từ chối bài viết của bạn.'
+                                        })
+                                        user.save()
+                                            .then(() => {
+                                                res.json(user._id)
+                                            })
+                                    })
+                            })
                     })
             }
         } else {
@@ -325,6 +330,7 @@ class AccountController {
     }
 
 }
+
 async function getMessagesInfo(posts) {
     for (var message of messages) {
         var user = await User.findOne({ _id: message.owner });
@@ -342,6 +348,44 @@ async function getMessagesInfo(posts) {
         // message.date = date + '/' + month + '/' + year;
     }
     return messages
+}
+async function getPostInfo(post) {
+    var user = await User.findOne({ _id: post.owner });
+    post.authorName = user.fullname;
+    post.authorAvatar = user.avatar;
+
+    let updatedTime = post.updatedAt;
+    let date = ("0" + updatedTime.getDate()).slice(-2);
+    let month = ("0" + (updatedTime.getMonth() + 1)).slice(-2);
+    let year = updatedTime.getFullYear();
+    post.updatedTime = date + '/' + month + '/' + year;
+
+    let createdTime = post.createdAt;
+    date = ("0" + createdTime.getDate()).slice(-2);
+    month = ("0" + (createdTime.getMonth() + 1)).slice(-2);
+    year = createdTime.getFullYear();
+    post.createdDate = date + '/' + month + '/' + year;
+    return post;
+}
+async function getPostsInfo(posts) {
+    for (var post of posts) {
+        var user = await User.findOne({ _id: post.owner });
+        post.authorName = user.fullname;
+        post.authorAvatar = user.avatar;
+
+        let updatedTime = post.updatedAt;
+        let date = ("0" + updatedTime.getDate()).slice(-2);
+        let month = ("0" + (updatedTime.getMonth() + 1)).slice(-2);
+        let year = updatedTime.getFullYear();
+        post.updatedTime = date + '/' + month + '/' + year;
+
+        let createdTime = post.createdAt;
+        date = ("0" + createdTime.getDate()).slice(-2);
+        month = ("0" + (createdTime.getMonth() + 1)).slice(-2);
+        year = createdTime.getFullYear();
+        post.createdDate = date + '/' + month + '/' + year;
+    }
+    return posts
 }
 
 module.exports = new AccountController;

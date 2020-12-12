@@ -138,7 +138,7 @@
 
         var socket = io('http://localhost:3000');
        
-        socket.on('{{localAuthUser._id}}', function (data) {
+        socket.on('{{localAuthUser._id}}noti', function (data) {
             updateNoti(`{{localAuthUser._id}}`)
             document.querySelector('.notification .fa-bell').classList.add('alerted')
 
