@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>account</title>
+    <link rel="stylesheet" href="/font/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/register/host_account.css">
+    <link rel="stylesheet" href="/register/cus_account.css">
+</head>
+
+<body>
+    <div class="container">
+        
+        <h2 class="title">Đăng ký</h2>
+        <p id="message" style="display: none;">{{#if message}}{{message}}{{else}}{{messageSuccess}}{{/if}}</p>
+        <div class="box_account">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link {{#if tab}} '' {{else}} active {{/if}}" data-toggle="tab" href="#chu_tro">Chủ trọ </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#if tab}} active {{else}} '' {{/if}}" data-toggle="tab" href="#nguoi_thue">Người thuê trọ</a>
+                </li>
+
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div id="chu_tro" class=" tab-pane {{#if tab}} fade {{else}} active {{/if}}">
+                    <form  method="POST" id="host_signup-form" action="">
+                        <!-- <h3>Chủ trọ</h3> -->
+                        <div class="form-group">
+
+                            <div class="input_item">
+                                <input type="text" id="username" name="username" value="{{#ifCond tab false}}{{values.username}}{{/ifCond}}" placeholder="Tên đăng nhập">
+                            </div>
+
+                            <div class="alert"></div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item-pass">
+                                <input type="password" id="password" class="pass" name="password" placeholder="Mật khẩu"
+                                    onfocus="focus_in(this)" onfocusout="focus_out(this)">
+                                <i class="fas fa-eye fa-eye-slash" id="togglePassword"></i>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item-pass">
+                                <input type="password" id="confirm_password" name="confirm_password"
+                                    placeholder="Nhập lại mật khẩu" onfocus="focus_in(this)"
+                                    onfocusout="focus_out(this)">
+
+                                <i class=" fas fa-eye fa-eye-slash" id="confirm_togglePassword"></i>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item full_name-input">
+                                <!-- <div class="title">Họ và tên:</div> -->
+                                <input type="text" id="fullname" name="fullname" value="{{#ifCond tab false}}{{values.fullname}}{{/ifCond}}" placeholder="Họ và tên">
+                            </div>
+                            <div class="alert"></div>
+
+
+                        </div>
+                        <!-- <div class="title">Giới tính: </div> -->
+                        <div class="form-group">
+                            <div class="form-gender">
+
+
+                                <span>Giới tính: </span>
+                                <div class="gender">
+                                    <input type="radio" name="gender" class="form-control" value="male">Nam
+                                </div>
+                                <div class="gender">
+                                    <input type="radio" name="gender" class="form-control" value="female">Nữ
+                                </div>
+                                <div class="gender">
+                                    <input type="radio" name="gender" class="form-control" value="other">Khác
+                                </div>
+
+                            </div>
+                            <p class="alert"></p>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item identity_input">
+                                <!-- <div class="title">Số CMND:</div> -->
+                                <input type="text" id="identity" value="{{#ifCond tab false}}{{values.identity}}{{/ifCond}}" name="identity" placeholder="Số CMND/CCCD">
+
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item address">
+                                <!-- <div class="title">Địa chỉ:</div> -->
+                                <input type="text" id="address" name="address" value="{{#ifCond tab false}}{{values.address}}{{/ifCond}}" placeholder="Địa chỉ">
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item">
+                                <input type="tel" id="phone" name="phone" value="{{#ifCond tab false}}{{values.phone}}{{/ifCond}}" placeholder="Số điện thoại">
+
+                            </div>
+                            <div class="alert"></div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item">
+                                <input type="text" id="email" value="{{#ifCond tab false}}{{values.email}}{{/ifCond}}" name="email" placeholder="Email">
+                                <input type="text" name="level" value="owner" style="display: none;">
+
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+
+
+                        <button type="submit" class="submit" >Đăng ký</button>
+
+
+                    </form>
+                </div>
+
+                <div id="nguoi_thue" class=" tab-pane {{#if tab}} active {{else}} fade{{/if}}">
+                    <!-- <h3>Người thuê trọ</h3> -->
+                    <form action="" method="POST" id="cus_signup-form">
+                        <div class="form-group">
+                            <div class="input_item">
+                                <input type="text" id="cus_username" name="username" value="{{#ifCond tab true}}{{values.username}}{{/ifCond}}" placeholder="Tên đăng nhập">
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item-pass">
+                                <input type="password" id="cus_password" name="password" placeholder="Mật khẩu"
+                                    onfocus="focus_in(this)" onfocusout="focus_out(this)">
+                                <i class="fas fa-eye fa-eye-slash" id="cus_togglePassword"></i>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item-pass">
+                                <input type="password" id="cus_confirm_password" name="confirm_password"
+                                    placeholder="Nhập lại mật khẩu" onfocus="focus_in(this)"
+                                    onfocusout="focus_out(this)">
+
+                                <i class=" fas fa-eye fa-eye-slash" id="cus_confirm_togglePassword"></i>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item full_name-input">
+                                <!-- <div class="title">Họ và tên:</div> -->
+                                <input type="text" id="cus_fullname" name="fullname" value="{{#ifCond tab true}}{{values.fullname}}{{/ifCond}}" placeholder="Họ và tên">
+
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+
+                        <!-- <div class="title">Giới tính: </div> -->
+                        <div class="form-group">
+                            <div class="form-gender">
+
+                                <span>Giới tính: </span>
+                                <div class="gender">
+                                    <input type="radio" name="gender" class="form-control" value="male">Nam
+                                </div>
+                                <div class="gender">
+                                    <input type="radio" name="gender" class="form-control" value="female">Nữ
+                                </div>
+                                <div class="gender">
+                                    <input type="radio" name="gender" class="form-control" value="other">Khác
+                                </div>
+                            </div>
+                            <p class="alert"></p>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input_item">
+                                <input type="tel" id="cus_phone" name="phone" value="{{#ifCond tab true}}{{values.phone}}{{/ifCond}}" placeholder="Số điện thoại">
+                                <input type="text" name="level" value="renter" style="display: none;">
+                                <input type="text" name="checked" value="-2" style="display: none;">
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <button type="submit" name="level" class="cus_submit" value="renter">Đăng ký</button>
+                    </form>
+
+                </div>
+                <p class="link">Bạn đã có tài khoản? <a href="/account/login">Đăng nhập ngay.</a></p>
+                
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <script src="/javascripts/validator.js"></script>
+    <script src="/register/account.js"></script>
+    <script>
+        if(document.querySelector('#message').innerText){
+            alert(document.querySelector('#message').innerText)
+        }
+        Validator({
+            form: '#host_signup-form',
+            formMessage: '.alert',
+            formGroupSelector: ".form-group",
+            rules: [
+                Validator.isRequired('#username'),
+                Validator.isRequired('#fullname'),
+                Validator.isRequired('#identity'),
+                Validator.isRequired('#address'),
+                Validator.isRequired('#email'),
+                Validator.isRequired('#phone'),
+                Validator.isEmail('#email'),
+                Validator.isRequired('#password'),
+                Validator.minLen('#password', 6),
+                Validator.isRequired('#confirm_password'),
+                Validator.isConfirm('#confirm_password', function () {
+                    return document.querySelector('#host_signup-form #password').value;
+                }, 'Mật khẩu đã nhập không chính xác'),
+                Validator.isRequired('#host_signup-form input[name="gender"]', 'Trường này là bắt buộc!!!'),
+            ],
+            //onSubmit: function (data) {
+            //    console.log(data);
+            //}
+        }
+        )
+        Validator({
+            form: '#cus_signup-form',
+            formMessage: '.alert',
+            formGroupSelector: ".form-group",
+            rules: [
+                Validator.isRequired('#cus_username'),
+                Validator.isRequired('#cus_fullname'),
+                Validator.isRequired('#cus_phone'),
+                Validator.isRequired('#cus_password'),
+                Validator.minLen('#cus_password', 6),
+                Validator.isRequired('#cus_confirm_password'),
+                Validator.isConfirm('#cus_confirm_password', function () {
+                    return document.querySelector('#cus_signup-form #cus_password').value;
+                }, 'Mật khẩu đã nhập không chính xác'),
+                Validator.isRequired('#cus_signup-form input[name="gender"]', 'Trường này là bắt buộc!!!'),
+            ],
+            //onSubmit: function (data) {
+            //    console.log(data);
+            //}
+        }
+
+        )
+    </script>
+</body>
+
+</html>

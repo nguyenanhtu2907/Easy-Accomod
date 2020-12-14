@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="header.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="content-header">
+            <div class="logo">
+                <a href="#">
+                    <img src="../../src/public/image/logo/cover.png" alt="">
+                </a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="#">Đăng bài</a>
+                    </li>
+                    <li>
+                        <a href="#">Tìm kiếm nâng cao</a>
+                    </li>
+                    <li>
+                        <a href="#">Thống kê phòng trọ</a>
+                    </li>
+                    <li>
+                        <div class="notification">
+                            <i class="alerted fa fa-bell" onclick="showList(event,'.show-noti')"></i>
+                            <div class="show-noti none">
+                                <ul>
+                                    <h3>Thông báo</h3>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                    <li>
+                                        <div class="avatar">
+                                            <img src="../avatar.jpg" alt="">
+                                        </div>
+                                        <span class="text-noti"> Bài viết của bạn đã được duyệt. </span>
+                                        <i class="fa fa-circle"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-comment"></i></a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">Đăng ký</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Đăng nhập</a>
+                    </li> -->
+                    <li>
+                        <div class="account" onclick="showList(event, '.account .show-info-option')">
+                            <div class="info-account">
+                                <span><b>Nguyễn Anh Tú</b> </span>
+                                <img src="../avatar.jpg" alt="">
+                            </div>
+                            <div class="show-info-option none">
+                                <ul>
+                                    <li>
+                                        <a href="#"> <i class="fa fa-long-arrow-right"></i> Bài viết của bạn</a> 
+                                    </li>   
+                                    <li>
+                                        <a href="#"> <i class="fa fa-long-arrow-right"></i> Sửa thông tin </a> 
+                                    </li>   
+                                    <li>
+                                        <a href="#"> <i class="fa fa-long-arrow-right"></i> Đổi mật khẩu</a> 
+                                    </li>   
+                                    <li>
+                                        <a href="#"> <i class="fa fa-long-arrow-right"></i> Quản lý người dùng</a> 
+                                    </li>   
+                                    <li>
+                                        <a href="#"> <i class="fa fa-long-arrow-right"></i> Quản lý bài viết</a> 
+                                    </li>
+                                    <li class="option-line">
+                                        <a href="#"> <i class="fa fa-long-arrow-right"></i> Đăng xuất</a> 
+                                    </li>   
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="header.js"></script>
+</body>
+
+</html>

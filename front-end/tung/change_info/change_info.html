@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"  href="../font/css/all.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../base.css">
+    <link rel="stylesheet" href="change_info.css">
+</head>
+<body>
+    <div class="change_info_head">
+        <h1 class="change_info_title">Chỉnh sửa thông tin cá nhân</h1>
+    
+      </div>
+      <div class="container">
+          <form action="" id="change_info-form">
+            <div class="avatar">
+                <input type="file" id = "avatar" accept="image/*" name="avatar_main">
+                    <label for="avatar" id = "selector" class="avatar_label">
+                        <i class="far fa-images icon_upload"></i>
+                        <!-- <i class="fas fa-smile-beam  icon_upload"></i> -->
+                        
+                    </label>
+                    <p>Ảnh đại diện</p>
+                    <!-- <div class="anh"> Ảnh </div> -->
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">CMND/Passport</div>
+                <div class="change_info-input--content">
+                    <input type="text" class="change_info-input--input" name="CMND">
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">Họ</div>
+                <div class="change_info-input--content">
+                    <input type="text" class="change_info-input--input" name="Ho">
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">Tên</div>
+                <div class="change_info-input--content">
+                    <input type="text" class="change_info-input--input" name="ten">
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">Email</div>
+                <div class="change_info-input--content">
+                    <input type="email" class="change_info-input--input" name="Email">
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">Tỉnh</div>
+                <div class="change_info-input--content">
+                    <select name="province" id="province" class ="change_info-input--input"  >
+                        <option selected  value="" disabled >Tỉnh </option>
+                        
+                      </select>
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">Quận/Huyện</div>
+                <div class="change_info-input--content">
+                    <select name="district" id="district" class ="change_info-input--input" >
+                        <option selected  value="" disabled >Quận huyện </option>
+                        
+                      </select>
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">Phường/Xã</div>
+                <div class="change_info-input--content">
+                    <select name="ward" id="ward" class ="change_info-input--input" >
+                        <option selected  value="" disabled >Phường/Xã </option>
+                        
+                      </select>
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title">Giới thiệu</div>
+                <div class="change_info-input--content">
+                    <textarea name="introduce" id="introduce" class="change_info-input--input"cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="change_info-input">
+                <div class="change_info-input--title"></div>
+                <div class="change_info-input--content">
+                    <button type="submit" class="submit_btn">Cập nhật </button>
+
+                </div>
+            </div>
+          </form>
+        
+      </div>
+      <script src="../sign_in&up/validator.js"></script>
+      <script src="change_info.js"></script>
+      <script>
+
+      </script>
+</body>
+</html>
