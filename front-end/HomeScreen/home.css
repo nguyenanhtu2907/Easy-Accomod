@@ -1,59 +1,373 @@
-div.top-bar {
+/*
+
+Sẽ có 3 màn hình chính
+1 PC 15.6" 1536
+2 Tablet ipad 768 x 1024
+3 Smartphone 6s 375 x 667
+
+*/
+
+/* Smartphone width: 375px */
+:root {
+  --width: 100vw;
+}
+@media screen and (min-width: 375px) {
+  :root {
+    font-size: calc(11px + 2 * ((100vw - 375px) / (1236 - 375)));
+  }
+  div.search-bar-container .search-bar {
+    width: calc(60% + 20% * ((100vw - 375px) / (1236 - 375)));
+  }
+}
+@media screen and (max-width: 376px) {
+  :root {
+    font-size: 11px;
+  }
+  div.search-bar-container .search-bar {
+    width: 80%;
+  }
+  div.select-zone select {
+    display: none;
+  }
+}
+
+/* Tablet width: 1024px */
+@media screen and (min-width: 768px) {
+}
+@media screen and (max-width: 768px) {
+}
+
+/* PC  width: 1536px */
+@media screen and (max-width: 1236px) {
+  .advanced-search {
+    display: none;
+  }
+}
+@media screen and (min-width: 1236px) {
+  :root {
+    font-size: 15px;
+  }
+  div.search-bar-container .search-bar {
+    width: 60%;
+  }
+}
+
+body {
+  margin: 0px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+a {
+  text-decoration: none;
+}
+p {
+  margin: 0px;
+}
+
+div#top-bar {
   max-width: 1000px;
   margin: auto;
   display: flex;
-  border-bottom: 1px solid black;
 }
-.logo {
+#logo {
   margin-top: 10px;
   margin-right: auto;
 }
 
-div.top-bar #menu {
+div#top-bar #menu {
   float: right;
   display: flex;
   list-style-type: none;
   margin: 0;
 }
 
-div.top-bar #menu li {
+div#top-bar #menu li {
   padding: 10px;
 }
 
-a {
+div#top-bar a {
   text-decoration: none;
   color: gray;
 }
-div.find-bar-container {
+
+/*
+SEARCH BAR SCREEN
+*/
+
+div.search-bar-container {
   display: flex;
-  width: 100%;
-  height: 600px;
-  background-image: url("./bg.png");
+  background: url(./images/bg.jpg) center no-repeat;
+  background-size: 100%;
   flex-direction: column;
+  position: relative;
+  background-size: cover;
+  height: 30rem;
 }
-div.find-bar-container .bg-container {
+div.search-bar-container #background-search-container {
   width: 100%;
   height: 100%;
   display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: black;
   flex-direction: column;
-  opacity: 0.3;
+  opacity: 0.4;
 }
-div.bg-container .slogan {
-  display: flex;
+div.search-bar-container #slogan {
+  z-index: 1;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
-  opacity: 1;
+  margin-bottom: 1rem;
+  margin-top: 7rem;
+  font-size: 2rem;
+  color: white;
 }
 
-div.bg-container .find-bar {
+div.search-bar-container .search-bar {
+  z-index: 1;
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  top: 100px;
-  background-color: wheat;
-  width: 50%;
-  height: 50%;
+  height: 25%;
+  position: relative;
+}
+
+div.search-bar #out-search-bar {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0.5;
+  border-radius: 1rem;
+  padding-bottom: 2rem;
+}
+
+div.search-bar .in-search-bar {
+  margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+  z-index: 1;
+}
+
+div.in-search-bar #header {
+  color: white;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+div.in-search-bar .input-search-bar {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  padding: 0.25rem;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+div.input-search-bar i {
+  font-size: 1.5rem;
+  margin: auto;
+  color: rgb(199, 199, 199);
+}
+div.input-search-bar input {
+  display: flex;
+  width: 100%;
+  padding-left: 0.5rem;
+  border-width: 0px;
+  font-size: 1.25rem;
+}
+
+input:focus {
+  outline: none;
+}
+
+div.input-search-bar button {
+  background-color: lightblue;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  width: 9rem;
+  padding: 0.75rem;
+  border-width: 0px;
+}
+
+div.in-search-bar .select-zone {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  font-size: 1.25rem;
+  align-items: center;
+}
+
+div.select-zone select {
+  margin-right: 2rem;
+  font-size: 1rem;
+  border: none;
+  background: none;
+  color: lightblue;
+}
+
+/*
+  CITY
+*/
+
+div.body-container {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
+
+/*
+  REVIEW 2 CITY
+*/
+
+div.body-container .review-two-cities {
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  display: flex;
+  width: 80%;
+}
+
+div.review-two-cities #text {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+div.review-two-cities .two-cities {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+div.two-cities a {
+  width: 49%;
+  display: flex;
+}
+div.two-cities .a1 {
+  margin-right: 1%;
+}
+div.two-cities .a2 {
+  margin-left: 1%;
+}
+
+/* 
+  width: 80%
+*/
+
+div.two-cities :hover {
+  filter: brightness(60%);
+}
+
+div.two-cities .ha-noi {
+  margin-left: auto;
+  width: 100%;
+  height: 8rem;
+  background: url(./images/ha-noi.jpg) no-repeat center;
+  background-size: 140%;
+  filter: brightness(90%);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+div.ha-noi p {
+  color: white;
+  font-size: 1.5rem;
+}
+
+div.two-cities .ho-chi-minh {
+  margin-right: auto;
+  width: 100%;
+  height: 8rem;
+  background: black url(./images/ho-chi-minh.jpg) center no-repeat;
+  background-size: 140%;
+  filter: brightness(90%);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+div.ho-chi-minh p {
+  color: white;
+  font-size: 1.5rem;
+}
+
+/*
+HA NOI
+*/
+.ha-noi-news {
+  width: 80%;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+}
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  width: 100%;
+}
+.news-vs-rank {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+.news {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  flex-direction: row;
+  border-right: 1px solid grey;
+}
+.new {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.left {
+  width: 38%;
+}
+.left > img {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+.right {
+  width: 60%;
+  justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+}
+.new-tilte {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: black;
+}
+.new-info {
+}
+.new-price {
+  font-weight: 500;
+  color: lightgreen;
+  font-size: 1.5rem;
+}
+.rank {
+  display: flex;
+  width: 20%;
+  justify-content: center;
+}
+
+.ho-chi-minh-news {
+  width: 80%;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
 }

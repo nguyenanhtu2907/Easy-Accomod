@@ -4,14 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./home.css" />
   </head>
   <body>
-    <div class="top-bar">
-      <div class="logo">
+    <div id="top-bar">
+      <div id="logo">
         <a href="">LOGO</a>
       </div>
-      <div class="slidemenu">
+      <div id="slidemenu">
         <ul id="menu">
           <li>
             <a href="">Tìm phòng</a>
@@ -28,14 +38,166 @@
         </ul>
       </div>
     </div>
-    <div class="find-bar-container">
-      <div class="bg-container">
-        <div class="slogan">
-          <p style="color: red; font-size: 3rem">
-            Đúng nhà, đúng giá, đúng thời điểm
-          </p>
+    <div class="search-bar-container">
+      <div id="background-search-container"></div>
+      <p id="slogan">Đúng nhà, đúng giá, đúng thời điểm</p>
+      <div class="search-bar">
+        <div id="out-search-bar"></div>
+        <div class="in-search-bar">
+          <p id="header">Bộ lọc + logo</p>
+          <div class="input-search-bar">
+            <i class="fas fa-search"></i>
+            <input placeholder="Từ khóa, Đường, Quận, Dự Án ..." />
+            <button>Tìm kiếm</button>
+          </div>
+          <div class="select-zone">
+            <select id="city" name="city">
+              <option>Thành phố</option>
+            </select>
+            <select id="district" name="district">
+              <option>Quận/Huyện</option>
+            </select>
+            <select id="cost" name="cost">
+              <option>Khoảng giá</option>
+            </select>
+            <a
+              class="advanced-search"
+              style="margin-left: auto; font-size: 1rem; color: white"
+              href=""
+              >Tìm kiếm nâng cao</a
+            >
+          </div>
         </div>
-        <div class="find-bar"></div>
+      </div>
+    </div>
+    <div class="body-container">
+      <div class="review-two-cities">
+        <p id="text">Thành phố nổi bật</p>
+        <br />
+        <div class="two-cities">
+          <a class="a1" href="">
+            <div class="ha-noi">
+              <p>Khám phá 154 khu vực</p>
+              <p>Hà Nội</p>
+            </div>
+          </a>
+          <a class="a2" href="">
+            <div class="ho-chi-minh">
+              <p>Khám phá 154 khu vực</p>
+              <p>Hồ Chí Minh</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="ha-noi-news">
+        <a class="title" href=""><p>Thành phố Hà Nội</p></a>
+        <div class="news-vs-rank">
+          <div class="news">
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ha-noi.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ha-noi.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ha-noi.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ha-noi.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+          </div>
+          <div class="rank">Bang xep hang</div>
+        </div>
+      </div>
+
+      <div
+        style="
+          width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 3rem;
+        "
+      >
+        <img
+          width="100%"
+          src="https://uet.vnu.edu.vn/wp-content/uploads/2019/02/banner_N.png"
+        />
+      </div>
+      <div class="ho-chi-minh-news">
+        <a class="title" href=""><p>Thành phố Hồ Chí Minh</p></a>
+        <div class="news-vs-rank">
+          <div class="news">
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ho-chi-minh.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ho-chi-minh.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ho-chi-minh.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+            <a class="new" href="">
+              <div class="left">
+                <img src="./images/ho-chi-minh.jpg" alt="" />
+              </div>
+              <div class="right">
+                <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
+                <p class="new-info">...............................</p>
+                <p class="new-price">7 ty 800 trieu</p>
+              </div>
+            </a>
+          </div>
+          <div class="rank">Bang xep hang</div>
+        </div>
       </div>
     </div>
 
