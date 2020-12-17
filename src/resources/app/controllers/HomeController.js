@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 const User = require('../models/Post')
 const Post = require('../models/User')
 
@@ -10,7 +7,6 @@ class HomeController{
             layout:false,
         })
     }
->>>>>>> 5b49a35033e466259198237267dbfdb72bd740ff
 }
 
 module.exports = new HomeController();
