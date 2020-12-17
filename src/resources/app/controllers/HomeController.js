@@ -1,8 +1,5 @@
 <<<<<<< HEAD
-class HomeController {
-  index(req, res, next) {
-    res.render("home");
-  }
+
 =======
 const User = require('../models/Post')
 const Post = require('../models/User')
