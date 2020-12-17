@@ -27,6 +27,11 @@ router.get('/:id/manage',accountController.restrictLogin, accountController.mana
 
 router.get('/:id/get-noti',accountController.restrictLogin, accountController.getNoti);
 
+router.get('/:id/nav', accountController.profileNav);
+
+router.get('/saved', accountController.addToSavedList);
+
 router.get('/:id', accountController.profile);
+
 
 module.exports = router;

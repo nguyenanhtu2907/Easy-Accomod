@@ -156,12 +156,12 @@
                     },
                     body: JSON.stringify(data),
                 })
-                .then(userId => userId.json())
-                .then(userId => console.log(userId))
+                socket.emit('Client-sent-notification', document.querySelectorAll('.detail-side ul li span')[10]?document.querySelectorAll('.detail-side ul li span')[10].innerText:data.id)
+                
                 //phe duyet bai viet
 
                 chooseOption(bigOption, innerOption);
-                socket.emit('Client-sent-notification', document.querySelectorAll('.detail-side ul li span')[10]?document.querySelectorAll('.detail-side ul li span')[10].innerText:data.id)
+                
             }
         }
     </script>

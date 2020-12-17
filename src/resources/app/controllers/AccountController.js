@@ -1,8 +1,9 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
-
+var mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
+const { post } = require('../routes/account');
 
 class AccountController {
 
@@ -14,10 +15,18 @@ class AccountController {
 
     registerDB(req, res, next) {
         const password_hash = bcrypt.hashSync(req.body.password, 8);
+        var gender = '';
+        if (req.body.gender == 'male') {
+            gender = 'Nam'
+        } else if (req.body.gender == 'female') {
+            gender = 'Nữ'
+        } else {
+            gender = 'Khác'
+        }
         const entity = {
             username: req.body.username,
             fullname: req.body.fullname,
-            gender: req.body.gender,
+            gender: gender,
             identity: req.body.identity,
             address: req.body.address,
             phone: req.body.phone,
@@ -219,7 +228,6 @@ class AccountController {
                         user.checked = req.body.status;
                         user.notifications.push({
                             avatar: user.avatar,
-                            id: user._id,
                             content: req.body.status == 1 ? 'Admin đã phê duyệt tài khoản của bạn.' : 'Admin đã từ chối tài khoản của bạn.'
                         })
                         user.save()
@@ -236,7 +244,6 @@ class AccountController {
                                     .then(user => {
                                         user.notifications.push({
                                             avatar: user.avatar,
-                                            id: user._id,
                                             content: req.body.status == 1 ? 'Admin đã phê duyệt bài viết của bạn.' : 'Admin đã từ chối bài viết của bạn.'
                                         })
                                         user.save()
@@ -279,23 +286,160 @@ class AccountController {
             .catch(() => { })
     }
     profile(req, res, next) {
-        User.findOne({ _id: req.params.id })
-            .then(account => {
-                Post.find({ owner: req.params.id }).limit(10)
-                    .then(posts => res.json({ account, posts }))
-            })
-            .catch(() => res.send('Khong ton tai nguoi dung'))
+        if (req.session.authUser && req.session.authUser._id == req.params.id && req.session.authUser.level == 'renter') {
+            res.redirect('/')
+        } else {
+            var userTarget;
+            var posted;
+            var waiting;
+            var saved;
+            var expired;
+            User.findOne({ _id: req.params.id }, function (err, user) {
+                if (!user) {
+                    return res.render('error', {
+                        layout: false
+                    })
+                } else {
+                    userTarget = user;
+                    let numberExpired = 0;
+                    Post.count({ owner: req.params.id, availabletime: 0, checked: 1 }, function (err, num) {
+                        if (num) {
+                            numberExpired = num
+                        }
+                    })
+                    let numberWaiting = 0;
+                    Post.count({ owner: req.params.id, checked: 0 }, function (err, num) {
+                        if (num) {
+                            numberWaiting = num
+                        }
+                    })
+                    let numberPosted = 0;
+                    Post.count({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }, function (err, num) {
+                        if (num) {
+                            numberPosted = num
+                        }
+                    })
 
+                    Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }).limit(7).sort({ 'viewed': -1 })
+                        .then(posts => multipleMongooseToObj(posts))
+                        .then(posts => getPostsInfo(posts))
+                        .then(posts => {
+                            if (userTarget) {
+                                if (req.session.authUser) {
+                                    expired = {
+                                        totalPosts: numberExpired,
+                                        page: (numberExpired > 10 ? Math.ceil(numberExpired / 10) : 1),
+                                        showPage: numberExpired > 10 ? 1 : 0,
+                                        showTab: req.session.authUser._id == req.params.id ? 1 : 0,
+                                    }
+                                    waiting = {
+                                        totalPosts: numberWaiting,
+                                        page: (numberWaiting > 10 ? Math.ceil(numberWaiting / 10) : 1),
+                                        showPage: numberWaiting > 10 ? 1 : 0,
+                                        showTab: req.session.authUser._id == req.params.id ? 1 : 0,
+                                    }
+                                    saved = {
+                                        totalPosts: req.session.authUser.saved.length,
+                                        page: (req.session.authUser.saved.length > 10 ? Math.ceil(req.session.authUser.saved.length / 10) : 1),
+                                        showPage: req.session.authUser.saved.length > 10 ? 1 : 0,
+                                        showTab: req.session.authUser._id == req.params.id ? 1 : 0,
+                                    }
+                                }
+                                posted = {
+                                    totalPosts: numberPosted,
+                                    page: (numberPosted > 10 ? Math.ceil(numberPosted / 10) : 1),
+                                    showPage: numberPosted > 10 ? 1 : 0,
+                                }
+
+                                return res.render('profile', {
+                                    layout: false,
+                                    userTarget: mongooseToObj(userTarget),
+                                    posted,
+                                    waiting,
+                                    saved,
+                                    expired,
+                                    posts,
+                                    query: req.query.tab ? req.query.tab : 'posted',
+                                })
+                            } else {
+                                return res.render('error', {
+                                    layout: false
+                                })
+                            }
+                        }) //render profile page
+                        .catch(() => { res.send(error) }) //reder error
+                }
+            })
+        }
     }
 
-    // profileNav(req, res, next) {
-    //     User.findOne({ _id: req.params.id })
-    //         .then(account => {
-    //             Post.find({ owner: req.params.id }).limit(10)
-    //                 .then(posts => res.json({ account, posts }))
-    //         })
-    //         .catch(() => res.send('Khong ton tai nguoi dung'))
-    // }
+    profileNav(req, res, next) {
+        if (req.query.tab == 'expired') {
+            Post.find({ owner: req.params.id, availabletime: 0, checked: 1 }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
+                .then(posts => multipleMongooseToObj(posts))
+                .then(posts => getPostsInfo(posts))
+                .then(posts => res.json({
+                    // total: number,
+                    saved: req.session.authUser ? req.session.authUser.saved : '', //account 1 vao account 2 thi se thay duoc nhung bai viet nao minh dang saved
+                    posts,
+                }))
+                .catch(() => { })
+        } else if (req.query.tab == 'waiting') {
+            Post.find({ owner: req.params.id, checked: 0 }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
+                .then(posts => multipleMongooseToObj(posts))
+                .then(posts => getPostsInfo(posts))
+                .then(posts => res.json({
+                    // total: number,
+                    saved: req.session.authUser ? req.session.authUser.saved : '', //account 1 vao account 2 thi se thay duoc nhung bai viet nao minh dang saved
+                    posts,
+                }))
+                .catch(() => { })
+        } else if (req.query.tab == 'saved') {
+            var ids = req.session.authUser.saved.map(id => {
+                return mongoose.Types.ObjectId(id);
+            })
+            Post.find({ _id: { $in: ids } })
+                .then(posts => multipleMongooseToObj(posts))
+                .then(posts => getPostsInfo(posts))
+                .then(posts => {
+                    console.log(posts[0].updatedTime)
+                    res.json({
+                        saved: req.session.authUser ? req.session.authUser.saved : '', //account 1 vao account 2 thi se thay duoc nhung bai viet nao minh dang saved
+                        posts: posts,
+                    })
+                })
+        } else {
+            Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
+                .then(posts => multipleMongooseToObj(posts))
+                .then(posts => getPostsInfo(posts))
+                .then(posts => res.json({
+                    // total: number,
+                    posts,
+                    saved: req.session.authUser ? req.session.authUser.saved : '', //account 1 vao account 2 thi se thay duoc nhung bai viet nao minh dang saved
+                }))
+                .catch(() => { })
+        }
+    }
+
+    addToSavedList(req, res, next) {
+        if (req.session.authUser) {
+            User.findOne({ _id: req.session.authUser._id })
+                .then(user => {
+                    let index = user.saved.indexOf(req.query.post);
+                    if (index == -1) {
+                        user.saved.push(req.query.post)
+                        req.session.authUser.saved.push(req.query.post)
+                        user.save()
+                            .then(() => { res.json(user.saved) })
+                    } else {
+                        user.saved.splice(index, 1);
+                        req.session.authUser.saved.splice(index, 1);
+                        user.save()
+                            .then(() => { res.json(user.saved) })
+                    }
+                })
+        }
+    }
 
     editProfile(req, res, next) {
 
@@ -330,6 +474,7 @@ class AccountController {
     }
 
 }
+
 
 async function getMessagesInfo(posts) {
     for (var message of messages) {

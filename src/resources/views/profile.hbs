@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang cá nhân</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/profile/profile.css">
+    <link rel="stylesheet" href="/header/header.css">
+</head>
+
+<body>
+    {{>header}}
+    <div class="avatar-background">
+        <img src="{{userTarget.avatar}}" alt="">
+    </div>
+    <div class="info-user">
+        <div class="avatar">
+            <img src="{{userTarget.avatar}}" alt="">
+            <p class="id" style="display: none;">{{query}}</p>
+        </div>
+        <p>{{userTarget.fullname}}</p>
+        {{#if localAuthUser}}
+        <div class="fa fa-cog option"></div>
+        {{/if}}
+        <div class="menu-option">
+            <ul>
+                <li><a href="#">Chỉnh sửa trang cá nhân</a></li>
+                <li><a href="#">Đổi mật khẩu</a></li>
+            </ul>
+        </div>
+        <div class="description">
+            <span>Vai trò: {{#ifCond userTarget.level 'renter'}}Khách hàng{{else}}Nhà cung cấp dịch
+                vụ{{/ifCond}}</span><br>
+            <span>Địa chỉ: {{userTarget.address}}</span><br>
+            <span>Email: {{userTarget.email}}</span><br>
+            <span>Số điện thoại: {{userTarget.phone}}</span><br>
+            <span>Giới tính: {{userTarget.gender}}</span>
+        </div>
+    </div>
+    <div class="content">
+        <div class="posts ">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a onclick="showTab(event, 'posted')" class="nav-link active" data-toggle="tab" href="#posted">Đã
+                        đăng</a>
+                </li>
+                {{#if waiting.showTab}}
+                <li class="nav-item">
+                    <a onclick="showTab(event, 'waiting')" class="nav-link" data-toggle="tab" href="#waiting">Chờ
+                        duyệt</a>
+                </li>
+                {{/if}}
+                {{#if saved.showTab}}
+                <li class="nav-item">
+                    <a onclick="showTab(event, 'saved')" class="nav-link" data-toggle="tab" href="#saved">Đã lưu</a>
+                </li>
+                {{/if}}
+                {{#if expired.showTab}}
+                <li class="nav-item">
+                    <a onclick="showTab(event, 'expired')" class="nav-link" data-toggle="tab" href="#expired">Đã hết
+                        hạn</a>
+                </li>
+                {{/if}}
+            </ul>
+
+            <div class="tab-content">
+                <div id="posted" class="container tab-pane active"><br>
+                    <div class="line">
+                        <h6>Tổng số: {{posted.totalPosts}} bài viết</h6>
+                    </div>
+                    <div class="list-posts">
+                        <ul>
+                            
+                        </ul>
+                    </div>
+                    {{#if posted.showPage}}
+                    <nav aria-label="page navigation example" class="next_page">
+                        <ul class="pagination">
+                            <li class="page-item disabled" id="posted1"><a class="page-link" href="#"
+                                    onclick="routePage(event, 'posted')" aria-label="Previous"><span
+                                        aria-hidden="true">&laquo;</span> Trang đầu</a></li>
+                            <li class="page-item num active pre"><a class="page-link"
+                                    onclick="routePage(event, 'posted')" href="?page=1">1</a></li>
+                            <li class="page-item num current"><a class="page-link" onclick="routePage(event, 'posted')"
+                                    href="?page=2">2</a></li>
+                            <li
+                                class="page-item num next {{#ifCond posted.page 1}} disabled{{/ifCond}}{{#ifCond posted.page 2}} disabled{{/ifCond}}">
+                                <a class="page-link" onclick="routePage(event, 'posted')" href="?page=3">3</a>
+                            </li>
+                            <li class="page-item last {{#ifCond posted.page 1}} disabled{{/ifCond}}{{#ifCond posted.page 2}} disabled{{/ifCond}}"
+                                value="{{posted.page}}">
+                                <a class="page-link " onclick="routePage(event, 'posted')" href="#" aria-label="Next">
+                                    Trang cuối <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    {{/if}}
+                </div>
+                <div id="waiting" class="container tab-pane fade"><br>
+                    <div class="line">
+                        <h6>Tổng số: {{waiting.totalPosts}} bài viết</h6>
+                    </div>
+                    <div class="list-posts">
+                        <ul>
+                            
+                        </ul>
+                    </div>
+                    {{#if waiting.showPage}}
+                    <nav aria-label="page navigation example" class="next_page">
+                        <ul class="pagination">
+                            <li class="page-item disabled" id="waiting1"><a class="page-link" href="#"
+                                    onclick="routePage(event, 'waiting')" aria-label="Previous"><span
+                                        aria-hidden="true">&laquo;</span> Trang đầu</a></li>
+                            <li class="page-item num active pre"><a class="page-link"
+                                    onclick="routePage(event, 'waiting')" href="?page=1">1</a></li>
+                            <li class="page-item num current"><a class="page-link" onclick="routePage(event, 'waiting')"
+                                    href="?page=2">2</a></li>
+                            <li
+                                class="page-item num next {{#ifCond waiting.page 1}} disabled{{/ifCond}}{{#ifCond waiting.page 2}} disabled{{/ifCond}}">
+                                <a class="page-link" onclick="routePage(event, 'waiting')" href="?page=3">3</a>
+                            </li>
+                            <li class="page-item last {{#ifCond waiting.page 1}} disabled{{/ifCond}}{{#ifCond waiting.page 2}} disabled{{/ifCond}}"
+                                value="{{waiting.page}}">
+                                <a class="page-link " onclick="routePage(event, 'waiting')" href="#" aria-label="Next">
+                                    Trang cuối <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    {{/if}}
+                </div>
+                <div id="saved" class="container tab-pane fade"><br>
+                    <div class="line">
+                        <h6>Tổng số: {{saved.totalPosts}} bài viết</h6>
+                    </div>
+                    <div class="list-posts">
+                        <ul>
+                            
+                        </ul>
+                    </div>
+                    {{#if saved.showPage}}
+                    <nav aria-label="page navigation example" class="next_page">
+                        <ul class="pagination">
+                            <li class="page-item disabled" id="saved1"><a class="page-link" href="#"
+                                    onclick="routePage(event, 'saved')" aria-label="Previous"><span
+                                        aria-hidden="true">&laquo;</span> Trang đầu</a></li>
+                            <li class="page-item num active pre"><a class="page-link"
+                                    onclick="routePage(event, 'saved')" href="?page=1">1</a></li>
+                            <li class="page-item num current"><a class="page-link" onclick="routePage(event, 'saved')"
+                                    href="?page=2">2</a></li>
+                            <li
+                                class="page-item num next {{#ifCond saved.page 1}} disabled{{/ifCond}}{{#ifCond saved.page 2}} disabled{{/ifCond}}">
+                                <a class="page-link" onclick="routePage(event, 'saved')" href="?page=3">3</a>
+                            </li>
+                            <li class="page-item last {{#ifCond saved.page 1}} disabled{{/ifCond}}{{#ifCond saved.page 2}} disabled{{/ifCond}}"
+                                value="{{saved.page}}">
+                                <a class="page-link " onclick="routePage(event, 'saved')" href="#" aria-label="Next">
+                                    Trang cuối <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    {{/if}}
+                </div>
+                <div id="expired" class="container tab-pane fade"><br>
+                    <div class="line">
+                        <h6>Tổng số: {{expired.totalPosts}} bài viết</h6>
+                    </div>
+                    <div class="list-posts">
+                        <ul>
+                            
+                        </ul>
+                    </div>
+                    {{#if expired.showPage}}
+                    <nav aria-label="page navigation example" class="next_page">
+                        <ul class="pagination">
+                            <li class="page-item disabled" id="expired1"><a class="page-link" href="#"
+                                    onclick="routePage(event, 'expired')" aria-label="Previous"><span
+                                        aria-hidden="true">&laquo;</span> Trang đầu</a></li>
+                            <li class="page-item num active pre"><a class="page-link"
+                                    onclick="routePage(event, 'expired')" href="?page=1">1</a></li>
+                            <li class="page-item num current"><a class="page-link" onclick="routePage(event, 'expired')"
+                                    href="?page=2">2</a></li>
+                            <li
+                                class="page-item num next {{#ifCond expired.page 1}} disabled{{/ifCond}}{{#ifCond expired.page 2}} disabled{{/ifCond}}">
+                                <a class="page-link" onclick="routePage(event, 'expired')" href="?page=3">3</a>
+                            </li>
+                            <li class="page-item last {{#ifCond expired.page 1}} disabled{{/ifCond}}{{#ifCond expired.page 2}} disabled{{/ifCond}}"
+                                value="{{expired.page}}">
+                                <a class="page-link " onclick="routePage(event, 'expired')" href="#" aria-label="Next">
+                                    Trang cuối <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    {{/if}}
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+        <div class="news">
+            <h6 class="line" style="margin: 10px 0; font-size: 1.2rem;">Bài viết có lượt xem cao nhất của Nguyễn Anh Tú
+            </h6>
+            <div class="list-news">
+                <ul>
+                    {{#each posts}}
+                    <li class="line">
+                        <a href="/post/{{this.slug}}" class="thumbnail">
+                            <img src="{{this.thumbnail}}" alt="">
+                        </a>
+                        <div class="props">
+                            <p><a class="title" href="/post/{{this.slug}}">{{this.title}}</a></p>
+                            <h3 class="cost">{{this.rentcost}}vnđ</h3>
+                            <span class="update">Ngày đăng: {{this.updatedTime}}</span>
+                            <span class="update" style="margin-left: 1rem;">{{this.viewd}} lượt xem</span>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="/profile/profile.js"></script>
+    <script src="/header/header.js"></script>
+    <script>
+        Array.from(document.querySelectorAll('.news .list-news .title')).forEach(title=>{
+            if(title.innerText.length>42){
+                title.innerText=title.innerText.slice(0,42)+'...'
+            }
+        })
+        
+
+
+
+        var tabs = document.querySelectorAll('.content .posts .nav-tabs li a');
+        if (document.querySelector('.info-user .avatar .id').innerText == 'posted') {
+            tabs[0].click();
+        } else if (document.querySelector('.info-user .avatar .id').innerText == 'waiting') {
+            tabs[1].click();
+        } else if (document.querySelector('.info-user .avatar .id').innerText == 'saved') {
+            tabs[2].click();
+        } else {
+            tabs[3].click();
+        }
+    
+    </script>
+</body>
+
+</html>

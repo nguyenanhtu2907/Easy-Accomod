@@ -12,4 +12,6 @@ router.get('/search', postController.searchResult)
 
 router.get('/get-info', postController.getInfo)
 
+router.get('/saved', postController.modifySaved)
+
 module.exports = router;

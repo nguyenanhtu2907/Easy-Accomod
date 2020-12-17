@@ -13,8 +13,12 @@ class PostController {
         req.body.author = req.session.authUser._id;
         var address = req.body.ward + ', ' + req.body.district + ', ' + req.body.province;
         var images = [];
-        for (var i = 0; i < req.body.images_room.length; i++) {
-            images.push(req.body.images_room[i]);
+        if(typeof req.body.images_room == 'string'){
+            images.push(req.body.images_room)
+        }else{
+            for (var i = 0; i < req.body.images_room.length; i++) {
+                images.push(req.body.images_room[i]);
+            }
         }
         var equipments = [
             req.body.airconditional == 'Yes' ? 'Điều hòa' : '',
@@ -27,15 +31,22 @@ class PostController {
             req.body.so_tang == '0' ? '' : 'Số tầng: ' + req.body.so_tang,
             req.body.vi_tri_tang == '0' ? '' : 'Vị trí tầng: ' + req.body.vi_tri_tang,
         ]
+        var cost;
+        if(req.body.rentcost.length<=6){
+            cost = req.body.rentcost.slice(0,req.body.rentcost.length-3)+'.'+ req.body.rentcost.slice(-3)
+        }else{
+            cost = req.body.rentcost.slice(0,req.body.rentcost.length-6)+'.'+ req.body.rentcost.slice(-6,-3)+'.'+ req.body.rentcost.slice(-3)
+        }
         const entity = {
             checked: req.session.authUser.level == 'admin' ? 1 : 0,
             title: req.body.title,
             owner: req.body.author,
+            thumnail: images[0],
             address: address,
             contact: req.session.authUser.phone,
             nearby: req.body.address_description,
             description: req.body.description,
-            rentcost: req.body.rentcost,
+            rentcost: cost,
             roomtype: req.body.rent,
             area: req.body.area,
             electric: req.body.electric,
@@ -53,6 +64,17 @@ class PostController {
                 message: req.session.authUser.level == 'admin' ? "Tạo bài viết thành công" : "Bạn đã tạo bài viết thành công. Hãy chờ admin phê duyệt bài viết của bạn.",
             }))
             .catch(error => { })
+    }
+
+    modifySaved(req, res, next){
+        if (req.session.authUser) {
+            Post.findOne({_id: req.query.post})
+            .then(post=>{
+                post.saved+=req.query.key=='saved'?1:-1;
+                post.save()
+                .then(()=>{res.json(post.saved)})
+            })
+        }
     }
 
     searchResult(req, res, next) {

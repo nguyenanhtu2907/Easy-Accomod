@@ -41,7 +41,7 @@ function showInfo(e, type, element) {
                 let spans = document.querySelectorAll(element + ' li span');
                 spans[0].innerText = post._id;
                 spans[1].innerText = post.authorName;
-                spans[2].innerText = post.title;
+                spans[2].innerText = post.title.length>50?post.title.slice(0,51)+'...':post.title;
                 spans[3].innerText = post.address;
                 spans[4].innerText = post.contact;
                 spans[5].innerText = post.createdDate;
@@ -378,7 +378,7 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
                                         <td>${post.createdDate}</td>
@@ -452,7 +452,7 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
                                         <td>${post.updatedTime}</td>
@@ -518,7 +518,7 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
                                         <td>${post.createdDate}</td>
