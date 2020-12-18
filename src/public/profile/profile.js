@@ -63,7 +63,7 @@ function routePage(e, id) {
     if (page == 2) {
         document.getElementById(id + '1').classList.add('disabled')
     }
-
+    
     // console.log(window.location.pathname+ '/nav?page='+(page-1))
     fetch(window.location.pathname + '/nav?tab=' + id + '&page=' + (page - 1))
         .then(res => res.json())

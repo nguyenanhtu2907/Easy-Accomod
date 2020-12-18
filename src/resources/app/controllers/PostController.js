@@ -15,7 +15,7 @@ class PostController {
             ward: req.body.ward,
             district: req.body.district,
             province: req.body.province,
-            // detail: req.body.detail_address,
+            detail: req.body.detail_address,
         };
 
         var images = [];
@@ -32,6 +32,9 @@ class PostController {
             bathroom: req.body.bathroom == 'Yes' ? 'Có' : 'Không',
             freazer: req.body.freazer == 'Yes' ? 'Có' : 'Không',
             hottank: req.body.hottank == 'Yes' ? 'Có' : 'Không',
+            closed: req.body.closed == 'Yes' ? 'Có' : 'Không',
+            washingmachine: req.body.washing_machine == 'Yes' ? 'Có' : 'Không',
+            balcony: req.body.balcony == 'Yes' ? 'Có' : 'Không',
             kitchen: req.body.kitchen,
             wc: req.body.so_phong_WC,
             bedroom: req.body.so_phong_ngu,
@@ -48,25 +51,24 @@ class PostController {
             checked: req.session.authUser.level == 'admin' ? 1 : 0,
             title: req.body.title,
             owner: req.body.author,
-            thumnail: images[0],
+            thumbnail: images[0],
             address: address,
             contact: req.session.authUser.phone,
             nearby: req.body.address_description,
             description: req.body.description,
             rentcost: cost,
-            // availabletime: req.body.availabletime,
+            availabletime: req.body.availabletime,
             roomtype: req.body.rent,
             area: req.body.area,
             electric: req.body.electric,
             water: req.body.water,
             equipments: equipments,
             images: images,
-            infoOwner: req.body.info_owner,
+            infoOwner: req.body.owner== 'Yes' ? 'Chung chủ' : 'Không chung chủ',
             key: removeVietnameseTones(address.detail + ' ' + req.body.address_description + ' ' + req.body.rent),
         }
 
         const post = new Post(entity);
-
 
         post.save()
             .then(() => {
@@ -216,7 +218,7 @@ class PostController {
                 } else {
                     return res.render('editPost', {
                         layout: false,
-                        post,
+                        post: mongooseToObj(post),
                     })
                 }
             })

@@ -48,7 +48,7 @@ function showInfo(e, type, element) {
                 spans[6].innerText = post.rentcost;
                 spans[7].innerText = post.roomtype;
                 spans[8].innerText = post.area;
-                spans[9].innerText = post.nearby;
+                spans[9].innerText = post.availabletime*25000;
                 spans[10].innerText = post.owner;
             })
     } else {
@@ -417,7 +417,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Thông tin thêm </b>: <span></span>
+                                        <b>Phí đăng bài </b>: <span></span>
                                     </li>
                                     <li style="display:none">
                                         <b>ID chủ trọ </b>: <span></span>
@@ -491,7 +491,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Thông tin thêm </b>: <span></span>
+                                        <b>Phí đăng bài </b>: <span></span>
                                     </li>
                                     <li style="display:none">
                                         <b>ID chủ trọ </b>: <span></span>
@@ -557,7 +557,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Thông tin thêm </b>: <span></span>
+                                        <b>Phí đăng bài </b>: <span></span>
                                     </li>
                                     <li style="display:none">
                                         <b>ID chủ trọ </b>: <span></span>

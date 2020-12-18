@@ -25,7 +25,7 @@ const Post = new Schema({
     saved: { type: Number, default: 0 },
     viewed: { type: Number, default: 0 },
     statusrent: { type: Boolean, default: false },
-    fulfill: { type: Boolean, default: false },
+    // fulfill: { type: Boolean, default: false },
     checked: {type: Number, default: 0},
     rates: { type: Array, default: [] },
     key: { type: String, default: '' },

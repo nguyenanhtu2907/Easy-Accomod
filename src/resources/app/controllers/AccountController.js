@@ -256,16 +256,16 @@ class AccountController {
                                             .then(() => {
                                                 var months = ["January", "February", "March", "April", "May", "June",
                                                     "July", "August", "September", "October", "November", "December"];
-                                                var indexMonth = new Date().getMonth() + 1;
+                                                var indexMonth = new Date().getMonth();
                                                 var currentMonth = months[indexMonth];
                                                 User.findOne({ level: 'admin' })
                                                     .then(admin => {
                                                         if (admin.profit[admin.profit.length - 1].month == currentMonth) {
-                                                            admin.profit[admin.profit.length - 1].total += post.availabletime*25;
+                                                            admin.profit[admin.profit.length - 1].total += post.availabletime*25000;
                                                         } else {
                                                             admin.profit.push({
                                                                 month: currentMonth,
-                                                                total: post.availabletime*25
+                                                                total: post.availabletime*25000
                                                             })
                                                         }
                                                         admin.markModified('profit')
@@ -423,7 +423,7 @@ class AccountController {
             // var ids = req.session.authUser.saved.map(id => {
             //     return mongoose.Types.ObjectId(id);
             // })
-            Post.find({ _id: { $in: req.session.authUser.saved } })
+            Post.find({ _id: { $in: req.session.authUser.saved } }).limit(10).skip(req.query.page * 10 || 0)
                 .then(posts => multipleMongooseToObj(posts))
                 .then(posts => getPostsInfo(posts))
                 .then(posts => {

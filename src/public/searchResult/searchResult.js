@@ -265,8 +265,7 @@ function routePage(e) {
     if (page == 2) {
         document.getElementById('1').classList.add('disabled')
     }
-
-    fetch(url + '&page=' + (page - 1))
+    fetch(url + '&page=' + (page - 1) + (sortQuery?sortQuery:''))
         .then(res => res.json())
         .then(data => {
             var html = '';
@@ -341,16 +340,17 @@ function saved(e) {
 
 }
 var url;
-
+var sortQuery;
 $('.search-btn').click(function(event){
     event.preventDefault()
     url = '/post/searchResult?'+$('.search-inputs').serialize();
     searchFetch(url)
 })
 
-function sort(e, sortQuery){
+function sort(e, sortQueryPara){
     if(url){
-        searchFetch(url+'&sort='+sortQuery)
+        sortQuery='&sort='+sortQueryPara;
+        searchFetch(url+sortQuery)
     }
 }
 function redirect(e, roomType){
@@ -372,7 +372,7 @@ function searchFetch(url){
                 <div class="props">
                     <p><a class="title" href="/post/${post.slug}">${post.title}</a></p>
 
-                    <div class="text">${post.address.detail?post.address.detail+ ', ':'' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
+                    <div class="text">${post.address.detail?post.address.detail+ ', ':''}${post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
                     <div class="equi">
                         <ul>
                             <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
@@ -406,6 +406,9 @@ function searchFetch(url){
         })
         document.querySelector('.posts .list-posts ul').innerHTML=html;
         let page = data.total > 10 ? Math.ceil(data.total / 10) : 1
+        if(document.querySelector('.next_page')){
+            document.querySelector('.next_page').remove()
+        }
         if(data.total>10){
             document.querySelector('.posts').innerHTML+=`
                 <nav aria-label="page navigation example" class="next_page">
