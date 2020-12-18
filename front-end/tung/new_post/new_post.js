@@ -88,19 +88,52 @@ function updateValue(e){
     log.textContent = convertToString(e.target.value);
     
 }
-
 function convertToString(e){
-    var result = '';
-    if(e.length == 0) result ='Chưa nhập giá';
-    if(e.length >= 5 & e.length <=6 )
-    result += e.slice(-e.length,-3) + ' Ngàn';
-    else if(e.length >= 7  & e.length <= 9){
-    result += e.slice(-e.length,-6) +' Triệu ' + e.slice(-6,-3)+ ' Ngàn ';
+  var result = '';
+  if(e.length == 0) result ='Chưa nhập giá';
+  if(e.length >= 5 & e.length <=6 )
+  result += e.slice(-e.length,-3) + ' Ngàn';
+  else if(e.length >= 7  & e.length <= 9){
+  result += e.slice(-e.length,-6) +' Triệu ' + e.slice(-6,-3)+ ' Ngàn ';
+  }
+  else if(e.length >= 10)
+  result += e.slice(-e.length,-9) +' Tỷ ' + e.slice(-9,-6) + ' Triệu ' +e.slice(-6,-3) + ' Ngàn ';
+  else result += e;
+return result;
+}
+
+var day = document.querySelector('#gia_han');
+var target = document.querySelector('.post_price-result p');
+
+day.addEventListener('input', updateValue);
+function updateValue(e){
+    
+    target.textContent = price(e.target.value);
+    
+}
+
+
+function price(e){
+  var num = Number (e) *3000;
+  console.log(num)
+  var cost = (Number (e) *3000).toString();
+  var result = '';
+  if(num<0) result ="Làm gì có ngày âm bạn ơi";
+  else if(num ==0) result ="Chưa nhập ngày";
+  else if(num <21000 && num>0) result ="Cần thuê tối thiểu 7 ngày";
+  else{
+    if(cost.length == 1 || num ==0) result ='Chưa nhập ngày  ';
+    if(cost.length >= 5 & cost.length <=6 )
+    result += cost.slice(-cost.length,-3) + ' Ngàn Đồng';
+    else if(cost.length >= 7  & cost.length <= 9){
+    result += cost.slice(-cost.length,-6) +' Triệu ' + cost.slice(-6,-3)+ ' Ngàn Đồng';
     }
-    else if(e.length >= 10)
-    result += e.slice(-e.length,-9) +' Tỷ ' + e.slice(-9,-6) + ' Triệu ' +e.slice(-6,-3) + ' Ngàn ';
-    else result += e;
-  return result;
+    else if(cost.length >= 10)
+    result += cost.slice(-cost.length,-9) +' Tỷ ' + cost.slice(-9,-6) + ' Triệu ' +cost.slice(-6,-3) + ' Ngàn Đồng';
+    // else result += cost;
+
+  }
+return result;
 }
 
 $(function() {
