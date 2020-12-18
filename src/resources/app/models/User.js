@@ -16,6 +16,7 @@ const User = new Schema({
     notifications: { type: Array, default: [] },
     saved: { type: Array, default: [] },
     messages: { type: Array, default: [] },
+    profit: { type: Array, default: [] },
     level: {type: String, default:''},
     checked: {type: Number, default: 0},
     

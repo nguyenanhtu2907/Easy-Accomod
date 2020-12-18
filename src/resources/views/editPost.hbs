@@ -22,7 +22,7 @@
     {{>header}}
     <p id="message" style="display: none;">{{#if message}}{{message}}{{/if}}</p>
     <div class="newpost_head">
-        <h1 class="newpost_title">Đăng tin Phòng trọ</h1>
+        <h1 class="newpost_title">Chỉnh sửa bài viết</h1>
 
     </div>
     <div class="container">
@@ -362,9 +362,9 @@
     <script src="/header/header.js"></script>
     <script src="/create-post/new_post.js"></script>
     <script>
-
         if (document.querySelector('#message').innerText) {
             alert(document.querySelector('#message').innerText)
+            window.location.replace(`/account/{{localAuthUser._id}}`)
         }
 
         Validator({

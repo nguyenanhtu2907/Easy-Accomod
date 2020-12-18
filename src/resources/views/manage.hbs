@@ -12,6 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <link rel="stylesheet" href="/manage/manage.css">
     <link rel="stylesheet" href="/header/header.css">
 </head>
@@ -57,7 +59,7 @@
                     </ul>
                 </li>
                 <li class="">
-                    <h4 onclick="chooseOption(0, 7)">Thống kê</h4>
+                    <h4 onclick="chooseOption(2, 7)">Thống kê</h4>
                 </li>
                 <li class="message">
                     <h4 onclick="chooseOption(1, 8)">Tin nhắn</h4>
@@ -119,8 +121,164 @@
                 <div class="detail-side">
                     <h1>Thông tin tài khoản</h1>
                     <ul id="info-chat">
-                        
+
                     </ul>
+                </div>
+            </div>
+            <div class="tab-option">
+                <div class="rank-container">
+                    <div class="title">
+                        <h1>Thống kê</h1>
+                    </div>
+                    <div class="rank-view">
+                        <div class="a-chart">
+                            <div id="pie-chart-user"></div>
+                        </div>
+                        <div class="a-chart">
+                            <div id="pie-chart-owner"></div>
+                        </div>
+                        <div class="a-chart">
+                            <div id="pie-chart-post"></div>
+                        </div>
+                        <div class="a-table" id="rank-user">
+                            <h4>Chủ trọ có nhiều bài đăng nhất</h4>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Tên chủ trọ</th>
+                                        <th>Số bài đăng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="a-table" id="rank-viewed">
+                            <h4>Bài đăng có nhiều lượt xem nhất</h4>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tiêu đề</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Giá tiền</th>
+                                        <th>Lượt xem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="a-table" id="rank-saved">
+                            <h4>Bài đăng có nhiều lượt like nhất</h4>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tiêu đề</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Giá tiền</th>
+                                        <th>Lượt yêu thích</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="bar-chat">
+                            <h4>Tổng doanh thu trong 12 tháng gần nhất</h4>
+                            <canvas id="bar-chart" width="1000" height="500"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,7 +289,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
         integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
         crossorigin="anonymous"></script>
-    
+
     <script>
         var socket = io('http://localhost:3000');
         function actionAdmin(type, action, bigOption, innerOption) {
@@ -156,14 +314,117 @@
                     },
                     body: JSON.stringify(data),
                 })
-                socket.emit('Client-sent-notification', document.querySelectorAll('.detail-side ul li span')[10]?document.querySelectorAll('.detail-side ul li span')[10].innerText:data.id)
-                
+                socket.emit('Client-sent-notification', document.querySelectorAll('.detail-side ul li span')[10] ? document.querySelectorAll('.detail-side ul li span')[10].innerText : data.id)
+
                 //phe duyet bai viet
 
                 chooseOption(bigOption, innerOption);
-                
+
             }
         }
+
+        // Load google charts
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChartUser);
+        google.charts.setOnLoadCallback(drawChartOwner);
+        google.charts.setOnLoadCallback(drawChartPost);
+        // Draw the chart and set the chart values
+        function drawChartUser() {
+            var data = google.visualization.arrayToDataTable(
+                [
+                    ['Type', 'Users'],
+                    ['Admin', 1],
+                    ['Owner', 10],
+                    ['Renter', 15],
+                ]
+            );
+            // Optional; add a title and set the width and height of the chart
+            var options = { 'title': 'Thống kê người dùng', 'width': 550, 'height': 400 };
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('pie-chart-user'));
+            chart.draw(data, options);
+        }
+        function drawChartOwner() {
+            var data = google.visualization.arrayToDataTable(
+                [
+                    ['Status', 'Users'],
+                    ['Đã duyệt', 8],
+                    ['Chờ duyệt', 2],
+                    ['Từ chối', 2],
+                ]
+            );
+            // Optional; add a title and set the width and height of the chart
+            var options = { 'title': 'Thống kê Chủ trọ', 'width': 550, 'height': 400 };
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('pie-chart-owner'));
+            chart.draw(data, options);
+        }
+        function drawChartPost() {
+            var data = google.visualization.arrayToDataTable(
+                [
+                    ['Status', 'Users'],
+                    ['Chưa được thuê', 18],
+                    ['Đã được thuê', 20],
+                    ['Chờ duyệt', 12],
+                    ['Từ chối', 5],
+                ]
+            );
+            // Optional; add a title and set the width and height of the chart
+            var options = { 'title': 'Thống kê bài viết', 'width': 550, 'height': 400 };
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('pie-chart-post'));
+            chart.draw(data, options);
+        }
+
+        var ctx = document.getElementById('bar-chart');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: 'Đơn vị: tỷ đồng',
+                    data: [12, 19, 3, 5, 2, 3, 15, 20, 32, 29, 22, 37],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     </script>
 </body>
 

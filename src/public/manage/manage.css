@@ -195,10 +195,6 @@ body{
     overflow-x: hidden;
 }
 
-
-.table thead{
-
-}
 .table tbody tr:hover{
     cursor: pointer;
     color: rgb(92, 126, 158);
@@ -371,13 +367,6 @@ input:focus, select:focus{
     overflow-x: hidden;
 
 }
-.chat-area ul{
-    
-}
-.chat-area ul li{
-    /* margin: 10px; */
-    
-}
 .chat-area ul li .a-message{
     width: 60%;
     line-height: 30px;
@@ -421,6 +410,39 @@ input:focus, select:focus{
     cursor: pointer;
 }
 
+.rank-container{
+    padding: 0 1rem;
+    width: 100%;
+}
+.rank-container .rank-view{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 775px;
+}
+.rank-container .rank-view .a-chart{
+    width: 30rem;
+    margin-right: 3rem;
+    /* text-align: center; */
+}
+.a-table{
+
+}
+#rank-viewed, #rank-saved{
+    width: 38rem;
+}
+#rank-user{
+    width: 25rem;
+}
+.rank-container .rank-view .a-table tr{
+    text-align: center;
+}
+.bar-chat{
+    width: 100%;
+}
 @media screen and (max-width:1900px) {
     :root {font-size:15px;}    
     

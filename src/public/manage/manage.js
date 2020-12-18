@@ -6,7 +6,7 @@ var trs = Array.from(document.querySelectorAll('.list-items tbody tr'));
 trs.forEach(tr => {
     tr.addEventListener('click', function (e) {
         console.log(1);
-        //tim vỊ trí/index của tr trong trs
+        //tim Địa chỉ/index của tr trong trs
         //chiếu sang mảng dữ liệu vừa fetch từ server và thay đổi dữ liệu bên detail-side
     });
 })
@@ -42,13 +42,13 @@ function showInfo(e, type, element) {
                 spans[0].innerText = post._id;
                 spans[1].innerText = post.authorName;
                 spans[2].innerText = post.title.length>50?post.title.slice(0,51)+'...':post.title;
-                spans[3].innerText = post.address;
+                spans[3].innerText = post.address.detail + ', ' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province;
                 spans[4].innerText = post.contact;
                 spans[5].innerText = post.createdDate;
                 spans[6].innerText = post.rentcost;
                 spans[7].innerText = post.roomtype;
                 spans[8].innerText = post.area;
-                spans[9].innerText = post.equipments.join(', ');
+                spans[9].innerText = post.nearby;
                 spans[10].innerText = post.owner;
             })
     } else {
@@ -399,7 +399,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b>: <span></span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                     <li>
                                         <b>Liên hệ </b>: <span></span>
@@ -473,7 +473,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b>: <span></span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                     <li>
                                         <b>Liên hệ </b>: <span></span>
@@ -539,7 +539,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b>: <span></span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                     <li>
                                         <b>Liên hệ </b>: <span></span>
@@ -575,14 +575,15 @@ function chooseOption(bigOption, innerOption) {
                     break;
                 } case 7: {
                     option.querySelector('.title h1').innerText = 'Thống kê';
-                    option.querySelector('.list-items thead tr').innerHTML = `
-                    <th>ID bài viết</th>
-                    <th>Tiêu đề</th>
-                    <th>Người đăng</th>
-                    <th>Liên hệ</th>
-                    <th>Thời gian tạo</th>
-                    `;
-                    option.querySelector('.list-items table').scrollIntoView();
+                    // option.querySelector('.list-items thead tr').innerHTML = `
+                    // <th>ID bài viết</th>
+                    // <th>Tiêu đề</th>
+                    // <th>Người đăng</th>
+                    // <th>Liên hệ</th>
+                    // <th>Thời gian tạo</th>
+                    // `;
+                    console.log(option)
+                    // option.querySelector('.list-items table').scrollIntoView();
 
                     break;
                 } default: {

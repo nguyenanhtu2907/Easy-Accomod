@@ -7,7 +7,7 @@ mongoose.plugin(slug);
 const Post = new Schema({
     owner: { type: String},
     title: { type: String },
-    address: { type: String, default: '' },
+    address: { type: Object, default: '' },
     contact: { type: String, default: '' },
     nearby: { type: String, default: '' },
     description: { type: String, default: '' },
@@ -18,11 +18,10 @@ const Post = new Schema({
     area: { type: String, default: '' },
     infoOwner: { type: String, default: '' },
     thumbnail: { type: String, default: '' },
-    equipments: { type: Array, default: [] },
+    equipments: { type: Object, default: [] },
     images: { type: Array, default: [] },
     comments: { type: Array, default: [] },
     availabletime: { type: Number, default: 0 },
-    postcost: { type: Number, default: 0 },
     saved: { type: Number, default: 0 },
     viewed: { type: Number, default: 0 },
     statusrent: { type: Boolean, default: false },
@@ -34,5 +33,5 @@ const Post = new Schema({
 }, {
     timestamps: true,
 })
-Post.index({slug: 'text'});
+Post.index({key: 'text'});
 module.exports = mongoose.model('Post', Post);

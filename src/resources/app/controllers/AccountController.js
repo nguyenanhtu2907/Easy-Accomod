@@ -149,10 +149,16 @@ class AccountController {
                     .then(users => res.json(users))
                     .catch(() => { })
             } else if (option == 7) {
+
+
+
                 User.find({ checked: 0 })
                     .then(users => multipleMongooseToObj(users))
                     .then(users => res.json(users))
                     .catch(() => { })
+
+
+
             } else if (option == 8) {
                 User.findOne({ _id: req.session.authUser._id })
                     .then(admin => mongooseToObj(admin))
@@ -248,7 +254,26 @@ class AccountController {
                                         })
                                         user.save()
                                             .then(() => {
-                                                res.json(user._id)
+                                                var months = ["January", "February", "March", "April", "May", "June",
+                                                    "July", "August", "September", "October", "November", "December"];
+                                                var indexMonth = new Date().getMonth() + 1;
+                                                var currentMonth = months[indexMonth];
+                                                User.findOne({ level: 'admin' })
+                                                    .then(admin => {
+                                                        if (admin.profit[admin.profit.length - 1].month == currentMonth) {
+                                                            admin.profit[admin.profit.length - 1].total += post.availabletime*25;
+                                                        } else {
+                                                            admin.profit.push({
+                                                                month: currentMonth,
+                                                                total: post.availabletime*25
+                                                            })
+                                                        }
+                                                        admin.markModified('profit')
+                                                        admin.save()
+                                                            .then(() => {
+                                                                res.json(admin.level);
+                                                            })
+                                                    })
                                             })
                                     })
                             })
@@ -320,7 +345,7 @@ class AccountController {
                         }
                     })
 
-                    Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }).limit(7).sort({ 'viewed': -1 })
+                    Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1, statusrent: false }).limit(7).sort({ 'viewed': -1 })
                         .then(posts => multipleMongooseToObj(posts))
                         .then(posts => getPostsInfo(posts))
                         .then(posts => {
@@ -375,7 +400,7 @@ class AccountController {
 
     profileNav(req, res, next) {
         if (req.query.tab == 'expired') {
-            Post.find({ owner: req.params.id, availabletime: 0, checked: 1 }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
+            Post.find({ owner: req.params.id, availabletime: 0, checked: 1, statusrent: false }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
                 .then(posts => multipleMongooseToObj(posts))
                 .then(posts => getPostsInfo(posts))
                 .then(posts => res.json({
@@ -395,21 +420,20 @@ class AccountController {
                 }))
                 .catch(() => { })
         } else if (req.query.tab == 'saved') {
-            var ids = req.session.authUser.saved.map(id => {
-                return mongoose.Types.ObjectId(id);
-            })
-            Post.find({ _id: { $in: ids } })
+            // var ids = req.session.authUser.saved.map(id => {
+            //     return mongoose.Types.ObjectId(id);
+            // })
+            Post.find({ _id: { $in: req.session.authUser.saved } })
                 .then(posts => multipleMongooseToObj(posts))
                 .then(posts => getPostsInfo(posts))
                 .then(posts => {
-                    console.log(posts[0].updatedTime)
                     res.json({
                         saved: req.session.authUser ? req.session.authUser.saved : '', //account 1 vao account 2 thi se thay duoc nhung bai viet nao minh dang saved
                         posts: posts,
                     })
                 })
         } else {
-            Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
+            Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1, statusrent: false }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
                 .then(posts => multipleMongooseToObj(posts))
                 .then(posts => getPostsInfo(posts))
                 .then(posts => res.json({

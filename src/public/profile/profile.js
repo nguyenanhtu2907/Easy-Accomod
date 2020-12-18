@@ -78,7 +78,7 @@ function routePage(e, id) {
                     <div class="props">
                         <p><a class="title" href="/post/${post.slug}">${post.title}</a></p>
 
-                        <div class="text">${post.address}</div>
+                        <div class="text">${post.address.detail + ', ' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
                         <div class="equi">
                             <ul>
                                 <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
@@ -88,12 +88,12 @@ function routePage(e, id) {
                                     </svg> ${post.area} m <sup>2</sup>
                                 </li>
                                 <li>
-                                    <div class="fa fa-bed"></div>${post.equipments[6].slice(-1)}
+                                    <div class="fa fa-bed"></div>${post.equipments.bedroom}
                                 </li>
-                                ${post.equipments[3] ? `<li>
-                                    <div class="fa fa-tv"></div>${post.equipments[5].slice(-1)}
+                                ${post.equipments.hottank ? `<li>
+                                    <div class="fa fa-tv"> 1</div>
                                 </li>`: ''}
-                                ${post.equipments[0] ? `<li> <img class="fa" src="/profile/air-conditioner.png" width="18px" height="18px"
+                                ${post.equipments.airconditional ? `<li> <img class="fa" src="/profile/air-conditioner.png" width="18px" height="18px"
                                 alt=""> 1</li>`: ''}
                             </ul>
                         </div>
@@ -138,8 +138,8 @@ function saved(e) {
             urlUser = `/account/saved?post=${btn.id}&key=unsaved`
             urlPost = `/post/saved?post=${btn.id}&key=unsaved`
         }
-        fetch(urlUser)
         fetch(urlPost)
+        fetch(urlUser)
 
     }
 
@@ -168,8 +168,8 @@ function showTab(e, tab) {
                         </a>
                         <div class="props">
                             <p><a class="title" href="/post/${post.slug}">${post.title}</a></p>
-    
-                            <div class="text">${post.address}</div>
+
+                            <div class="text">${post.address.detail + ', ' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
                             <div class="equi">
                                 <ul>
                                     <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
@@ -179,12 +179,12 @@ function showTab(e, tab) {
                                         </svg> ${post.area} m <sup>2</sup>
                                     </li>
                                     <li>
-                                        <div class="fa fa-bed"></div>${post.equipments[6].slice(-1)}
+                                        <div class="fa fa-bed"></div>${post.equipments.bedroom}
                                     </li>
-                                    ${post.equipments[3] ? `<li>
-                                        <div class="fa fa-tv"></div>${post.equipments[5].slice(-1)}
+                                    ${post.equipments.hottank ? `<li>
+                                        <div class="fa fa-tv"> </div>
                                     </li>`: ''}
-                                    ${post.equipments[0] ? `<li> <img class="fa" src="/profile/air-conditioner.png" width="18px" height="18px"
+                                    ${post.equipments.airconditional ? `<li> <img class="fa" src="/profile/air-conditioner.png" width="18px" height="18px"
                                     alt=""> 1</li>`: ''}
                                 </ul>
                             </div>
