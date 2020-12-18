@@ -105,8 +105,8 @@ return result;
 var day = document.querySelector('#gia_han');
 var target = document.querySelector('.post_price-result p');
 
-day.addEventListener('input', updateValue);
-function updateValue(e){
+day.addEventListener('input', update);
+function update(e){
     
     target.textContent = price(e.target.value);
     
