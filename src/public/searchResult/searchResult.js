@@ -1,10 +1,24 @@
-var cities; // cac thanh pho
+var cities;
+var districts;
+var wards;
 var iCity; // index city duoc click
 var iDistrict; //index district duoc click
-fetch('http://localhost:3000/searchResult/local.json')
+fetch('http://localhost:3000/api/province.json')
     .then(res => res.json())
     .then(data => {
         cities = data;
+    })
+    .catch()
+fetch('http://localhost:3000/api/district.json')
+    .then(res => res.json())
+    .then(data => {
+        districts = data;
+    })
+    .catch()
+fetch('http://localhost:3000/api/ward.json')
+    .then(res => res.json())
+    .then(data => {
+        wards = data;
     })
     .catch()
 
@@ -13,35 +27,37 @@ function showAddress(e, step, status) {
     let address = document.querySelector('.select>span');
     if (step == 0) {
         let html = '';
-        cities.forEach(city => {
+        for(city in cities){
             html += `
-            <li class="li-option" onclick="showAddress(event, 1, 1)">${city.name}<div class="fa fa-angle-right"></div></li>
+            <li class="li-option" id="${cities[city].code}" onclick="showAddress(event, 1, 1)">${cities[city].name}<div class="fa fa-angle-right"></div></li>
             `
-        })
+        }
         steps[step].querySelector('.list-option').innerHTML = html;
     }
     if (step == 1) {
         if (!e.target.classList.contains('back')) {
-            iCity = Array.from(e.target.parentNode.querySelectorAll('li')).indexOf(e.target);
+            iCity = e.target.id;
         }
         let html = '<li class="back" onclick="showAddress(event, 0, -1)"><div class="fa fa-angle-left"></div>Quay lại </li>';
-        cities[iCity].districts.forEach(district => {
-            html += `
-            <li class="li-option" onclick="showAddress(event, 2, 1)">${district.name}<div class="fa fa-angle-right"></div></li>
-            `
-        })
+        for(district in districts){
+            if(districts[district].parent_code==iCity){html += `
+            <li class="li-option" id="${districts[district].code}" onclick="showAddress(event, 2, 1)">${districts[district].name}<div class="fa fa-angle-right"></div></li>
+            `}
+        }
         steps[step].querySelector('.list-option').innerHTML = html;
     }
     if (step == 2 && status != 0) {
         if (!e.target.classList.contains('back')) {
-            iDistrict = Array.from(e.target.parentNode.querySelectorAll('li')).indexOf(e.target)
+            iDistrict = e.target.id;
         }
         let html = '<li class="back" onclick="showAddress(event, 1, -1)"><div class="fa fa-angle-left"></div>Quay lại </li>';
-        cities[iCity].districts[iDistrict - 1].wards.forEach(ward => {
-            html += `
-            <li class="li-option" onclick="showAddress(event, 2, 0)">${ward.name}<div class="fa fa-angle-right"></div></li>
-            `
-        })
+        for(ward in wards){
+            if(wards[ward].parent_code==iDistrict){
+                html += `
+                <li class="li-option" id="${wards[ward].code}" onclick="showAddress(event, 2, 0)">${wards[ward].name}<div class="fa fa-angle-right"></div></li>
+                `
+            }
+        }
         steps[step].querySelector('.list-option').innerHTML = html;
     }
     if (e.target.classList.contains('back') || e.target.classList.contains('fa-angle-down')) {
@@ -169,8 +185,11 @@ function resetFilter(e){
     document.querySelector('.address>span').innerHTML += '<div class="fa fa-angle-down"></div>';
     document.querySelector('.price>span').innerText = ' Chọn khoảng giá (tháng)';
     document.querySelector('.price>span').innerHTML += '<div class="fa fa-angle-down"></div>';
-
-
+    document.querySelector('.posts .list-posts ul').innerHTML='';
+    document.querySelector('.posts-area .text-result h4').innerText='Chúng tôi sẽ mang lại thông tin các phòng trọ phù hợp nhất với tiêu chí tìm trọ của bạn. Hãy nhập các lựa chọn ở bộ tìm kiếm nâng cao ở trên!!!'
+    document.querySelectorAll('.posts-area .option-result b')[1].innerText=''
+    url='';
+    console.log(url)
     Array.from(document.querySelectorAll('input')).forEach(input =>{
         if(input.type=='text'){
             input.value='';
@@ -180,6 +199,7 @@ function resetFilter(e){
             input.checked=false;
         }
     })
+    // location.reload();
 }
 
 function routePage(e) {
@@ -205,7 +225,7 @@ function routePage(e) {
             liClicked.classList.add('active');
             page = e.target.innerText * 1;
         }
-    } else if (liClicked.classList.contains('last') || e.target.innerText * 1 === ulClicked.querySelector('.last').id * 1) {
+    } else if (liClicked.classList.contains('last') || e.target.innerText * 1 === ulClicked.querySelector('.last').id * 1 && liClicked.id!='current') {
         let k = ulClicked.querySelector('.last').id * 1 - 2;
         ulClicked.querySelectorAll('.num').forEach(item => {
             item.children[0].innerText = k;
@@ -245,57 +265,178 @@ function routePage(e) {
     if (page == 2) {
         document.getElementById('1').classList.add('disabled')
     }
+    fetch(url + '&page=' + (page - 1) + (sortQuery?sortQuery:''))
+        .then(res => res.json())
+        .then(data => {
+            var html = '';
+            data.posts.forEach(function (post) {
+                html += `
+                <li class="line">
+                    <a href="/post/${post.slug}" class="thumbnail">
+                        <img src="${post.images[0]}" alt="">
+                    </a>
+                    <div class="props">
+                        <p><a class="title" href="/post/${post.slug}">${post.title}</a></p>
 
-    // console.log(window.location.pathname+ '/nav?page='+(page-1))
-    // fetch(window.location.pathname + '/nav?page=' + (page - 1))
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         var html = '';
-    //         data.forEach(function (item) {
-    //             html += `
-    //             <li class="recipes_item">
-    //                 <div class="cook_link">
-    //                     <div class="recipes_item-main">
-    //                         <a href="/account/${item.author}" class="link">
-    //                             <img class="recipes_item-nick--image" src="${item.authorAvatar}" alt="">
-    //                             <span class="nick_name">${item.authorName}</span>
-    //                         </a>
-    //                         <a href="/post/${item.slug}" class="title link">
-    //                             <h3 class="title_text">${item.title}</h3>
-    //                         </a>
-    //                         <div class="time_and_ration">
-    //                 `
-    //             if (item.timecook) {
-    //                 html += `
-    //                         <span class="time"><i class="fas fa-stopwatch time_icon"></i>
-    //                             ${item.timecook} phút
-    //                         </span>
-    //                         `
-    //             }
-    //             if (item.ration) {
-    //                 html += `
-    //                         <span class="ration"><i class="fas fa-user ration_icon"></i>
-    //                             ${item.ration}</span>
-    //                         `
-    //             }
-    //             html += `
-    //                     </div>
-    //                     <div class="description">
-    //                         <p class="description_info"> ${item.ingredients}
-    //                         </p>
-    //                     </div>
-    //                 </div>
-    //                 <div class="cook_image">
-    //                     <img class="recipes_item-main--image" src="${item.thumbnail}" alt="">
-    //                 </div>
-    //             </div>
-    //         </li>
-    //         `
-    //         })
-    //         ulClicked.parentNode.parentNode.querySelector('.recipes_list').innerHTML = html;
-    //         window.scrollTo(0,0)
-    //     })
+                        <div class="text">${post.address.detail?post.address.detail+ ', ':'' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
+                        <div class="equi">
+                            <ul>
+                                <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M1.5 2.5A1.5 1.5 0 0 1 3 1h10a1.5 1.5 0 0 1 1.5 1.5v3.563a2 2 0 0 1 0 3.874V13.5A1.5 1.5 0 0 1 13 15H3a1.5 1.5 0 0 1-1.5-1.5V9.937a2 2 0 0 1 0-3.874V2.5zm1 3.563a2 2 0 0 1 0 3.874V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V9.937a2 2 0 0 1 0-3.874V2.5A.5.5 0 0 0 13 2H3a.5.5 0 0 0-.5.5v3.563zM2 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm12 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                    </svg> ${post.area} m <sup>2</sup>
+                                </li>
+                                <li>
+                                    <div class="fa fa-bed"></div>${post.equipments.bedroom}
+                                </li>
+                                ${post.equipments.hottank ? `<li>
+                                    <div class="fa fa-tv"> 1</div>
+                                </li>`: ''}
+                                ${post.equipments.airconditional ? `<li> <img class="fa" src="/profile/air-conditioner.png" width="18px" height="18px"
+                                alt=""> 1</li>`: ''}
+                            </ul>
+                        </div>
+                        <h3 class="cost">${post.rentcost}vnđ</h3>
+                        <div class="update text">Ngày đăng: ${post.updatedTime}</div>
+                        <div class="contact">
+                            <div class="phone">
+                                <div class="fa fa-phone"></div>${post.contact}
+                            </div>
+                            <div id="${post._id}" class="fa fa-heart  ${data.saved && data.saved.indexOf(post._id) != -1 ? 'checked' : 'default'}" onclick="saved(event)"></div>
+                        </div>
+                    </div>
+                </li>
+
+                `
+            })
+            document.querySelector('.posts .list-posts ul').innerHTML=html;
+            window.scrollTo(0,0)
+        })
 
 
 
+}
+function saved(e) {
+    e.preventDefault();
+    if (document.querySelector('.header .menu .info-account')) {
+        let btn = e.target;
+        let urlUser = '';
+        let urlPost = '';
+        if (btn.classList.contains('default')) {
+            btn.classList.add('checked')
+            btn.classList.remove('default')
+            urlUser = `/account/saved?post=${btn.id}&key=saved`
+            urlPost = `/post/saved?post=${btn.id}&key=saved`
+        } else {
+            btn.classList.add('default')
+            btn.classList.remove('checked')
+            urlUser = `/account/saved?post=${btn.id}&key=unsaved`
+            urlPost = `/post/saved?post=${btn.id}&key=unsaved`
+        }
+        fetch(urlPost)
+        fetch(urlUser)
+    }
+
+}
+var url;
+var sortQuery;
+$('.search-btn').click(function(event){
+    event.preventDefault()
+    url = '/post/searchResult?'+$('.search-inputs').serialize();
+    searchFetch(url)
+})
+
+function sort(e, sortQueryPara){
+    if(url){
+        sortQuery='&sort='+sortQueryPara;
+        searchFetch(url+sortQuery)
+    }
+}
+function redirect(e, roomType){
+    e.preventDefault()
+    url='/post/searchResult?roomType='+roomType
+    searchFetch(url)
+}
+function searchFetch(url){
+    fetch(url)
+    .then(data=>data.json())
+    .then(data=>{
+        let html ='';
+        data.posts.forEach(post=>{
+            html+=`
+            <li class="line">
+                <a href="/post/${post.slug}" class="thumbnail">
+                    <img src="${post.images[0]}" alt="">
+                </a>
+                <div class="props">
+                    <p><a class="title" href="/post/${post.slug}">${post.title}</a></p>
+
+                    <div class="text">${post.address.detail?post.address.detail+ ', ':''}${post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
+                    <div class="equi">
+                        <ul>
+                            <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M1.5 2.5A1.5 1.5 0 0 1 3 1h10a1.5 1.5 0 0 1 1.5 1.5v3.563a2 2 0 0 1 0 3.874V13.5A1.5 1.5 0 0 1 13 15H3a1.5 1.5 0 0 1-1.5-1.5V9.937a2 2 0 0 1 0-3.874V2.5zm1 3.563a2 2 0 0 1 0 3.874V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V9.937a2 2 0 0 1 0-3.874V2.5A.5.5 0 0 0 13 2H3a.5.5 0 0 0-.5.5v3.563zM2 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm12 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                </svg> ${post.area} m <sup>2</sup>
+                            </li>
+                            <li>
+                                <div class="fa fa-bed"></div>${post.equipments.bedroom}
+                            </li>
+                            ${post.equipments.hottank ? `<li>
+                                <div class="fa fa-tv"> 1</div>
+                            </li>`: ''}
+                            ${post.equipments.airconditional ? `<li> <img class="fa" src="/profile/air-conditioner.png" width="18px" height="18px"
+                            alt=""> 1</li>`: ''}
+                        </ul>
+                    </div>
+                    <h3 class="cost">${post.rentcost}vnđ</h3>
+                    <div class="update text">Ngày đăng: ${post.updatedTime}</div>
+                    <div class="contact">
+                        <div class="phone">
+                            <div class="fa fa-phone"></div>${post.contact}
+                        </div>
+                        <div id="${post._id}" class="fa fa-heart  ${data.saved && data.saved.indexOf(post._id) != -1 ? 'checked' : 'default'}" onclick="saved(event)"></div>
+                    </div>
+                </div>
+            </li>
+            `
+            
+        })
+        document.querySelector('.posts .list-posts ul').innerHTML=html;
+        let page = data.total > 10 ? Math.ceil(data.total / 10) : 1
+        if(document.querySelector('.next_page')){
+            document.querySelector('.next_page').remove()
+        }
+        if(data.total>10){
+            document.querySelector('.posts').innerHTML+=`
+                <nav aria-label="page navigation example" class="next_page">
+                    <ul class="pagination">
+                        <li class="page-item disabled" id="1"><a class="page-link" href="#" onclick="routePage(event)"
+                                aria-label="Previous"><span aria-hidden="true">&laquo;</span> Trang đầu</a></li>
+                        <li class="page-item num active" id="pre"><a class="page-link" onclick="routePage(event)"
+                                href="?page=1">1</a></li>
+                        <li class="page-item num " id="current"><a class="page-link" onclick="routePage(event)"
+                                href="?page=2">2</a></li>
+                        <li class="page-item num ${page==1 || page ==2?'disabled':''}" id="next"><a class="page-link" onclick="routePage(event)"
+                                href="?page=3">3</a></li>
+                        <li class="page-item last ${page==1 || page ==2?'disabled':''}" id="${page}">
+                            <a class="page-link " onclick="routePage(event)" href="#" aria-label="Next">
+                                Trang cuối <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            `
+        }
+
+        if(data.total>0){
+            document.querySelector('.posts-area .text-result h4').innerText='Kết quả tìm kiếm:'
+            document.querySelectorAll('.posts-area .option-result b')[1].innerText=data.total
+        }else{
+            document.querySelector('.posts-area .text-result h4').innerText='Chúng tôi sẽ mang lại thông tin các phòng trọ phù hợp nhất với tiêu chí tìm trọ của bạn. Hãy nhập các lựa chọn ở bộ tìm kiếm nâng cao ở trên!!!'
+            document.querySelectorAll('.posts-area .option-result b')[1].innerText=''
+        }
+    })
 }

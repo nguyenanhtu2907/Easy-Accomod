@@ -1,5 +1,4 @@
-
-    //preview image
+//preview image
     var loader = function (evt){
         let file = evt.target.files;
         let output = document.getElementById("selector");
@@ -121,6 +120,5 @@ fetch(districtApi, object)
           
           
         })
-
 
 

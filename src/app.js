@@ -61,11 +61,22 @@ io.on("connection", function (socket) {
     });
     //server lắng nghe dữ liệu từ client
     socket.on("Client-sent-notification", function (data) {
-
         //sau khi lắng nghe dữ liệu, server phát lại dữ liệu này đến các client khác
-        console.log(data)
-        socket.broadcast.emit(`${data}`, data);
+        socket.broadcast.emit(`${data}noti`, data);
     });
+
+    socket.on("messageToAdmin", function (data) {
+        //sau khi lắng nghe dữ liệu, server phát lại dữ liệu này đến các client khác
+        
+        socket.broadcast.emit('5fb7e2f7662281052c43df98toAdmin', data);
+    });
+
+    socket.on("messageToOwner", function (data) {
+        //sau khi lắng nghe dữ liệu, server phát lại dữ liệu này đến các client khác
+        
+        socket.broadcast.emit(`${data}toOwner`, data);
+    });
+
 });
 server.listen(port, () => {
     console.log(`http://localhost:${port}`);
