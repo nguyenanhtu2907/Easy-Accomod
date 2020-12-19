@@ -16,10 +16,12 @@
                 <li>
                     <a href="/post/search">Tìm kiếm nâng cao</a>
                 </li>
-                <li>
-                    <a href="/post/rank">Thống kê phòng trọ</a>
-                </li>
                 {{#if localAuthUser}}
+                {{#ifCond localAuthUser.level "admin"}}
+                <li>
+                    <a href="/account/{{localAuthUser._id}}/manage">Thống kê phòng trọ</a>
+                </li>
+                {{/ifCond}}
                 {{#ifCond localAuthUser.level "owner"}}
                 <li>
                     <div class="notification">

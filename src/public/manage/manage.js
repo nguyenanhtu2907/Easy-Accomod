@@ -575,15 +575,52 @@ function chooseOption(bigOption, innerOption) {
                     break;
                 } case 7: {
                     option.querySelector('.title h1').innerText = 'Thống kê';
-                    // option.querySelector('.list-items thead tr').innerHTML = `
-                    // <th>ID bài viết</th>
-                    // <th>Tiêu đề</th>
-                    // <th>Người đăng</th>
-                    // <th>Liên hệ</th>
-                    // <th>Thời gian tạo</th>
-                    // `;
-                    console.log(option)
-                    // option.querySelector('.list-items table').scrollIntoView();
+                    fetch(window.location.pathname + '?option=7')
+                        .then(data => data.json())
+                        .then(data => {
+                            var htmlViewed = '';
+                            data.savedPosts.forEach(post=>{
+                                var address  =post.address.detail+', ' + post.address.ward+', '+post.address.district+', '+post.address.province;
+                                htmlViewed+=`
+                                    <tr>
+                                        <td><a href="/post/${post.slug}">${post.title.length>20?post.title.slice(0,20)+'...':post.title}</a></td>
+                                        <td><a href="/post/${post.slug}">${address.length>20?address.slice(0,20)+'...':address}</a></td>
+                                        <td><a href="/post/${post.slug}">${post.rentcost}</a></td>
+                                        <td><a href="/post/${post.slug}">${post.viewed}</a></td>
+                                    </tr>
+                                `
+                            })
+                            document.querySelector('#rank-viewed table tbody').innerHTML=htmlViewed;
+                            
+                            var htmlSaved = '';
+                            data.savedPosts.forEach(post=>{
+                                var address  =post.address.detail+', ' + post.address.ward+', '+post.address.district+', '+post.address.province;
+                                htmlSaved+=`
+                                    <tr>
+                                        <td><a href="/post/${post.slug}">${post.title.length>20?post.title.slice(0,20)+'...':post.title}</a></td>
+                                        <td><a href="/post/${post.slug}">${address.length>20?address.slice(0,20)+'...':address}</a></td>
+                                        <td><a href="/post/${post.slug}">${post.rentcost}</a></td>
+                                        <td><a href="/post/${post.slug}">${post.saved}</a></td>
+                                    </tr>
+                                `
+                            })
+                            document.querySelector('#rank-saved table tbody').innerHTML=htmlSaved;
+                            
+                            var htmlRankOwner = '';
+                            data.owners.forEach(owner=>{
+                                htmlRankOwner+=`
+                                    <tr>
+                                        <td><a href="/account/${owner._id}">${owner.username}</a></td>
+                                        <td><a href="/account/${owner._id}">${owner.fullname}</a></td>
+                                        <td><a href="/account/${owner._id}">${owner.totalPost}</a></td>
+                                    </tr>
+                                `
+                            })
+                            document.querySelector('#rank-user table tbody').innerHTML=htmlRankOwner;
+
+                            // option.querySelector('.list-items table').scrollIntoView();
+                        })
+                        .catch(() => { })
 
                     break;
                 } default: {
