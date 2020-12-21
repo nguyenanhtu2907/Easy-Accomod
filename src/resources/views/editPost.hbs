@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/font/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/create-post/new_post.css">
+    <link rel="stylesheet" href="/header/header.css">
+
+</head>
+
+<body>
+    {{>header}}
+    <p id="message" style="display: none;">{{#if message}}{{message}}{{/if}}</p>
+    <div class="newpost_head">
+        <h1 class="newpost_title">Chỉnh sửa bài viết</h1>
+
+    </div>
+    <div class="container">
+        <div class="new_post">
+
+            <form id="regForm" method="POST" action="">
+
+                <!-- One "tab" for each step in the form: -->
+                <div class="tab">
+                    <div class="form-group ">
+
+                        <h3 class="tab_title">Loại hình cho thuê</h3>
+
+
+                        <label class="home_apartment">
+                            <input type="radio" name="rent" value="Nhà nguyên căn" onclick="nextPrev(1)">
+                            <div class="image_home">
+                                <img src="/create-post/Home.png" alt="">
+                                <p>Nhà nguyên căn</p>
+                            </div>
+
+
+                        </label>
+                        <label class="home_apartment">
+                            <input type="radio" name="rent" value="Chung cư" onclick="nextPrev(1)">
+                            <div class="image_home">
+                                <img src="/create-post/rent.png" alt="">
+                                <p>Chung cư</p>
+                            </div>
+                        </label>
+                        <label class="home_apartment">
+                            <input type="radio" name="rent" value="Phòng trọ" onclick="nextPrev(1)">
+                            <div class="image_home">
+                                <img src="/create-post/rent.png" alt="">
+                                <p>Phòng trọ</p>
+                                <!-- &nbsp; -->
+                            </div>
+                        </label>
+
+                        <label class="home_apartment">
+                            <input type="radio" name="rent" value="Chung cư mini" onclick="nextPrev(1)">
+                            <div class="image_home smalls">
+                                <img src="/create-post/apartment.png" alt="">
+                                <p>Chung cư mini</p>
+                            </div>
+                        </label>
+
+                        <div class="alert"></div>
+                    </div>
+                </div>
+                <div class="tab">
+                    <h3 class="tab_title">Vị trí cho thuê</h3>
+                    <div class="form-group required">
+                        <div class="input_province">
+                            <p class="input_title">Tỉnh thành: </p>
+                            <select name="province" id="province" class="address_input" aria-label="asd">
+                                <option selected value="" disabled id="1" title="  111" style="display: none;">Tỉnh
+                                </option>
+
+                            </select>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group required">
+                        <div class="input_district">
+                            <p class="input_title">Quận/huyện:</p>
+                            <select name="district" id="district" class="address_input" label="aaaa">
+                                <option selected disabled>Quận/Huyện </option>
+
+                            </select>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group required">
+                        <div class="input_ward">
+                            <p class="input_title">Phường/xã</p>
+                            <select name="ward" id="ward" class="address_input">
+                                <option selected disabled>Phường/xã </option>
+
+                            </select>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group required">
+                        <div class="floorsdirection">
+                            <div class="floorsdirection-title input_title">Địa chỉ chi tiết</div>
+                            <input name="detail_address" autocomplete="off" value="{{post.address.detail}}" type="text"
+                                id="detail_address" placeholder="Tên đường, phố...">
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="input_description">
+                            <p class="input_title">Mô tả vị trí:</p>
+                            <textarea name="address_description"  id="description" cols="100"
+                                rows="5">{{post.nearby}}</textarea>
+                        </div>
+
+                        <div class="alert"></div>
+                    </div>
+                </div>
+                <div class="tab">
+                    <h3 class="tab_title">Diện tích và giá</h3>
+                    <div class="form-group required">
+                        <div class="input_acreage">
+                            <p class="input_title">Diện tích đất</p>
+                            <input id="acreage" type="number" value="{{post.area}}" min="0"
+                                placeholder="Diện tích sử dụng" name="area">
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+
+                    <div class="input_width_and_height">
+                        <div class="form-group required">
+                            <div class="width_input">
+                                <p class="input_title">Tiền điện</p>
+                                <div class="width_input-unit">
+                                    <input id="electric" value="{{post.electric}}" type="number" min="0"
+                                        placeholder="Điện" name="electric">
+                                    <span>VND/số</span>
+                                </div>
+
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="height_input">
+                                <p class="input_title">Tiền nước</p>
+                                <div class="height_input-unit">
+                                    <input type="number" min="0" value="{{post.water}}" id="water" name="water"
+                                        placeholder="Nước">
+                                    <span>VND/tháng</span>
+                                </div>
+
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <div class="price_input">
+                            <p class="input_title">Giá</p>
+                            <div class="price_input-unit">
+                                <input id="price" placeholder="Nhập giá phòng/nhà trọ" type="number" min="0"
+                                    class="height" name="rentcost">
+                                <span>VND/tháng</span>
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+
+                    <div class="price_total">
+                        <p class="input_title">Tổng giá tiền</p>
+                        <div class="price_total-result">
+                            <p>Chưa nhập giá </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab">
+                    <h3 class="tab_title">Thông tin bài đăng</h3>
+                    <div class="form-group required">
+                        <div class="newpost_heading">
+                            <div class="newpost_heading-title input_title">Tiêu đề</div>
+                            <input type="text" autocomplete="off" name="title" value="{{post.title}}"
+                                id="newpost_heading-input" placeholder="Tiêu đề bài viết">
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group required">
+                        <div class="newpost_content">
+                            <div class="newpost_content-title input_title">Nội dung</div>
+                            <textarea type="text" name="description" 
+                                id="newpost_content-input" rows="10" placeholder="Nội dung bài viết">{{post.description}}</textarea>
+                        </div>
+                        <div class="alert"></div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="tab">
+                    <h3 class="tab_title">Thông tin chi tiết</h3>
+                    <div class="form-group required">
+                        <div class="direction">
+                            <div class="direction_title input_title">Bếp, nấu ăn</div>
+                            <input type="text" autocomplete="off" name="kitchen" value="{{post.equipments.kitchen}}"
+                                id="direction-input" min="0"
+                                placeholder="Nấu riêng, nấu chung, được phép nấu ăn, không nấu ăn...">
+                        </div>
+                        <div class="alert"></div>
+
+                    </div>
+                    <div class="bedrooms_and_toilets">
+                        <div class="form-group required">
+                            <div class="bedrooms">
+                                <div class="bedrooms-title input_title">Số phòng ngủ</div>
+                                <input name="so_phong_ngu" type="number" value="{{post.equipments.bedroom}}"
+                                    id="bedrooms_input" min="0" placeholder="Số phòng ngủ">
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="toilets">
+                                <div class="toilets-title input_title">Số phòng WC</div>
+                                <input name="so_phong_WC" type="number" value="{{post.equipments.wc}}"
+                                    id="toilets_input" min="0" placeholder="Số phòng WC">
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                    <div class="floors_and_floorsdirection">
+                        <div class="form-group required">
+                            <div class="floors">
+                                <div class="floors-title input_title">Số tầng/lầu</div>
+                                <input name="so_tang" type="number" id="floors_input" value="{{post.equipments.floors}}"
+                                    min="0" placeholder="Số tầng/lầu">
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="floorsdirection">
+                                <div class="floorsdirection-title input_title">Vị trí tầng lầu</div>
+                                <input name="vi_tri_tang" type="number" id="floordirection_input"
+                                    value="{{post.equipments.floor}}" min="0" placeholder="Vị trí tầng lầu">
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                    <div class="bathrooms_and_hottanks">
+                        <div class="form-group required">
+                            <div class="bathroom">
+                                <div class="bathroom-title input_title">Phòng tắm</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender">
+
+                                    <div class="gender">
+                                        <input type="radio" name="bathroom" checked class="form-control" value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="bathroom" class="form-control" value="No"> Không
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="hottank">
+                                <div class="hottank-title input_title">Nóng lạnh</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender form-hottank">
+
+                                    <div class="gender">
+                                        <input type="radio" name="hottank" checked class="form-control" value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="hottank" class="form-control" value="No"> Không
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                    <div class="airconditional_and_freazer">
+                        <div class="form-group required">
+                            <div class="airconditional">
+                                <div class="airconditional-title input_title">Điều hòa</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender form-airconditional">
+
+                                    <div class="gender">
+                                        <input type="radio" name="airconditional" checked class="form-control"
+                                            value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="airconditional" class="form-control" value="No"> Không
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="freazer">
+                                <div class="freazer-title input_title">Tủ lạnh</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender form-freazer">
+
+                                    <div class="gender">
+                                        <input type="radio" name="freazer" checked class="form-control" value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="freazer" class="form-control" value="No"> Không
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                    <div class="airconditional_and_freazer">
+                        <div class="form-group required">
+                            <div class="airconditional">
+                                <div class="airconditional-title input_title">Chung chủ</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender form-airconditional">
+
+                                    <div class="gender">
+                                        <input type="radio" name="owner" checked class="form-control" value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="owner" class="form-control" value="No"> Không
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="freazer">
+                                <div class="freazer-title input_title">Khép kín</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender form-freazer">
+
+                                    <div class="gender">
+                                        <input type="radio" name="closed" checked class="form-control" value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="closed" class="form-control" value="No"> Không
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                    <div class="airconditional_and_freazer">
+                        <div class="form-group required">
+                            <div class="airconditional">
+                                <div class="airconditional-title input_title">Máy giặt</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender form-airconditional">
+
+                                    <div class="gender">
+                                        <input type="radio" name="washing_machine" checked class="form-control"
+                                            value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="washing_machine" class="form-control" value="No">
+                                        Không
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="freazer">
+                                <div class="freazer-title input_title">Ban công</div>
+                                <!-- <input name="so_tang" type="number" id="floors_input" min="0" placeholder="Số tầng/lầu"> -->
+                                <div class="form-gender form-freazer">
+
+                                    <div class="gender">
+                                        <input type="radio" name="balcony" checked class="form-control" value="Yes">Có
+                                    </div>
+                                    <div class="gender">
+                                        <input type="radio" name="balcony" class="form-control" value="No"> Không
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <h3 class="tab_title">Đăng ảnh</h3>
+                    <input type="file" multiple id="images_input">
+                    <label for="images_input" id="img_input-label">
+                        <div class="images_input-label--item">
+                            <p>Nhấn để tải ảnh</p>
+                            <i class="fa fa-plus"></i>
+                        </div>
+                    </label>
+                    <hr>
+                    <ul class="image_list">
+                    </ul>
+                    <hr />
+                </div>
+                <div class="tab">
+                    <h3 class="tab_title">Thời gian hiển thị</h3>
+                    <div class="form-group required">
+                        <div class="price_input">
+                            <p class="input_title">Chọn thời gian hiển thị của bài đăng</p>
+
+                            <div class="price_input-unit">
+                                <input id="gia_han" type="number" min="7" class="extend" name="availabletime"
+                                    placeholder="Nhập số ngày">
+                                <span>Ngày</span>
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="post_price">
+                        <p class="input_title">Tổng chi phí bài đăng</p>
+                        <div class="post_price-result">
+                            <p>Chưa nhập ngày </p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div style="overflow:auto;">
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                        <button type="submit" id="submit_btn">Submit</button>
+                    </div>
+                </div>
+                <!-- Circles which indicates the steps of the form: -->
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+    <script src="/javascripts/validator.js"></script>
+    <script src="/header/header.js"></script>
+    <script src="/create-post/new_post.js"></script>
+    <script>
+        if (document.querySelector('#message').innerText) {
+            alert(document.querySelector('#message').innerText)
+            window.location.replace(`/account/{{localAuthUser._id}}`)
+        }
+
+        Validator({
+            form: '#regForm',
+            formMessage: '.alert',
+            formGroupSelector: ".form-group",
+            rules: [
+                Validator.isRequired('#province'),
+                Validator.isRequired('#district'),
+                Validator.isRequired('#acreage'),
+                Validator.isRequired('#water'),
+                Validator.isRequired('#electric'),
+                Validator.isRequired('#price'),
+                Validator.isRequired('#newpost_heading-input'),
+                Validator.isRequired('#newpost_content-input'),
+                Validator.isRequired('#direction-input'),
+                Validator.isRequired('#bedrooms_input'),
+                Validator.isRequired('#toilets_input'),
+                Validator.isRequired('#floors_input'),
+                Validator.isRequired('#floordirection_input'),
+            ],
+            //onSubmit: function (data) {
+            //    console.log(data);
+            //}
+        }
+        )
+
+
+    </script>
+</body>
+
+</html>

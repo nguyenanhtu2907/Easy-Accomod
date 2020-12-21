@@ -2,7 +2,7 @@
 body{
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+    
 }
 .avatar-background{
     width: 100%;
@@ -290,7 +290,7 @@ ul li{
 
 @media screen and (max-width:768px) {
     :root {font-size: calc(13px + 2 * ((100vw - 768px) / 598));}
-    .posts .props .equi, .posts .props .text{
+    .posts .props .equi, .posts .props .text, .description{
         display: none; 
     }
 }
@@ -298,7 +298,7 @@ ul li{
 /* width: >= 1366px desktop */
 @media screen and (max-width:1366px) {
     :root {font-size:15px;}    
-    .news{
+    .news,.description{
         display: none;
     }
     .content .posts{

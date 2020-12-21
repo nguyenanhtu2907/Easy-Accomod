@@ -3,8 +3,10 @@ const Post = require('../models/User')
 
 class HomeController{
     index(req, res, next){
-        res.render('home')
+        res.render('home',{
+            layout:false,
+        })
     }
 }
 
-module.exports = new HomeController;
+module.exports = new HomeController();
