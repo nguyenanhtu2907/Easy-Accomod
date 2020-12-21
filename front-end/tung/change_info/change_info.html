@@ -8,12 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../base.css">
     <link rel="stylesheet" href="change_info.css">
+    <link rel="stylesheet" href="change_pass.css">
 </head>
 <body>
     <div class="change_info_head">
@@ -21,88 +21,168 @@
     
       </div>
       <div class="container">
-          <form action="" id="change_info-form">
-            <div class="avatar">
-                <input type="file" id = "avatar" accept="image/*" name="avatar_main">
-                    <label for="avatar" id = "selector" class="avatar_label">
-                        <i class="far fa-images icon_upload"></i>
-                        <!-- <i class="fas fa-smile-beam  icon_upload"></i> -->
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#change_info">Sửa thông tin</a></li>
+            <li><a data-toggle="tab" href="#change_pass">Đổi mật khẩu</a></li>
+            
+          </ul>
+        
+          <div class="tab-content">
+            <div id="change_info" class="tab-pane fade in active">
+              
+              <form action="" id="change_info-form">
+                <div class="avatar">
+                    <input type="file" id = "avatar" accept="image/*" name="avatar_main">
+                        <label for="avatar" id = "selector" class="avatar_label">
+                            <i class="far fa-images icon_upload"></i>
+                            <!-- <i class="fas fa-smile-beam  icon_upload"></i> -->
+                            
+                        </label>
+                        <p>Ảnh đại diện</p>
+                        <!-- <div class="anh"> Ảnh </div> -->
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">CMND/Passport</div>
+                    <div class="change_info-input--content">
+                        <input type="text" class="change_info-input--input" name="CMND">
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">Họ</div>
+                    <div class="change_info-input--content">
+                        <input type="text" class="change_info-input--input" name="Ho">
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">Tên</div>
+                    <div class="change_info-input--content">
+                        <input type="text" class="change_info-input--input" name="ten">
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">Email</div>
+                    <div class="change_info-input--content">
+                        <input type="email" class="change_info-input--input" name="Email">
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">Tỉnh</div>
+                    <div class="change_info-input--content">
+                        <select name="province" id="province" class ="change_info-input--input"  >
+                            <option selected  value="" disabled >Tỉnh </option>
+                            
+                          </select>
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">Quận/Huyện</div>
+                    <div class="change_info-input--content">
+                        <select name="district" id="district" class ="change_info-input--input" >
+                            <option selected  value="" disabled >Quận huyện </option>
+                            
+                          </select>
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">Phường/Xã</div>
+                    <div class="change_info-input--content">
+                        <select name="ward" id="ward" class ="change_info-input--input" >
+                            <option selected  value="" disabled >Phường/Xã </option>
+                            
+                          </select>
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title">Giới thiệu</div>
+                    <div class="change_info-input--content">
+                        <textarea name="introduce" id="introduce" class="change_info-input--input"cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="change_info-input">
+                    <div class="change_info-input--title"></div>
+                    <div class="change_info-input--content">
+                        <button type="submit" id="info_submit" class="submit_btn">Cập nhật </button>
+    
+                    </div>
+                </div>
+              </form>
+            </div>
+            <div id="change_pass" class="tab-pane fade">
+              
+              <form action="" id="change_pass-form">
+                <div class="form-group">
+                <div class="change_pass-input">
+                    
+                        <div class="change_pass-input--title">Mật khẩu cũ</div>
+                        <div class="change_pass-input--content">
+                            <input type="password" id="old_pass" class="change_pass-input--input" name="old_pass">
+                            <!-- <i class="fas fa-eye fa-eye-slash" id="old_togglePassword"></i> -->
+                            <div class="alert"></div>
+                        </div>
                         
-                    </label>
-                    <p>Ảnh đại diện</p>
-                    <!-- <div class="anh"> Ảnh </div> -->
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">CMND/Passport</div>
-                <div class="change_info-input--content">
-                    <input type="text" class="change_info-input--input" name="CMND">
+                    </div>
                 </div>
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">Họ</div>
-                <div class="change_info-input--content">
-                    <input type="text" class="change_info-input--input" name="Ho">
-                </div>
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">Tên</div>
-                <div class="change_info-input--content">
-                    <input type="text" class="change_info-input--input" name="ten">
-                </div>
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">Email</div>
-                <div class="change_info-input--content">
-                    <input type="email" class="change_info-input--input" name="Email">
-                </div>
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">Tỉnh</div>
-                <div class="change_info-input--content">
-                    <select name="province" id="province" class ="change_info-input--input"  >
-                        <option selected  value="" disabled >Tỉnh </option>
+                <div class="form-group">
+                <div class="change_pass-input">
+                        <div class="change_pass-input--title">Mật khẩu mới</div>
+                        <div class="change_pass-input--content">
+                            <input type="password" id="new_pass" class="change_pass-input--input" name = "new_pass">
+                            <!-- <i class="fas fa-eye fa-eye-slash" id="new_togglePassword"></i> -->
+                            <div class="alert"></div>
+                        </div>
                         
-                      </select>
+                    </div>
                 </div>
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">Quận/Huyện</div>
-                <div class="change_info-input--content">
-                    <select name="district" id="district" class ="change_info-input--input" >
-                        <option selected  value="" disabled >Quận huyện </option>
-                        
-                      </select>
+                <div class="form-group">
+                <div class="change_pass-input">
+                        <div class="change_pass-input--title">Nhập lại mật khẩu mới</div>
+                        <div class="change_pass-input--content">
+                            <input type="password" id="retype_newpass" class="change_pass-input--input" name ="retype_newpass">
+                            <!-- <i class="fas fa-eye fa-eye-slash" id="retype_togglePassword"></i> -->
+                            <div class="alert"></div>
+                        </div>
+                    </div>
+                   
                 </div>
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">Phường/Xã</div>
-                <div class="change_info-input--content">
-                    <select name="ward" id="ward" class ="change_info-input--input" >
-                        <option selected  value="" disabled >Phường/Xã </option>
-                        
-                      </select>
+                
+                <div class="change_pass-input">
+                    <div class="change_pass-input--title"></div>
+                    <div class="change_pass-input--content">
+                        <button type="submit" id="pass_submit" class="submit_btn">Cập nhật </button>
+    
+                    </div>
                 </div>
+              </form>
             </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title">Giới thiệu</div>
-                <div class="change_info-input--content">
-                    <textarea name="introduce" id="introduce" class="change_info-input--input"cols="30" rows="10"></textarea>
-                </div>
-            </div>
-            <div class="change_info-input">
-                <div class="change_info-input--title"></div>
-                <div class="change_info-input--content">
-                    <button type="submit" class="submit_btn">Cập nhật </button>
-
-                </div>
-            </div>
-          </form>
+            
+            
+          </div>
+          
         
       </div>
       <script src="../sign_in&up/validator.js"></script>
       <script src="change_info.js"></script>
       <script>
-
+    Validator({
+        form:'#change_pass-form',
+        formMessage:'.alert',
+        formGroupSelector: ".form-group",
+         rules:[
+         Validator.isRequired('#old_pass'),
+          Validator.isRequired('#new_pass'),
+          Validator.minLen('#new_pass', 6),
+          Validator.isRequired('#retype_newpass'),
+          
+          
+          Validator.isConfirm('#retype_newpass', function(){
+            return document.querySelector('#change_pass-form #new_pass').value;
+          }, 'Mật khẩu đã nhập không chính xác'),
+          
+       
+    
+    ],
+       }
+       )
       </script>
 </body>
 </html>
