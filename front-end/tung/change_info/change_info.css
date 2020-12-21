@@ -10,7 +10,7 @@
     z-index: 5;
     width: 1000px;
     margin: auto;
-    margin-top: -110px;
+    margin-top: -80px;
     background-color: white;
   
     
@@ -129,6 +129,9 @@ label.image img{
 }
 
 @media screen and (max-width:1000px){
+    .container {
+        max-width: 100%;
+    }
     .change_info-input--content{
         width: 100%;
         margin-right: 10px;
