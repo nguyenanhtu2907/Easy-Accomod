@@ -30,7 +30,7 @@
       }
       return opt;
     }
-    
+
 //fetch province 
 var ProvinceSel = document.getElementById('province')
 var x = getSelectedOption(ProvinceSel)
@@ -136,10 +136,10 @@ fetch(districtApi, object)
       //  console.log(posts)
       htmls.join('');
       document.getElementById('ward').innerHTML = htmls;
-      }
+}
                  
                       
               
           
           
-        })
+})
