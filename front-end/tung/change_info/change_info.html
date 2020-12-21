@@ -34,63 +34,84 @@
                 <div class="avatar">
                     <input type="file" id = "avatar" accept="image/*" name="avatar_main">
                         <label for="avatar" id = "selector" class="avatar_label">
-                            <i class="far fa-images icon_upload"></i>
+                            <!-- <i class="far fa-images icon_upload"></i> -->
                             <!-- <i class="fas fa-smile-beam  icon_upload"></i> -->
-                            
+                            <img src="../image/choco.jpg" alt="" id="default">
                         </label>
                         <p>Ảnh đại diện</p>
                         <!-- <div class="anh"> Ảnh </div> -->
                 </div>
-                <div class="change_info-input">
-                    <div class="change_info-input--title">CMND/Passport</div>
-                    <div class="change_info-input--content">
-                        <input type="text" class="change_info-input--input" name="CMND">
+                <div class="form-group">
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">CMND/Passport</div>
+                        <div class="change_info-input--content">
+                            <input type="text" class="change_info-input--input" id="ND"name="CMND">
+                        </div>
                     </div>
+                    <div class="alert"></div>
                 </div>
-                <div class="change_info-input">
-                    <div class="change_info-input--title">Họ</div>
-                    <div class="change_info-input--content">
-                        <input type="text" class="change_info-input--input" name="Ho">
+                <div class="form-group">
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">Họ</div>
+                        <div class="change_info-input--content">
+                            <input type="text" class="change_info-input--input" id="f_name" name="Ho">
+                        </div>
                     </div>
+                    <div class="alert"></div>
                 </div>
-                <div class="change_info-input">
-                    <div class="change_info-input--title">Tên</div>
-                    <div class="change_info-input--content">
-                        <input type="text" class="change_info-input--input" name="ten">
+                <div class="form-group">
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">Tên</div>
+                        <div class="change_info-input--content">
+                            <input type="text" class="change_info-input--input" id="l_name" name="ten">
+                        </div>
                     </div>
+                    <div class="alert"></div>
                 </div>
-                <div class="change_info-input">
-                    <div class="change_info-input--title">Email</div>
-                    <div class="change_info-input--content">
-                        <input type="email" class="change_info-input--input" name="Email">
+                <div class="form-group">
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">Email</div>
+                        <div class="change_info-input--content">
+                            <input type="email" class="change_info-input--input" id="mail"name="Email">
+                        </div>
                     </div>
+                    <div class="alert"></div>
                 </div>
-                <div class="change_info-input">
-                    <div class="change_info-input--title">Tỉnh</div>
-                    <div class="change_info-input--content">
-                        <select name="province" id="province" class ="change_info-input--input"  >
-                            <option selected  value="" disabled >Tỉnh </option>
-                            
-                          </select>
+                <div class="form-group">
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">Tỉnh</div>
+                        <div class="change_info-input--content">
+                            <select name="province" id="province" class ="change_info-input--input"  >
+                                <option selected  value="" disabled >Tỉnh </option>
+                                
+                              </select>
+                        </div>
                     </div>
+                    <div class="alert"></div>
                 </div>
-                <div class="change_info-input">
-                    <div class="change_info-input--title">Quận/Huyện</div>
-                    <div class="change_info-input--content">
-                        <select name="district" id="district" class ="change_info-input--input" >
-                            <option selected  value="" disabled >Quận huyện </option>
-                            
-                          </select>
+                <div class="form-group">
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">Quận/Huyện</div>
+                        <div class="change_info-input--content">
+                            <select name="district" id="district" class ="change_info-input--input" >
+                                <option selected  value="" disabled >Quận huyện </option>
+                                
+                              </select>
+                        </div>
                     </div>
+                    <div class="alert"></div>
                 </div>
-                <div class="change_info-input">
-                    <div class="change_info-input--title">Phường/Xã</div>
-                    <div class="change_info-input--content">
-                        <select name="ward" id="ward" class ="change_info-input--input" >
-                            <option selected  value="" disabled >Phường/Xã </option>
-                            
-                          </select>
+                <div class="form-group">
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">Phường/Xã</div>
+                        <div class="change_info-input--content">
+                            <select name="ward" id="ward" class ="change_info-input--input" >
+                                <option selected  value="" disabled >Phường/Xã </option>
+                                
+                              </select>
+                        </div>
                     </div>
+                    <div class="alert"></div>
                 </div>
                 <div class="change_info-input">
                     <div class="change_info-input--title">Giới thiệu</div>
@@ -184,5 +205,32 @@
        }
        )
       </script>
+      <script>
+        Validator({
+            form:'#change_info-form',
+            formMessage:'.alert',
+            formGroupSelector: ".form-group",
+             rules:[
+             Validator.isRequired('#ND'),
+             Validator.isRequired('#f_name'),
+              Validator.isRequired('#l_name'),
+              Validator.isRequired('#mail'),
+              Validator.isEmail ('#mail'),
+              
+              Validator.isRequired('#province'),
+              Validator.isRequired('#district'),
+              Validator.isRequired('#ward'),
+              
+              
+            //   Validator.isConfirm('#retype_newpass', function(){
+            //     return document.querySelector('#change_pass-form #new_pass').value;
+            //   }, 'Mật khẩu đã nhập không chính xác'),
+              
+           
+        
+        ],
+           }
+           )
+          </script>
 </body>
 </html>
