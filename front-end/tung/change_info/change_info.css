@@ -49,15 +49,21 @@ input[type="file"]{
 }
 .avatar_label{   
     /* display: flex; */
-    width: 150px;
-    height: 150px;
+    /* width: 150px; */
+    /* height: 150px; */
     margin: 10px;
     background-color: rgb(230, 230, 230);
     border-radius: 50%;
     border: 3px solid rgb(228, 228, 228);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1);    
 }
-
+#default{
+    width: 160px;
+    border-radius: 50%;
+    height: 160px;
+    object-fit: cover;
+    top: 0;
+}
 label.image{
     width: 160px;
     height: 160px;
@@ -127,7 +133,11 @@ label.image img{
 .focus{
     border: 2px solid rgb(34, 212, 180);
 }
-
+.alert{
+    margin-left:320px;
+    margin-bottom: 5px;
+    margin-top: -1.3rem;
+}
 @media screen and (max-width:1000px){
     .container {
         max-width: 100%;
@@ -143,6 +153,9 @@ label.image img{
         text-align: left;
         width: 100%;
     }
+    .alert{
+        margin-left:5px;
+    }
 }
 
 @media (max-width: 580px){
@@ -156,5 +169,8 @@ label.image img{
 }
 .change_info-input--content{
    
+}
+.alert{
+    margin-left:5px;
 }
 }
