@@ -55,7 +55,9 @@
 }
 .change_pass-input--content{
     border-radius: 5px;
-    width: calc(100% - 500px);
+    width: calc(100% - 400px);
+    /* display: flex; */
+
 }
 .change_pass-input--input{
     width: 100%;
@@ -65,7 +67,9 @@
     font-size: 1.1rem;
     outline: none;
 }
-
+#new_togglePassword, #retype_togglePassword, #old_togglePassword{
+    cursor: pointer;
+}
 .change_pass-input--input:focus{
     /* border-radius: 5px; */
     border: 2px solid rgb(34, 212, 180);

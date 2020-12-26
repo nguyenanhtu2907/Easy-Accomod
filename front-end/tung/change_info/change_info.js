@@ -1,5 +1,4 @@
-
-    //preview image
+//preview image
     var loader = function (evt){
         let file = evt.target.files;
         let output = document.getElementById("selector");
@@ -20,6 +19,22 @@
     fileInput.addEventListener("change", loader);
 
 
+    function getSelectedOption(sel) {
+      var opt;
+      for ( var i = 0, len = sel.options.length; i < len; i++ ) {
+          opt = sel.options[i];
+          if ( opt.selected === true ) {
+              break;
+          }
+      }
+      return opt;
+    }
+
+//fetch province 
+var ProvinceSel = document.getElementById('province')
+var x = getSelectedOption(ProvinceSel)
+// console.log(x)
+var DistrictSel = document.getElementById('district')
 
 //fetch province 
 var provinceApi =
@@ -38,21 +53,23 @@ var object = {
     headers: myHeader
 }
 
+ 
 fetch(provinceApi, object)
     .then( res => res.json() )
     .then(posts => {
         
+       
          var htmls = posts.data.map(function(post){
-             return ` <option value="${post.ProvinceID}">
+             return ` <option value="${post.ProvinceName}" title="${post.ProvinceID}">
              ${post.ProvinceName}
              </option>`
               
+
           })
-          // console.log(posts)
+          // console.log(posts);
          htmls.join('');
          document.getElementById('province').innerHTML += htmls;
     })
-
 
 //fetch district   
 var provinceInput = document.getElementById('province')
@@ -64,33 +81,36 @@ var provinceInput = document.getElementById('province')
 fetch(districtApi, object)
     .then(res=>res.json())
     .then(posts => {
+      
       provinceInput.onchange = function(){
-        var provinceValue = document.getElementById('province').value;
+        var x = getSelectedOption(ProvinceSel)
+        
+        // console.log(ProvinceValue);
+        var provinceValue =  x.title;
+        
         // console.log(typeof (provinceValue));
-        var htmls = `<option selected  value="" disabled >Phường/Xã </option>`;
-         var htmls = posts.data.map(function(post){
+        var htmls = posts.data.map(function(post){
           // console.log(typeof(post.DistrictID))
           // console.log(post.ProvinceID == Number(provinceValue))
             if(post.ProvinceID == Number(provinceValue)){
-              return ` <option value="${post.DistrictID}">
+              return ` <option value="${post.DistrictName}" title="${post.DistrictID}">
                    ${post.DistrictName}
                   </option>`
             }
-           
           })
-          htmls.join('')
-        //   console.log(a);
-        // htmls+=a;
           
           
       //  console.log(posts)
+      htmls.join('');
       var a=`<option selected  value="" disabled >Quận huyện </option>`;
       document.getElementById('district').innerHTML = a;
       document.getElementById('district').innerHTML += htmls;
       }
          
     })
+   
 
+    //fetch ward
     var districtInput = document.getElementById('district')
 
    var wardApi = "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id";
@@ -98,13 +118,14 @@ fetch(districtApi, object)
     .then(res => res.json())
     .then(posts => {
       districtInput.onchange = function(){
-        var districtValue = document.getElementById('district').value;
+        var x = getSelectedOption(DistrictSel)
+        var districtValue = x.title;
         // console.log(typeof (provinceValue));
         var htmls = posts.data.map(function(post){
           // console.log(typeof(post.DistrictID))
           // console.log(post.ProvinceID == Number(provinceValue))
             if(post.DistrictID == Number(districtValue)){
-              return ` <option value="${post.WardCode}">
+              return ` <option value="${post.WardName}">
                    ${post.WardName}
                   </option>`
             }
@@ -114,13 +135,16 @@ fetch(districtApi, object)
       //  console.log(posts)
       htmls.join('');
       document.getElementById('ward').innerHTML = htmls;
-      }
+}
                  
                       
               
           
           
-        })
+
+})
+
+        
 
 
 

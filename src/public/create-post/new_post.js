@@ -82,31 +82,32 @@ function fixStepIndicator(n) {
 var number = document.querySelector('#price');
 var log = document.querySelector('.price_total-result p');
 
-number.addEventListener('input', updateValue);
-function updateValue(e) {
-
-  log.textContent = convertToString(e.target.value);
-
+number.addEventListener('input', updateValuePrice);
+function updateValuePrice(e){
+    
+    log.textContent = convertToString(e.target.value);
+    
 }
+
 function convertToString(e){
-  var result = '';
-  if(e.length == 0) result ='Chưa nhập giá';
-  if(e.length >= 5 & e.length <=6 )
-  result += e.slice(-e.length,-3) + ' Ngàn';
-  else if(e.length >= 7  & e.length <= 9){
-  result += e.slice(-e.length,-6) +' Triệu ' + e.slice(-6,-3)+ ' Ngàn ';
-  }
-  else if(e.length >= 10)
-  result += e.slice(-e.length,-9) +' Tỷ ' + e.slice(-9,-6) + ' Triệu ' +e.slice(-6,-3) + ' Ngàn ';
-  else result += e;
-return result;
+    var result = '';
+    if(e.length == 0) result ='Chưa nhập giá';
+    if(e.length >= 5 & e.length <=6 )
+    result += e.slice(-e.length,-3) + ' Ngàn';
+    else if(e.length >= 7  & e.length <= 9){
+    result += e.slice(-e.length,-6) +' Triệu ' + e.slice(-6,-3)+ ' Ngàn ';
+    }
+    else if(e.length >= 10)
+    result += e.slice(-e.length,-9) +' Tỷ ' + e.slice(-9,-6) + ' Triệu ' +e.slice(-6,-3) + ' Ngàn ';
+    else result += e;
+  return result;
 }
 
 var day = document.querySelector('#gia_han');
 var target = document.querySelector('.post_price-result p');
 
-day.addEventListener('input', update);
-function update(e){
+day.addEventListener('input', updateValue);
+function updateValue(e){
     
     target.textContent = price(e.target.value);
     
@@ -114,9 +115,8 @@ function update(e){
 
 
 function price(e){
-  var num = Number (e) *3000;
-  console.log(num)
-  var cost = (Number (e) *3000).toString();
+  var num = Number (e) *25000;
+  var cost = (Number (e) *25000).toString();
   var result = '';
   if(num<0) result ="Làm gì có ngày âm bạn ơi";
   else if(num ==0) result ="Chưa nhập ngày";
@@ -180,7 +180,7 @@ function getSelectedOption(sel) {
 }
 var ProvinceSel = document.getElementById('province')
 var x = getSelectedOption(ProvinceSel)
-// console.log(x)
+
 var DistrictSel = document.getElementById('district')
 
 //fetch province 
@@ -213,7 +213,6 @@ fetch(provinceApi, object)
 
 
     })
-    // console.log(posts);
     htmls.join('');
     document.getElementById('province').innerHTML += htmls;
   })
@@ -231,23 +230,14 @@ fetch(districtApi, object)
 
     provinceInput.onchange = function () {
       var x = getSelectedOption(ProvinceSel)
-
-      // console.log(ProvinceValue);
       var provinceValue = x.title;
-
-      // console.log(typeof (provinceValue));
       var htmls = posts.data.map(function (post) {
-        // console.log(typeof(post.DistrictID))
-        // console.log(post.ProvinceID == Number(provinceValue))
         if (post.ProvinceID == Number(provinceValue)) {
           return ` <option value="${post.DistrictName}" title="${post.DistrictID}">
                    ${post.DistrictName}
                   </option>`
         }
       })
-
-
-      //  console.log(posts)
       htmls.join('');
       var a = `<option selected  value="" disabled >Quận huyện </option>`;
       document.getElementById('district').innerHTML = a;
@@ -267,19 +257,13 @@ fetch(wardApi, object)
     districtInput.onchange = function () {
       var x = getSelectedOption(DistrictSel)
       var districtValue = x.title;
-      // console.log(typeof (provinceValue));
       var htmls = posts.data.map(function (post) {
-        // console.log(typeof(post.DistrictID))
-        // console.log(post.ProvinceID == Number(provinceValue))
         if (post.DistrictID == Number(districtValue)) {
           return ` <option value="${post.WardName}">
                    ${post.WardName}
                   </option>`
         }
       })
-
-
-      //  console.log(posts)
       htmls.join('');
       document.getElementById('ward').innerHTML = htmls;
     }

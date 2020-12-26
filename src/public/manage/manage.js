@@ -6,7 +6,7 @@ var trs = Array.from(document.querySelectorAll('.list-items tbody tr'));
 trs.forEach(tr => {
     tr.addEventListener('click', function (e) {
         console.log(1);
-        //tim vỊ trí/index của tr trong trs
+        //tim Địa chỉ/index của tr trong trs
         //chiếu sang mảng dữ liệu vừa fetch từ server và thay đổi dữ liệu bên detail-side
     });
 })
@@ -39,35 +39,70 @@ function showInfo(e, type, element) {
             .then(res => res.json())
             .then(post => {
                 let spans = document.querySelectorAll(element + ' li span');
-                spans[0].innerText = user._id;
-                spans[1].innerText = user.authorName;
-                spans[2].innerText = user.title;
-                spans[3].innerText = user.address;
-                spans[4].innerText = user.contact;
-                spans[5].innerText = user.createdDate;
-                spans[6].innerText = user.rentcost;
-                spans[7].innerText = user.roomtype;
-                spans[8].innerText = user.area;
-                spans[9].innerText = user.equiments.join(', ');
+                spans[0].innerText = post._id;
+                spans[1].innerText = post.authorName;
+                spans[2].innerText = post.title.length>50?post.title.slice(0,51)+'...':post.title;
+                spans[3].innerText = post.address.detail + ', ' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province;
+                spans[4].innerText = post.contact;
+                spans[5].innerText = post.createdDate;
+                spans[6].innerText = post.rentcost;
+                spans[7].innerText = post.roomtype;
+                spans[8].innerText = post.area;
+                spans[9].innerText = post.availabletime*25000;
+                spans[10].innerText = post.owner;
             })
     } else {
-        console.log(items)
-        // url = `/account/get-info?key=${items.querySelectorAll('td')[0].innerText}`
-        // fetch(url)
-        //     .then(res => res.json())
-        //     .then(user => {
-        //         let spans = document.querySelectorAll(element + ' li span');
-        //         spans[0].innerText = user._id;
-        //         spans[1].innerText = user.username;
-        //         spans[2].innerText = user.fullname;
-        //         spans[3].innerText = user.gender;
-        //         spans[4].innerText = user.phone;
-        //         spans[5].innerText = user.email;
-        //         spans[6].innerText = user.identity;
-        //         spans[7].innerText = user.address;
-        //     })
-    }
+        let li = e.target;
+        while (li.tagName != 'LI') {
+            li = li.parentNode;
+        }
+        Array.from(li.parentNode.querySelectorAll('li')).forEach((ele, index) => {
+            if (li === ele) {
+                li.classList.add('chosen')
+                if (li.classList.contains('bolder')) {
+                    li.classList.remove('bolder')
+                    fetch('/account/seen-message/' + index, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                        .then(() => { })
+                        .catch(() => { })
+                }
 
+            } else {
+                ele.classList.remove('chosen')
+            }
+        });
+
+        url = `/account/get-info?key=${li.querySelector('.info-chat span').innerText}`
+        fetch(url)
+            .then(res => res.json())
+            .then(user => {
+                let spans = document.querySelectorAll(element + ' li span');
+                spans[0].innerText = user._id;
+                spans[1].innerText = user.username;
+                spans[2].innerText = user.fullname;
+                spans[3].innerText = user.gender;
+                spans[4].innerText = user.phone;
+                spans[5].innerText = user.email;
+                spans[6].innerText = user.identity;
+                spans[7].innerText = user.address;
+
+                let chatHtml = '';
+                user.messages.forEach(message => {
+                    chatHtml += `
+                        <li>
+                            <div class="a-message ${message.author == 'admin' ? 'admin-message' : ''}"><span> ${message.message}</span></div>
+                        </li>
+                    `
+                })
+                document.querySelector('.chat-area ul').innerHTML = chatHtml;
+                document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
+
+            })
+    }
 }
 function chooseOption(bigOption, innerOption) {
     //bigOption: option to: quản lý bài viết, tài khoản, chat, thống kê
@@ -343,10 +378,10 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
-                                        <td>${post.createDate}</td>
+                                        <td>${post.createdDate}</td>
                                     </tr>
                                 `;
                             });
@@ -364,7 +399,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b>: <span></span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                     <li>
                                         <b>Liên hệ </b>: <span></span>
@@ -382,7 +417,10 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b>: <span></span>
+                                        <b>Phí đăng bài </b>: <span></span>
+                                    </li>
+                                    <li style="display:none">
+                                        <b>ID chủ trọ </b>: <span></span>
                                     </li>
                                 </ul>
                                 <div class="button-admin">
@@ -408,16 +446,16 @@ function chooseOption(bigOption, innerOption) {
                                 <th>Tiêu đề</th>
                                 <th>Người đăng</th>
                                 <th>Liên hệ</th>
-                                <th>Thời gian tạo</th>
+                                <th>Thời gian cập nhật</th>
                             `;
                             posts.forEach(post => {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
-                                        <td>${post.createDate}</td>
+                                        <td>${post.updatedTime}</td>
                                     </tr>
                                 `;
                             });
@@ -435,7 +473,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b>: <span></span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                     <li>
                                         <b>Liên hệ </b>: <span></span>
@@ -453,7 +491,10 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b>: <span></span>
+                                        <b>Phí đăng bài </b>: <span></span>
+                                    </li>
+                                    <li style="display:none">
+                                        <b>ID chủ trọ </b>: <span></span>
                                     </li>
                                 </ul>
                             `;
@@ -477,10 +518,10 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
-                                        <td>${post.createDate}</td>
+                                        <td>${post.createdDate}</td>
                                     </tr>
                                 `;
                             });
@@ -498,7 +539,7 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Tiêu đề </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Vị trí </b>: <span></span>
+                                        <b>Địa chỉ </b>: <span></span>
                                     </li>
                                     <li>
                                         <b>Liên hệ </b>: <span></span>
@@ -516,7 +557,10 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Diện tích </b>: <span></span>
                                     </li>
                                     <li>
-                                        <b>Trang thiết bị </b>: <span></span>
+                                        <b>Phí đăng bài </b>: <span></span>
+                                    </li>
+                                    <li style="display:none">
+                                        <b>ID chủ trọ </b>: <span></span>
                                     </li>
                                 </ul>
                                 <div class="button-admin">
@@ -531,65 +575,47 @@ function chooseOption(bigOption, innerOption) {
                     break;
                 } case 7: {
                     option.querySelector('.title h1').innerText = 'Thống kê';
-                    option.querySelector('.list-items thead tr').innerHTML = `
-                    <th>ID bài viết</th>
-                    <th>Tiêu đề</th>
-                    <th>Người đăng</th>
-                    <th>Liên hệ</th>
-                    <th>Thời gian tạo</th>
-                    `;
-                    option.querySelector('.list-items table').scrollIntoView();
+                    // option.querySelector('.list-items thead tr').innerHTML = `
+                    // <th>ID bài viết</th>
+                    // <th>Tiêu đề</th>
+                    // <th>Người đăng</th>
+                    // <th>Liên hệ</th>
+                    // <th>Thời gian tạo</th>
+                    // `;
+                    console.log(option)
+                    // option.querySelector('.list-items table').scrollIntoView();
 
                     break;
                 } default: {
-                    fetch(window.location.pathname + '?option=8')
-                        .then(messages => messages.json())
-                        .then(messages => {
-                            option.querySelector('.title h1').innerText = 'Message';
-                            let html = '';
-                            messages.forEach((message, index) => {
-                                html += `
-                                    <li class="${'chosen'}" onclick="showMessage(event)">
-                                        <div class="avatar-chat">
-                                            <img src="${message.avatar}" alt="">
-                                        </div>
-                                        <div class="info-chat">
-                                            <p>${message.fullname}</p>
-                                            <span>${message.username}</span>
-                                        </div>
-                                    </li>
-                                `
-                            })
-                            document.querySelector('.message-side .room-chat .accounts>ul').innerHTML = html;
-                            document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
-                            option.querySelector('#info-chat').innerHTML = `
-                                    <li>
-                                        <b>ID người dùng</b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Tên đăng nhập </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Họ và tên </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Giới tính </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Số điện thoại </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Email </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>CCCD/CMND </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Địa chỉ </b>: <span></span>
-                                    </li>
-                            `;
-                        })
-                        .catch(()=>{})
+                    option.querySelector('.title h1').innerText = 'Message';
+                    document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
+                    option.querySelector('#info-chat').innerHTML = `
+                        <li>
+                            <b>ID người dùng</b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Tên đăng nhập </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Họ và tên </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Giới tính </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Số điện thoại </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Email </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>CCCD/CMND </b>: <span></span>
+                        </li>
+                        <li>
+                            <b>Địa chỉ </b>: <span></span>
+                        </li>
+                    `;
+                    refreshListChat();
                     break;
                 }
             }
@@ -597,10 +623,8 @@ function chooseOption(bigOption, innerOption) {
     })
 }
 
-function showMessage(e){
-    showInfo(e, 2, '#info-chat ')
-}
 chooseOption(0, 0)
+
 function getEnter(e) {
     let chatArea = document.querySelector('.chat-area');
     let value = e.target.value;
@@ -611,7 +635,8 @@ function getEnter(e) {
             </li>
         `
         chatArea.scrollTop = chatArea.scrollHeight;
-        submitMessageToDB(value);
+        submitMessageToDB(value, 'toOwner');
+
         chatArea.parentNode.querySelector('.input-chat input').value = '';
     }
 }
@@ -625,7 +650,44 @@ function submitMessage(e) {
                 </li>
             `
         chatArea.scrollTop = chatArea.scrollHeight;
-        submitMessageToDB(value);
+        submitMessageToDB(value, 'toOwner');
     }
+
     chatArea.parentNode.querySelector('.input-chat input').value = '';
 }
+
+function refreshListChat() {
+    var choosing;
+    if (document.querySelector('.message-side .room-chat .accounts>ul>li.chosen .info-chat p')) {
+        choosing = document.querySelector('.message-side .room-chat .accounts>ul>li.chosen .info-chat p').innerText;
+    }
+    fetch('/account/get-info?key=admin')
+        .then(admin => admin.json())
+        .then(admin => {
+            let html = '';
+            admin.messages.forEach(message => {
+                html += `
+                <li class="${message.seen == false ? 'bolder' : ''}" >
+                    <div onclick="showInfo(event, 2, '#info-chat ')">
+                        <div class="avatar-chat">
+                            <img src="${message.avatar}" alt="">
+                        </div>
+                        <div class="info-chat">
+                            <p>${message.fullname}</p>
+                            <span>${message.username}</span>
+                        </div>
+                    </div>
+                </li>
+            `
+            })
+            document.querySelector('.message-side .room-chat .accounts>ul').innerHTML = html;
+            if (document.querySelector('.message-side .room-chat .accounts>ul>li.bolder .info-chat p') && document.querySelector('.message-side .room-chat .accounts>ul>li.bolder .info-chat p').innerText == choosing) {
+                document.querySelector('.message-side .room-chat .accounts>ul>li.bolder div').click();
+            };
+        })
+}
+
+socket.on(`5fb7e2f7662281052c43df98toAdmin`, data => {
+    refreshListChat()   
+    document.querySelector('.fa-comment').classList.add('alerted')
+})

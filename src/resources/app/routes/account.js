@@ -15,6 +15,10 @@ router.get('/logout', accountController.logout);
 
 router.get('/get-info', accountController.getInfo);
 
+router.put('/seen-message/:index', accountController.seenMessage);
+
+router.get('/get-info/:id', accountController.getInfoById);
+
 router.post('/submit-message', accountController.submitMessage);
 
 router.post('/action-admin',accountController.restrictLogin, accountController.actionAdmin);
@@ -23,6 +27,11 @@ router.get('/:id/manage',accountController.restrictLogin, accountController.mana
 
 router.get('/:id/get-noti',accountController.restrictLogin, accountController.getNoti);
 
+router.get('/:id/nav', accountController.profileNav);
+
+router.get('/saved', accountController.addToSavedList);
+
 router.get('/:id', accountController.profile);
+
 
 module.exports = router;

@@ -38,7 +38,7 @@ body{
   padding-bottom: 50px;
 }
 .tab{
-  /* display:none; */
+  display:none;
 }
 .tab input{
   /* margin-bottom:1.3rem ; */
@@ -271,7 +271,7 @@ border:none !important;
   font-size: 1.5rem;
   color:rgb(6, 153, 126) ;
 }
-i{
+.newpost_head i{
   color: rgb(206, 206, 211);
   font-size: 4rem;}
 .image_list{
