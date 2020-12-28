@@ -77,6 +77,7 @@ const article = {
   ],
   comments: [
     {
+      id: "123sdfdfbfghtrt",
       avatar:
         "https://plantationhomes.com.au/cms_uploads/images/15861_six-stages-of-building-a-home.jpg",
       name: "Anh Tú",
@@ -85,6 +86,7 @@ const article = {
       date: "26/12/2020 15:36",
     },
     {
+      id: "123sdfdfbfgfbfkbfhtrt",
       avatar:
         "https://plantationhomes.com.au/cms_uploads/images/15861_six-stages-of-building-a-home.jpg",
       name: "Anh Tú",
@@ -284,6 +286,7 @@ const input_comment = document.querySelector(".input-comment");
 const send = () => {
   if (input_comment.value) {
     article.comments.push({
+      id: inner.id,
       avatar: inner.avatarUrl,
       star_voted: stars > 0 ? stars : false,
       name: inner.name,
