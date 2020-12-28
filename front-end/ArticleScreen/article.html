@@ -44,23 +44,7 @@
     <div class="body-container">
       <div class="detail-article">
         <div class="slide-image">
-          <img
-            class="image"
-            src="https://plantationhomes.com.au/cms_uploads/images/15861_six-stages-of-building-a-home.jpg"
-          />
-          <img
-            class="image"
-            src="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"
-          />
-          <img
-            class="image"
-            src="https://cloud.mogi.vn/images/2020/10/28/282/23e3aed4d0a34705b6f769c4fd30bec6.jpg"
-          />
-          <img
-            class="image"
-            src="https://q4g9y5a8.rocketcdn.me/wp-content/uploads/2020/02/home-banner-2020-02-min.jpg"
-          />
-
+          <div class="images"></div>
           <button class="previous-button-slide" onclick="plusDivs(-1)">
             <i class="fas fa-chevron-circle-left"></i>
           </button>
@@ -71,7 +55,7 @@
         <div class="introduce-article"></div>
         <div class="main-article">
           <p class="title-main">Thông tin chính</p>
-          <div style="flex-direction: row; display: flex; width: 100%">
+          <div class="main">
             <ul class="left-main"></ul>
             <ul class="right-main"></ul>
           </div>
@@ -79,30 +63,36 @@
         <div class="description-article">
           <p class="title-main">Mô tả chi tiết</p>
           <div class="content-description"></div>
-          <div class="host-description">
-            <img
-              class="avatar-host"
-              src="https://cdn.mogi.vn/upload/profile/thumb-avatar/201808/09/952/bcdb6603c3fd4a82b1987a9ef63311de.jpg"
-            />
-            <div class="name-host">
-              <p style="font-size: 1.2rem; font-weight: bold; margin: 0px">
-                Phuong Minh
-              </p>
-              <p style="font-size: 1rem; color: grey; margin: 0px">
-                Da tham gia: 2 nam 9 thang
-              </p>
-            </div>
-            <div class="contact-host">
-              <i
-                class="fas fa-phone-alt"
-                style="color: #009177; margin-right: 0.5rem"
-              ></i>
-              0123456789
-            </div>
-          </div>
+          <div class="host-description"></div>
         </div>
       </div>
       <div class="host-article"></div>
+    </div>
+    <div class="comment-container">
+      <div class="my-comment">
+        <div class="rate-comment">
+          <h5 style="margin: 0px; margin-right: 0.5rem">Bình luận của bạn</h5>
+          <div class="rate-star">
+            <i class="far fa-star" onclick="rate(1)"></i>
+            <i class="far fa-star" onclick="rate(2)"></i>
+            <i class="far fa-star" onclick="rate(3)"></i>
+            <i class="far fa-star" onclick="rate(4)"></i>
+            <i class="far fa-star" onclick="rate(5)"></i>
+          </div>
+        </div>
+        <div class="comment-area">
+          <textarea
+            placeholder="Mời nhập bình luận của bạn"
+            class="input-comment"
+          ></textarea>
+          <button class="send-comment" onclick="send()">Gửi</button>
+        </div>
+      </div>
+
+      <h1>Đánh giá của người thuê</h1>
+      <div class="list-comment">
+        <div class="comments"></div>
+      </div>
     </div>
     <script src="article.js"></script>
   </body>
