@@ -24,8 +24,14 @@
       src="https://kit.fontawesome.com/61ffe76e38.js"
       crossorigin="anonymous"
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
-  <body>
+  <body style="padding: 0px">
     <div class="top-bar-container">
       <div class="left-top-bar">
         <ul class="ul-top-bar"></ul>
@@ -52,6 +58,35 @@
             <i class="fas fa-chevron-circle-right"></i>
           </button>
         </div>
+        <div style="display: flex; margin: 0.5rem 0px">
+          <span class="rent-status"></span>
+          <i
+            class="fas fa-ellipsis-h more-option"
+            onclick="showMoreOption(event, '.more-option .options')"
+          >
+            <div class="options none">
+              <div
+                class="option top-left"
+                style="border-bottom: 1px solid var(--color-word)"
+                data-toggle="modal"
+                data-target="#deleteArticle"
+              >
+                Xóa bài viết
+              </div>
+              <div
+                class="option"
+                style="border-bottom: 1px solid var(--color-word)"
+                data-toggle="modal"
+                data-target="#extendArticle"
+              >
+                Gia hạn bài viết
+              </div>
+              <div class="option bottom-left">
+                <a href="#">Chỉnh sửa bài viết</a>
+              </div>
+            </div>
+          </i>
+        </div>
         <div class="introduce-article"></div>
         <div class="main-article">
           <p class="title-main">Thông tin chính</p>
@@ -63,21 +98,25 @@
         <div class="description-article">
           <p class="title-main">Mô tả chi tiết</p>
           <div class="content-description"></div>
-          <div class="host-description"></div>
+          <div class="owner-description"></div>
         </div>
       </div>
-      <div class="host-article"></div>
+      <div class="owner-article"></div>
     </div>
     <div class="comment-container">
       <div class="my-comment">
         <div class="rate-comment">
-          <h5 style="margin: 0px; margin-right: 0.5rem">Bình luận của bạn</h5>
+          <h4 style="margin: 0px; margin-right: 0.5rem">Bình luận của bạn</h4>
           <div class="rate-star">
             <i class="far fa-star" onclick="rate(1)"></i>
             <i class="far fa-star" onclick="rate(2)"></i>
             <i class="far fa-star" onclick="rate(3)"></i>
             <i class="far fa-star" onclick="rate(4)"></i>
             <i class="far fa-star" onclick="rate(5)"></i>
+          </div>
+          <div class="report-button" data-toggle="modal" data-target="#myModal">
+            <span id="baocao">Báo cáo bài viết</span>
+            <i class="fas fa-exclamation-circle report-icon"></i>
           </div>
         </div>
         <div class="comment-area">
@@ -89,11 +128,138 @@
         </div>
       </div>
 
-      <h1>Đánh giá của người thuê</h1>
+      <h2>Đánh giá của người thuê</h2>
       <div class="list-comment">
         <div class="comments"></div>
       </div>
     </div>
+    <!-- Modal Report -->
+    <div>
+      <div class="container">
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header-new">
+                <h4 class="modal-title-new">Báo cáo vi phạm</h4>
+                <button class="close-new" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body-new">
+                <div class="content-reported">
+                  <input type="checkbox" name="check-report" />
+                  <span>Nội dung tin không đúng (giá, diện tích, ...)</span>
+                </div>
+                <div class="content-reported">
+                  <input type="checkbox" name="check-report" />
+                  <span>Địa chỉ không đúng</span>
+                </div>
+                <div class="content-reported">
+                  <input type="checkbox" name="check-report" />
+                  <span>Ảnh không đúng với thực tế</span>
+                </div>
+                <div class="content-reported">
+                  <input type="checkbox" name="check-report" />
+                  <span>Không liên lạc được với người bán</span>
+                </div>
+                <div class="content-reported">
+                  <input type="checkbox" name="check-report" />
+                  <span>Phòng trọ đã cho thuê</span>
+                </div>
+                <div class="content-reported">
+                  <input type="checkbox" name="check-report" />
+                  <span>Tin không có thật</span>
+                </div>
+              </div>
+              <div class="modal-footer-new">
+                <button
+                  class="send-report"
+                  data-dismiss="modal"
+                  onclick="sendReport()"
+                >
+                  Gửi
+                </button>
+                <button class="close-report" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Report -->
+    <!-- Modal Delete -->
+    <div>
+      <div class="container">
+        <div class="modal fade" id="deleteArticle" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header-new">
+                <h4 class="modal-title-new">Bạn muốn xóa bài viết ?</h4>
+                <button class="close-new" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-footer-new">
+                <button
+                  class="send-report"
+                  data-dismiss="modal"
+                  onclick="deleteArticle()"
+                >
+                  Có
+                </button>
+                <button class="close-report" data-dismiss="modal">Không</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Delete -->
+    <!-- Modal Extend -->
+    <div>
+      <div class="container">
+        <div class="modal fade" id="extendArticle" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header-new">
+                <h4 class="modal-title-new">Bạn muốn gia hạn bài viết ?</h4>
+                <button class="close-new" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body-new">
+                <span
+                  >Mời bạn nhập số ngày (chú ý số ngày phải lớn hoặc bằng
+                  7)</span
+                >
+                <div class="extended">
+                  <input
+                    type="number"
+                    class="input-day-extended"
+                    placeholder="ngày"
+                    value="7"
+                  />
+                  <div class="convert-button">
+                    <i
+                      class="fas fa-long-arrow-alt-right"
+                      style="font-size: 2rem"
+                      onclick="chuyendoi()"
+                    ></i>
+                  </div>
+                  <span class="money-extended">0 VNĐ</span>
+                </div>
+              </div>
+              <div class="modal-footer-new">
+                <button
+                  class="send-report"
+                  data-dismiss="modal"
+                  onclick="extendArticle()"
+                >
+                  Có
+                </button>
+                <button class="close-report" data-dismiss="modal">Không</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Extend -->
+
     <script src="article.js"></script>
   </body>
 </html>
