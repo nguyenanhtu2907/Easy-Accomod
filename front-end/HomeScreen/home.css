@@ -148,7 +148,7 @@ input:focus {
 }
 
 div.input-search-bar button {
-  background-color: rgb(34, 212, 180);
+  background-color: lightblue;
   border-radius: 0.75rem;
   font-size: 1rem;
   width: 9rem;
@@ -400,7 +400,7 @@ HA NOI
 }
 .new-price {
   font-weight: 500;
-  color: rgb(34, 212, 180);
+  color: lightgreen;
   font-size: 1.5rem;
 }
 .rank {
@@ -432,9 +432,6 @@ HA NOI
 .rank_item{
   padding: 10px 20px;
   
-}
-.rank_item a:hover{
-  color: rgb(34, 212, 180);
 }
 .rank_item a{
   display: flex;
