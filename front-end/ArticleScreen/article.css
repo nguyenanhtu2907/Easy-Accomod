@@ -305,6 +305,7 @@ BODY
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
   background: white;
+  box-shadow: 2px 2px 3px 1px #888888;
 }
 .option {
   text-align: right;
