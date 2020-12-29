@@ -63,9 +63,12 @@ input:focus, select:focus{
 .none{
     display: none;
 }
+
+
 .option{
     z-index: 1;
     background-color: #ffffff;
+    color: black;
     position: absolute;
     top: 44px;
     left: -1px;

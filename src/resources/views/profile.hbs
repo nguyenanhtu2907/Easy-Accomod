@@ -27,13 +27,13 @@
             <p class="id" style="display: none;">{{query}}</p>
         </div>
         <p>{{userTarget.fullname}}</p>
-        {{#if localAuthUser}}
+        {{#ifCond localAuthUser._id userTarget._id}}
         <div class="fa fa-cog option"></div>
-        {{/if}}
+        {{/ifCond}}
         <div class="menu-option">
             <ul>
-                <li><a href="#">Chỉnh sửa trang cá nhân</a></li>
-                <li><a href="#">Đổi mật khẩu</a></li>
+                <li><a href="/account/{{localAuthUser._id}}/edit?type=info">Chỉnh sửa trang cá nhân</a></li>
+                <li><a href="/account/{{localAuthUser._id}}/edit?type=password">Đổi mật khẩu</a></li>
             </ul>
         </div>
         <div class="description">
@@ -42,7 +42,7 @@
             <span>Địa chỉ: {{userTarget.address}}</span><br>
             <span>Email: {{userTarget.email}}</span><br>
             <span>Số điện thoại: {{userTarget.phone}}</span><br>
-            <span>Giới tính: {{userTarget.gender}}</span>
+            <span>Giới tính: {{#ifCond userTarget.gender "male"}} Nam {{else}} Nữ {{/ifCond}}</span>
         </div>
     </div>
     <div class="content">

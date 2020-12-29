@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/font/css/all.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/edit-profile/change_info.css">
+    <link rel="stylesheet" href="/edit-profile/change_pass.css">
+    <link rel="stylesheet" href="/header/header.css">
+</head>
+
+<body>
+    {{>header}}
+    <div class="change_info_head">
+        <h1 class="change_info_title">Chỉnh sửa thông tin cá nhân</h1>
+        {{#if message}}
+        <p id="messageEdit" style="display: none;">{{message}}</p>
+        {{/if}}
+    </div>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="change_info {{#ifCond type 'info'}} active{{/ifCond}}"><a data-toggle="tab"
+                    href="#change_info">Sửa thông tin</a></li>
+            <li class="change_pass {{#ifCond type 'password'}} active{{/ifCond}}"><a data-toggle="tab"
+                    href="#change_pass">Đổi mật khẩu</a></li>
+
+        </ul>
+
+        <div class="tab-content">
+            <div id="change_info" class="tab-pane fade {{#ifCond type 'info'}}in active{{/ifCond}}">
+
+                <form method="POST" action="" id="change_info-form">
+                    <div class="avatar">
+                        <input type="file" id="avatar" accept="image/*" name="avatar_main">
+                        <input type="text" name="avatar" id="avatarText" style="display:none;">
+                        <label for="avatar" id="selector" class="avatar_label">
+                            <img src="{{user.avatar}}" alt="" id="default">
+                            <!-- <i class="fas fa-smile-beam  icon_upload"></i> -->
+
+                        </label>
+                        <p>Ảnh đại diện</p>
+                        <!-- <div class="anh"> Ảnh </div> -->
+                    </div>
+                    <div class="form-group">
+                        <div class="change_info-input">
+                            <div class="change_info-input--title">Họ và tên</div>
+                            <div class="change_info-input--content">
+                                <input id="fullname" type="text" class="change_info-input--input" value="{{user.fullname}}"
+                                    name="fullname">
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_info-input">
+                            <div class="change_info-input--title">Số điện thoại</div>
+                            <div class="change_info-input--content">
+                                <input id="phone" type="text" class="change_info-input--input" value="{{user.phone}}" name="phone">
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_info-input">
+                            <div class="change_info-input--title">CMND/CCCD</div>
+                            <div class="change_info-input--content">
+                                <input type="text" class="change_info-input--input" id="identity" value="{{user.identity}}"
+                                    name="identity">
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_info-input">
+                            <div class="change_info-input--title">Email</div>
+                            <div class="change_info-input--content">
+                                <input type="email" id="email" class="change_info-input--input" value="{{user.email}}"
+                                    name="email">
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_info-input">
+                            <div class="change_info-input--title">Tỉnh</div>
+                            <div class="change_info-input--content">
+                                <select name="province" id="province" class="change_info-input--input">
+                                    <option selected value="" disabled>Tỉnh </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_info-input">
+                            <div class="change_info-input--title">Quận/Huyện</div>
+                            <div class="change_info-input--content">
+                                <select name="district" id="district" class="change_info-input--input">
+                                    <option selected value="" disabled>Quận/Huyện </option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_info-input">
+                            <div class="change_info-input--title">Phường/Xã</div>
+                            <div class="change_info-input--content">
+                                <select name="ward" id="ward" class="change_info-input--input">
+                                    <option selected value="" disabled>Phường/Xã </option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="alert"></div>
+                    </div>
+                    <div class="change_info-input">
+                        <div class="change_info-input--title">Giới thiệu</div>
+                        <div class="change_info-input--content">
+                            <textarea name="user_description" id="user_description" class="change_info-input--input"
+                                cols="30" rows="10">{{user.user_description}}</textarea>
+                        </div>
+                    </div>
+                    <div class="change_info-input">
+                        <div class="change_info-input--title"></div>
+                        <div class="change_info-input--content">
+                            <button type="submit" id="info_submit" class="submit_btn">Cập nhật </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="change_pass" class="tab-pane fade {{#ifCond type 'password'}}in active{{/ifCond}}">
+
+                <form method="POST" action="" id="change_pass-form">
+                    <div class="form-group">
+                        <div class="change_pass-input">
+                            <div class="change_pass-input--title">Mật khẩu cũ</div>
+                            <div class="change_pass-input--content">
+                                <input type="password" id="old_pass" class="change_pass-input--input" name="old_pass">
+                                <!-- <i class="fas fa-eye fa-eye-slash" id="old_togglePassword"></i> -->
+                            </div>
+                        </div>
+                                <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_pass-input">
+                            <div class="change_pass-input--title">Mật khẩu mới</div>
+                            <div class="change_pass-input--content">
+                                <input type="password" id="new_pass" class="change_pass-input--input" name="new_pass">
+                                <!-- <i class="fas fa-eye fa-eye-slash" id="new_togglePassword"></i> -->
+                            </div>
+                        </div>
+                                <div class="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="change_pass-input">
+                            <div class="change_pass-input--title">Nhập lại mật khẩu mới</div>
+                            <div class="change_pass-input--content">
+                                <input type="password" id="retype_newpass" class="change_pass-input--input"
+                                    name="retype_newpass">
+                                <!-- <i class="fas fa-eye fa-eye-slash" id="retype_togglePassword"></i> -->
+                            </div>
+                        </div>
+                                <div class="alert"></div>
+                    </div>
+                    <div class="change_pass-input">
+                        <div class="change_pass-input--title"></div>
+                        <div class="change_pass-input--content">
+                            <button type="submit" id="pass_submit" class="submit_btn">Cập nhật </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <script src="/javascripts/validator.js"></script>
+    <script src="/header/header.js"></script>
+    <script src="/edit-profile/change_info.js"></script>
+    <script>
+        if (document.querySelector('#messageEdit')) {
+            alert(document.querySelector('#messageEdit').innerText)
+        }
+
+        Validator({
+            form: '#change_pass-form',
+            formMessage: '.alert',
+            formGroupSelector: ".form-group",
+            rules: [
+                Validator.isRequired('#old_pass'),
+                Validator.isRequired('#new_pass'),
+                Validator.minLen('#new_pass', 6),
+                Validator.isRequired('#retype_newpass'),
+
+
+                Validator.isConfirm('#retype_newpass', function () {
+                    return document.querySelector('#change_pass-form #new_pass').value;
+                }, 'Mật khẩu đã nhập không chính xác'),
+
+
+
+            ],
+
+        }
+        )
+        Validator({
+            form: '#change_info-form',
+            formMessage: '.alert',
+            formGroupSelector: ".form-group",
+            rules: [
+                Validator.isRequired('#fullname'),
+                Validator.isRequired('#phone'),
+                Validator.isRequired('#identity'),
+                Validator.isRequired('#email'),
+                Validator.isEmail('#email'),
+                Validator.isRequired('#province'),
+                Validator.isRequired('#district'),
+                Validator.isRequired('#ward'),
+            ],
+        }
+        )
+    </script>
+</body>
+
+</html>

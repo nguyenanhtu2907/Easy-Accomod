@@ -38,7 +38,7 @@ body{
   padding-bottom: 50px;
 }
 .tab{
-  /* display:none; */
+  display:none;
 }
 .tab input{
   /* margin-bottom:1.3rem ; */
@@ -401,7 +401,7 @@ button:hover{
 
 @media screen and (max-width:1000px){
   :root{
-    font-size: 10px;
+    font-size: 12px;
   }
   .input_width_and_height,.airconditional_and_freazer,.bathrooms_and_hottanks{
     display: block;
