@@ -441,7 +441,7 @@ HA NOI
 }
 .new-price {
   font-weight: 500;
-  color: lightgreen;
+  color: rgb(34, 212, 180);
   font-size: 1.5rem;
 }
 .rank {
@@ -473,7 +473,10 @@ HA NOI
 .rank_item {
   padding: 10px 20px;
 }
-.rank_item a {
+.rank_item a:hover{
+  color: rgb(34, 212, 180);
+}
+.rank_item a{
   display: flex;
   justify-content: space-between;
   text-decoration: none;
