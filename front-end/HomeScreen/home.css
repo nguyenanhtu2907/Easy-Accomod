@@ -10,47 +10,9 @@ Sẽ có 3 màn hình chính
 /* Smartphone width: 375px */
 :root {
   --width: 100vw;
-}
-@media screen and (min-width: 375px) {
-  :root {
-    font-size: calc(11px + 2 * ((100vw - 375px) / (1236 - 375)));
-  }
-  div.search-bar-container .search-bar {
-    width: calc(60% + 20% * ((100vw - 375px) / (1236 - 375)));
-  }
-}
-@media screen and (max-width: 376px) {
-  :root {
-    font-size: 11px;
-  }
-  div.search-bar-container .search-bar {
-    width: 80%;
-  }
-  div.select-zone select {
-    display: none;
-  }
+  font-family: 'Open Sans', sans-serif;
 }
 
-/* Tablet width: 1024px */
-@media screen and (min-width: 768px) {
-}
-@media screen and (max-width: 768px) {
-}
-
-/* PC  width: 1536px */
-@media screen and (max-width: 1236px) {
-  .advanced-search {
-    display: none;
-  }
-}
-@media screen and (min-width: 1236px) {
-  :root {
-    font-size: 15px;
-  }
-  div.search-bar-container .search-bar {
-    width: 60%;
-  }
-}
 
 body {
   margin: 0px;
@@ -192,25 +154,73 @@ div.input-search-bar button {
   width: 9rem;
   padding: 0.75rem;
   border-width: 0px;
+  cursor: pointer;
 }
-
+div.input-search-bar button:hover{
+  /* opacity: .8; */
+  filter: brightness(0.9);
+}
 div.in-search-bar .select-zone {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
-  color: white;
-  font-size: 1.25rem;
+  color:lightblue;
+  font-size: 1rem;
   align-items: center;
+  cursor: pointer;
 }
 
 div.select-zone select {
+  cursor: pointer;
+  min-width: 105px;
+  max-width: 105px;
   margin-right: 2rem;
   font-size: 1rem;
   border: none;
   background: none;
   color: lightblue;
 }
-
+.group-price{
+  display: flex;
+}
+.none{
+  display: none;
+}
+.option-price{
+  width: 23rem;
+  height: 300px;
+  font-size: 1rem;
+}
+.option{
+  color: black;
+  z-index: 1;
+  background-color: #ffffff;
+  position: absolute;
+  
+  overflow: scroll;
+  overflow-x: hidden;
+  border: 1px solid #b1b1b1;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.list-option{
+  padding-left: 0;
+  flex: 1;
+}
+.list-option li{
+  list-style: none;
+  padding: 8px;
+}
+.list-option li:hover{
+  background-color: #e0e0e0;
+  transition: 0.1s;
+}
+.list-option li:first-child{
+  background-color: #b1b1b1;
+  font-weight: 500;
+}
+.group-price .list-option:first-child {
+  border-right: #b1b1b1 1px solid;
+}
 /*
   CITY
 */
@@ -248,6 +258,10 @@ div.review-two-cities .two-cities {
   justify-content: center;
 }
 
+div.two-cities{
+  position: relative;
+  
+}
 div.two-cities a {
   width: 49%;
   display: flex;
@@ -263,21 +277,36 @@ div.two-cities .a2 {
   width: 80%
 */
 
-div.two-cities :hover {
+div.two-cities :hover .images {
   filter: brightness(60%);
+  transition: filter 0.2s;
 }
 
 div.two-cities .ha-noi {
   margin-left: auto;
   width: 100%;
-  height: 8rem;
-  background: url(./images/ha-noi.jpg) no-repeat center;
+  height: 9rem;
   background-size: 140%;
-  filter: brightness(90%);
+  
   border-radius: 1rem;
-  padding: 1rem;
+  /* padding: 1rem; */
+}
+div.two-cities .ha-noi .hanoi_image{
+  /* filter: brightness(90%); */
+  background: url(./images/ha-noi.jpg) no-repeat center;
+  width: 100%;
+  height: 100%;  
+  background-size: 140%;
+  border-radius: 1rem;
+  
+  /* padding: 1rem; */
+}
+.images{transition: filter 0.2s;  
 }
 div.ha-noi p {
+  position: absolute;
+  left: 10px;
+  top: 10px;
   color: white;
   font-size: 1.5rem;
 }
@@ -285,15 +314,28 @@ div.ha-noi p {
 div.two-cities .ho-chi-minh {
   margin-right: auto;
   width: 100%;
-  height: 8rem;
-  background: black url(./images/ho-chi-minh.jpg) center no-repeat;
+  height: 9rem;
+  /* background: black url(./images/ho-chi-minh.jpg) center no-repeat; */
   background-size: 140%;
   filter: brightness(90%);
   border-radius: 1rem;
-  padding: 1rem;
+  /* padding: 1rem; */
+}
+
+div.two-cities .ho-chi-minh .hcm_image{
+  background: black url(./images/ho-chi-minh.jpg) center no-repeat;
+  width: 100%;
+  /* filter: brightness(90%); */
+  height: 100%;  
+  background-size: 140%;
+  border-radius: 1rem;
+  /* padding: 1rem; */
 }
 
 div.ho-chi-minh p {
+  position: absolute;
+  top: 10px;
+  left: 10px;
   color: white;
   font-size: 1.5rem;
 }
@@ -324,7 +366,7 @@ HA NOI
   flex-wrap: wrap;
   width: 80%;
   flex-direction: row;
-  border-right: 1px solid grey;
+  border-right: 2px solid #d6d6d6;
 }
 .new {
   width: 50%;
@@ -335,6 +377,9 @@ HA NOI
 }
 .left {
   width: 38%;
+}
+.left:hover > img{
+  filter: brightness(.7);
 }
 .left > img {
   width: 100%;
@@ -359,8 +404,8 @@ HA NOI
   font-size: 1.5rem;
 }
 .rank {
-  display: flex;
-  width: 20%;
+  /* display: flex; */
+  width: 25%;
   justify-content: center;
 }
 
@@ -370,4 +415,133 @@ HA NOI
   margin-left: auto;
   margin-right: auto;
   flex-direction: column;
+}
+
+.rank_list{
+  /* margin-top:40px ; */
+  list-style-type: none;
+  padding-left:0 ;
+}
+.rank_title{
+  text-align: center;
+  background-color: #f1f4f6;
+  font-size:1.4rem;
+  font-weight: 500;
+  padding:10px 12px;
+}
+.rank_item{
+  padding: 10px 20px;
+  
+}
+.rank_item a{
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  color: black;
+}
+.rank_item-title{
+  white-space: nowrap;
+    width: calc(100% - 80px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+sup {
+  position: absolute;
+  font-size: 0.6rem;
+  /* margin-top: -.5em; */
+}
+i{
+  color:#888787;
+  font-size: 1.1rem;
+}
+.bed_icon{
+  margin-right: 30px;
+}
+
+@media screen and (max-width: 1000px) {
+  :root {
+    font-size: calc(11px + 2 * ((100vw - 375px) / (1236 - 375)));
+  }
+  .advanced-search {
+    display: none;
+  }
+  div.search-bar-container .search-bar {
+    width: calc(60% + 20% * ((100vw - 375px) / (1236 - 375)));
+  }
+  .price{
+    display: none;
+  }
+  div.search-bar-container .search-bar {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 500px) {
+  :root {
+    font-size: 11px;
+  }
+  .body-container{
+    width: 100%;
+  }
+  .rank{
+    display: none;
+  }
+  .news{
+    width: 100%;
+    display: block;
+    border-right: none;
+  }
+  .new{
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .new-tilte {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: black;
+}
+  .left{
+    width: 100%;
+  }
+  .right{
+    width: 100%;
+  }
+  div.search-bar-container .search-bar {
+    width: 80%;
+  }
+  div.select-zone select {
+    display: none;
+  }
+  .price{
+    display: none;
+  }
+  div.search-bar-container .search-bar {
+    width: 100%;
+  }
+  div.body-container .review-two-cities{
+    width: 95%;
+  }
+  div.ha-noi p , div.ho-chi-minh p{
+    font-size: 1rem;
+  }
+} 
+
+
+/* Tablet width: 1024px */
+
+
+
+/* PC  width: 1536px */
+@media screen and (max-width: 1236px) {
+  
+}
+@media screen and (min-width: 1236px) {
+  :root {
+    font-size: 15px;
+  }
+  div.search-bar-container .search-bar {
+    width: 60%;
+  }
+  
 }

@@ -4,12 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+    <link rel="stylesheet"  href="../tung/font/css/all.css">
     <link
       rel="stylesheet"
       href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
       crossorigin="anonymous"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
       rel="stylesheet"
@@ -57,9 +60,58 @@
             <select id="district" name="district">
               <option>Quận/Huyện</option>
             </select>
-            <select id="cost" name="cost">
+            <!-- <select id="cost" name="cost">
               <option>Khoảng giá</option>
-            </select>
+            </select> -->
+            <div class="select price">
+              <span onclick="showList(event, '.price .option')">
+                  Khoảng giá <div class="fa fa-angle-down"></div>
+              </span>
+              <div class="option option-price none">
+                  <div class="group-price">
+                      <ul class="list-option">
+                          <li>Giá thấp nhất</li>
+                          <input type="text" name="minPrice" class="minPrice none">
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="1000000">1
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="2000000">2
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="3000000">3
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="5000000">5
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="7000000">7
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="10000000">10
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="20000000">20
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="min" value="50000000">50
+                                  triệu </label></li>
+                      </ul>
+                      <ul class="list-option">
+                          <li>Giá cao nhất</li>
+                          <input type="text" name="maxPrice" class="maxPrice none">
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="2000000">2
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="3000000">3
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="5000000">5
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="7000000">7
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="10000000">10
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="20000000">20
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="50000000">50
+                                  triệu </label></li>
+                          <li><label onchange="checkPrice(event)"><input type="radio" name="max" value="100000000">100
+                                  triệu </label></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
             <a
               class="advanced-search"
               style="margin-left: auto; font-size: 1rem; color: white"
@@ -77,14 +129,16 @@
         <div class="two-cities">
           <a class="a1" href="">
             <div class="ha-noi">
-              <p>Khám phá 154 khu vực</p>
-              <p>Hà Nội</p>
+              <div class="hanoi_image images"></div>
+              <p>Khám phá 154 khu vực <br> Hà Nội</p>
+              <!-- <p>Hà Nội</p> -->
             </div>
           </a>
           <a class="a2" href="">
             <div class="ho-chi-minh">
-              <p>Khám phá 154 khu vực</p>
-              <p>Hồ Chí Minh</p>
+              <div class="hcm_image images"></div>
+              <p>Khám phá 154 khu vực <br> Hồ Chí Minh </p>
+              <!-- <p>Hồ Chí Minh</p> -->
             </div>
           </a>
         </div>
@@ -99,7 +153,10 @@
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
             </a>
@@ -109,32 +166,66 @@
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
-            </a>
-            <a class="new" href="">
+            </a><a class="new" href="">
               <div class="left">
                 <img src="./images/ha-noi.jpg" alt="" />
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
-            </a>
-            <a class="new" href="">
+            </a><a class="new" href="">
               <div class="left">
                 <img src="./images/ha-noi.jpg" alt="" />
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
             </a>
           </div>
-          <div class="rank">Bang xep hang</div>
+          <div class="rank">
+           <div class="rank_title">Bảng xếp hạng</div> 
+           <ul class="rank_list">
+             <li class="rank_item">
+               <a href="">
+                <div class="rank_item-title">địa chỉ top 1 nhà cửa</div> 
+                <div class="rank_item-price">vài tỷ/m<sup>2</sup> </div>
+              </a> 
+            </li>
+             <li class="rank_item">
+               <a href="">
+                  <div class="rank_item-title">địa chỉ top 2 nhà cửa</div>
+                  <div class="rank_item-price">vài tỷ/m<sup>2</sup></div>
+
+                </a>
+              </li>
+             <li class="rank_item">
+               <a href="">
+                  <div class="rank_item-title">địa chỉ top 3 nhà cửa</div>
+                  <div class="rank_item-price">vài tỷ/m<sup>2</sup></div>
+
+                  
+                </a>
+              </li>
+           </ul>
+            
+
+          </div>
         </div>
       </div>
 
@@ -161,7 +252,10 @@
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
             </a>
@@ -171,7 +265,10 @@
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
             </a>
@@ -181,7 +278,10 @@
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
             </a>
@@ -191,12 +291,42 @@
               </div>
               <div class="right">
                 <p class="new-tilte">Mua nha deeeeeeeeeeeeee</p>
-                <p class="new-info">...............................</p>
+                <p class="new-info">
+                  <i class="fas fa-bed bed_icon">  5 </i>
+                  <i class="fas fa-bath bath_icon">  6</i>
+                </p>
                 <p class="new-price">7 ty 800 trieu</p>
               </div>
             </a>
           </div>
-          <div class="rank">Bang xep hang</div>
+          <div class="rank">
+            <div class="rank_title">Bảng xếp hạng</div> 
+            <ul class="rank_list">
+              <li class="rank_item">
+                <a href="">
+                 <div class="rank_item-title">địa chỉ top 1 nhà cửa</div> 
+                 <div class="rank_item-price">vài tỷ/m<sup>2</sup> </div>
+               </a> 
+             </li>
+              <li class="rank_item">
+                <a href="">
+                   <div class="rank_item-title">địa chỉ top 2 nhà cửa</div>
+                   <div class="rank_item-price">vài tỷ/m<sup>2</sup></div>
+ 
+                 </a>
+               </li>
+              <li class="rank_item">
+                <a href="">
+                   <div class="rank_item-title">địa chỉ top 3 nhà cửa</div>
+                   <div class="rank_item-price">vài tỷ/m<sup>2</sup></div>
+ 
+                   
+                 </a>
+               </li>
+            </ul>
+             
+ 
+           </div>
         </div>
       </div>
     </div>
