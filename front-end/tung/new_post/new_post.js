@@ -118,7 +118,7 @@ function price(e){
   console.log(num)
   var cost = (Number (e) *3000).toString();
   var result = '';
-  if(num<0) result ="Làm gì có ngày âm bạn ơi";
+  if(num<0) result ="Ơ Nào! ai lại làm như thế!!!";
   else if(num ==0) result ="Chưa nhập ngày";
   else if(num <21000 && num>0) result ="Cần thuê tối thiểu 7 ngày";
   else{
