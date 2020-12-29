@@ -56,9 +56,6 @@
                         <li>
                             <span onclick="chooseOption(0, 6)">Bài viết đã xóa</span>
                         </li>
-                        <li>
-                            <span onclick="chooseOption(0, 9)">Bài viết bị báo cáo</span>
-                        </li>
                     </ul>
                 </li>
                 <li class="">
@@ -135,10 +132,10 @@
                     </div>
                     <div class="rank-view">
                         <div class="a-chart">
-                            <div id="pie-chart-owner"></div>
+                            <div id="pie-chart-user"></div>
                         </div>
                         <div class="a-chart">
-                            <div id="pie-chart-user"></div>
+                            <div id="pie-chart-owner"></div>
                         </div>
                         <div class="a-chart">
                             <div id="pie-chart-post"></div>
@@ -154,7 +151,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>username</td>
+                                        <td>Nguyễn Anh Tú</td>
+                                        <td>100</td>
+                                    </tr>
                                 </tbody>
                             </table>
 
@@ -171,7 +192,37 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                    
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+
                                 </tbody>
                             </table>
 
@@ -184,16 +235,45 @@
                                         <th>Tiêu đề</th>
                                         <th>Địa chỉ</th>
                                         <th>Giá tiền</th>
-                                        <th>Lượt like</th>
+                                        <th>Lượt yêu thích</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cho thuê phòng trọ</td>
+                                        <td>Xuân Thủy Cầu Giấy Hà Nội</td>
+                                        <td>1000000</td>
+                                        <td>100</td>
+                                    </tr>
+
                                 </tbody>
                             </table>
 
                         </div>
-                        
                         <div class="bar-chat">
                             <h4>Tổng doanh thu trong 12 tháng gần nhất</h4>
                             <canvas id="bar-chart" width="1000" height="500"></canvas>
@@ -252,16 +332,14 @@
         function drawChartUser() {
             var data = google.visualization.arrayToDataTable(
                 [
-                    ['Type', 'Posts'],
-                    ['> 5 triệu', {{price1}}],
-                    ['4 - 5 triệu', {{price2}}],
-                    ['3 - 4 triệu', {{price3}}],
-                    ['2 - 3 triệu', {{price4}}],
-                    ['< 2 triệu', {{price5}}],
+                    ['Type', 'Users'],
+                    ['Admin', 1],
+                    ['Owner', 10],
+                    ['Renter', 15],
                 ]
             );
             // Optional; add a title and set the width and height of the chart
-            var options = { 'title': 'Thống kê bài viết theo giá phòng', 'width': 600, 'height': 450 };
+            var options = { 'title': 'Thống kê người dùng', 'width': 550, 'height': 400 };
             // Display the chart inside the <div> element with id="piechart"
             var chart = new google.visualization.PieChart(document.getElementById('pie-chart-user'));
             chart.draw(data, options);
@@ -269,14 +347,14 @@
         function drawChartOwner() {
             var data = google.visualization.arrayToDataTable(
                 [
-                    ['Status', 'Owners'],
-                    ['Đã duyệt', {{acceptOwner}}],
-                    ['Chờ duyệt', {{waitingOwner}}],
-                    ['Từ chối', {{rejectOwner}}],
+                    ['Status', 'Users'],
+                    ['Đã duyệt', 8],
+                    ['Chờ duyệt', 2],
+                    ['Từ chối', 2],
                 ]
             );
             // Optional; add a title and set the width and height of the chart
-            var options = { 'title': 'Thống kê Chủ trọ', 'width': 600, 'height': 450 };
+            var options = { 'title': 'Thống kê Chủ trọ', 'width': 550, 'height': 400 };
             // Display the chart inside the <div> element with id="piechart"
             var chart = new google.visualization.PieChart(document.getElementById('pie-chart-owner'));
             chart.draw(data, options);
@@ -284,16 +362,15 @@
         function drawChartPost() {
             var data = google.visualization.arrayToDataTable(
                 [
-                    ['Status', 'Posts'],
-                    ['Chưa được thuê', {{availablePost}}],
-                    ['Đã được thuê', {{rentPost}}],
-                    ['Chờ duyệt', {{waitingPost}}],
-                    ['Từ chối', {{rejectPost}}],
-                    ['Đã hết hạn', {{expiredPost}}],
+                    ['Status', 'Users'],
+                    ['Chưa được thuê', 18],
+                    ['Đã được thuê', 20],
+                    ['Chờ duyệt', 12],
+                    ['Từ chối', 5],
                 ]
             );
             // Optional; add a title and set the width and height of the chart
-            var options = { 'title': 'Thống kê số lượng bài viết ', 'width': 600, 'height': 450 };
+            var options = { 'title': 'Thống kê bài viết', 'width': 550, 'height': 400 };
             // Display the chart inside the <div> element with id="piechart"
             var chart = new google.visualization.PieChart(document.getElementById('pie-chart-post'));
             chart.draw(data, options);
@@ -303,10 +380,10 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: [{{#each month}}"{{this}}",{{/each}}],
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 datasets: [{
-                    label: 'Đơn vị: triệu VNĐ',
-                    data: [{{profit}}],
+                    label: 'Đơn vị: tỷ đồng',
+                    data: [12, 19, 3, 5, 2, 3, 15, 20, 32, 29, 22, 37],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(54, 162, 235, 0.2)',

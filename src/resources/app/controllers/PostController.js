@@ -64,7 +64,7 @@ class PostController {
             water: req.body.water,
             equipments: equipments,
             images: images,
-            infoOwner: req.body.owner == 'Yes' ? 'Chung chủ' : 'Không chung chủ',
+            infoOwner: req.body.owner== 'Yes' ? 'Chung chủ' : 'Không chung chủ',
             key: removeVietnameseTones(address.detail + ' ' + req.body.address_description + ' ' + req.body.rent),
         }
 
@@ -78,113 +78,6 @@ class PostController {
                 })
             })
             .catch(error => { })
-    }
-
-    postDetail(req, res, next) {
-        Post.findOne({ slug: req.params.slug })
-            .then(post => {
-                let extendedTime = post.extendedTime || post.createdAt.getTime();
-                if (Date.now() - extendedTime >= post.availabletime * 86400000) {
-                    post.availabletime = 0;
-
-                    post.markModified('availabletime');
-                    post.save()
-                        .then(post => mongooseToObj(post))
-                        .then(post => getPostInfo(post))
-                        .then((post) => {
-                            if (req.session.authUser && req.session.authUser._id == post.owner) {
-                                return res.render('postDetail', {
-                                    layout: false,
-                                    post,
-                                })
-                            } else {
-                                res.redirect('back')
-                            }
-
-                        })
-                } else {
-                    post.viewed += 1;
-                    post.save()
-                        .then(post => mongooseToObj(post))
-                        .then(post => getPostInfo(post))
-                        .then((post) => {
-                            return res.render('postDetail', {
-                                layout: false,
-                                post,
-                            })
-                        })
-                }
-            })
-            .catch(() => {
-                res.render('error', {
-                    layout: false,
-                })
-            })
-    }
-
-    addComment(req, res, next) {
-        var comment = {
-            authorName: req.session.authUser.fullname,
-            authorId: req.session.authUser._id,
-            authorAvatar: req.session.authUser.avatar,
-            content: req.body.content,
-            star: req.body.star_voted == false ? 0 : req.body.star_voted,
-            date: req.body.date,
-        }
-        Post.findOne({ slug: req.params.slug })
-            .then(post => {
-                post.comments.push(comment);
-                post.save()
-                    .then(() => res.json(post.comments))
-                    .catch(() => { })
-            })
-    }
-
-    reportPost(req, res, next) {
-        Post.findOne({ slug: req.params.slug })
-            // .then(post => mongooseToObj(post))
-            .then(post => {
-                post.isReported = true;
-                post.markModified('isReported')
-                post.save()
-                    .then(() => res.json(post.isReported))
-            })
-            .catch(() => {
-                res.render('error', {
-                    layout: false,
-                })
-            })
-    }
-
-    extendPost(req, res, next) {
-        Post.findOne({ slug: req.params.slug })
-            .then(post => {
-                post.extendedTime = Date.now();
-                post.availabletime = req.query.days
-                post.save()
-                    .then(() => {
-                        var months = ["January", "February", "March", "April", "May", "June",
-                            "July", "August", "September", "October", "November", "December"];
-                        var indexMonth = new Date().getMonth();
-                        var currentMonth = months[indexMonth];
-                        User.findOne({ level: 'admin' })
-                            .then(admin => {
-                                if (admin.profit[admin.profit.length - 1].month == currentMonth) {
-                                    admin.profit[admin.profit.length - 1].total += post.availabletime * 25000;
-                                } else {
-                                    admin.profit.push({
-                                        month: currentMonth,
-                                        total: post.availabletime * 25000
-                                    })
-                                }
-                                admin.markModified('profit')
-                                admin.save()
-                                    .then(() => {
-                                        return res.json(admin.level);
-                                    })
-                            })
-                    })
-            })
     }
 
     modifySaved(req, res, next) {
@@ -203,51 +96,33 @@ class PostController {
         var miniApartment = 0;
         var motel = 0;
         var house = 0;
-        Post.count({ roomtype: 'Chung cư', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Chung cư' }, function (err, number) {
             if (number) {
                 apartment = number
             }
         })
-        Post.count({ roomtype: 'Chung cư mini', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Chung cư mini' }, function (err, number) {
             if (number) {
                 miniApartment = number
             }
         })
-        Post.count({ roomtype: 'Phòng trọ', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Phòng trọ' }, function (err, number) {
             if (number) {
                 motel = number
             }
         })
-        Post.count({ roomtype: 'Nhà nguyên căn', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Nhà nguyên căn' }, function (err, number) {
             if (number) {
                 house = number
             }
         })
-        console.log(req.query)
         setTimeout(() => {
-            Post.aggregate([
-                { '$match': { checked: 1, availabletime: { $gt: 0 } } },
-                {
-                    '$group': {
-                        '_id': '$address.province',
-                        'totalPosts': { '$sum': 1 },
-                    }
-                },
-                {
-                    '$sort': { 'totalPosts': -1 }
-                }
-            ], (err, postsProvince) => {
-                postsProvince.forEach((province, index) => {
-                    province.index = index + 1;
-                })
-                res.render('search', {
-                    layout: false,
-                    apartment,
-                    miniApartment,
-                    house,
-                    motel,
-                    postsProvince
-                })
+            res.render('search', {
+                layout: false,
+                apartment,
+                miniApartment,
+                house,
+                motel,
             })
         }, 500)
     }
@@ -262,10 +137,10 @@ class PostController {
             query["address.province"] = req.query.province;
         }
         if (req.query.district) {
-            query["address.district"] = { $regex: '.*' + req.query.district };
+            query["address.district"] = "Quận " + req.query.district;
         }
         if (req.query.ward) {
-            query["address.ward"] = { $regex: '.*' + req.query.ward };
+            query["address.ward"] = "Phường " + req.query.ward;
         }
         if (req.query.roomType) {
             query.roomtype = req.query.roomType;
@@ -321,7 +196,7 @@ class PostController {
         } else {
             sort = { 'createdAt': -1 }
         }
-
+        console.log(query)
         Post.find(query).limit(10).skip(10 * req.query.page || 0).sort(sort)
             .then(posts => multipleMongooseToObj(posts))
             .then(posts => getPostsInfo(posts))
@@ -415,7 +290,7 @@ class PostController {
     }
 
     getInfo(req, res, next) {
-        Post.findOne(req.query.key ? { _id: req.query.key } : { slug: req.query.slug })
+        Post.findOne({ _id: req.query.key })
             .then(post => mongooseToObj(post))
             .then(post => getPostInfo(post))
             .then(post => res.json(post))
@@ -455,12 +330,6 @@ async function getPostInfo(post) {
     var user = await User.findOne({ _id: post.owner });
     post.authorName = user.fullname;
     post.authorAvatar = user.avatar;
-
-    // let createdUser = user.createdAt;
-    // date = ("0" + createdUser.getDate()).slice(-2);
-    // month = ("0" + (createdUser.getMonth() + 1)).slice(-2);
-    // year = createdUser.getFullYear();
-    // post.authorCreated = date + '/' + month + '/' + year;
 
     let updatedTime = post.updatedAt;
     let date = ("0" + updatedTime.getDate()).slice(-2);

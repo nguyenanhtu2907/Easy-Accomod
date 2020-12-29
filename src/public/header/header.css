@@ -14,13 +14,11 @@ body{
     display: flex;
     margin-bottom: 4px;
 }
-.sticky{
-    position: fixed;
-}
 .content-header{
     width: 70%;
     margin: 0 auto;
     display: flex;
+    
 }
 a{
     color: rgb(56, 56, 56);
@@ -39,6 +37,10 @@ a:hover{
 .logo img{
     height: 100%;
     
+}
+.space{
+    
+    /* border-right: 1px solid rgb(95, 95, 95); */
 }
 .menu{
     height: 50px;
@@ -154,8 +156,6 @@ a:hover{
 }
 .menu .account img{
     height: 40px;
-    width: 40px;
-    object-fit: cover;
     margin-bottom: 5px;
     border-radius: 50%;
 }
@@ -206,6 +206,10 @@ a:hover{
 }
 .none{
     display: none;
+}
+
+.window-chat{
+    
 }
 .small-chat{
     position: fixed;
