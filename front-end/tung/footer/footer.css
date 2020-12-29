@@ -1,6 +1,4 @@
-body{
-    color: white;
-}
+
 a{
     text-decoration: none;
 }
@@ -9,13 +7,14 @@ a{
     height: auto;
     margin: auto;
     background: #272727;
-    padding: 20px 0px 0 0 ;
+    padding: 20px 0px 5px 0 ;
     
 }
-.footer_main-div{
-    position: relative;
+.footer_main-div {
+    position: absolute;
     bottom: 0;
 }
+
 .footer_social-icons{
     width: 100%;
     height: auto;
@@ -94,20 +93,23 @@ a{
     text-align: left;
     font-size:12px;
     margin: auto;
+    color: white;
+
 }
 .footer_menu-two span{
     width: 100%;
     text-align: right;
     font-size:12px;
-    margin: auto;
+    margin: auto; 
+    color: white;
 }
 .tieu_de{}
 .footer-note p{
     width: 100%;
-    height: auto;
+    height: 25px;
     margin: auto;
     background-color: rgb(34, 212, 180);
-    padding: 5px;
+    padding: 3px;
     font-family: arial;
     font-size: 14px;
     text-align: center;
