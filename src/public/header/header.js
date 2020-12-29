@@ -9,6 +9,20 @@ document.addEventListener('mouseup', function (e) {
         })
     }
 });
+if(window.location.pathname !=='/account/5fb7e2f7662281052c43df98/manage'){
+    window.onscroll = function() {stickyFunc()};
+    function stickyFunc(){
+        var header = document.querySelector('.header');
+        var sticky = header.offsetTop;
+    
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+}
+
 document.addEventListener('mouseup', function (e) {
     var price = document.querySelector('.account');
     if (price && !price.contains(e.target)) {
@@ -121,21 +135,22 @@ function submitMessageToDB(value, to) {
         })
         .catch(() => { })
 
-    setTimeout(()=>{
-        if(to == 'toOwner'){
+    setTimeout(() => {
+        if (to == 'toOwner') {
             socket.emit(`messageToOwner`, ownerID)
             refreshListChat()
-        }else{
+        } else {
             socket.emit(`messageToAdmin`, ownerID)
         }
     }, 100)
 }
-
-socket.on(`${document.querySelector('.show-info-option>ul>li>a').href.slice(30)}toOwner`, data => {
-    if(document.querySelector('#message-window').classList.contains('big-chat')){
-        refreshWindowChat()
-    }else{
-        document.querySelector('#message-window .title-window .fa-comments').classList.add('alerted')
-    }
-})
+if(document.querySelector('.show-info-option>ul>li>a')){
+    socket.on(`${document.querySelector('.show-info-option>ul>li>a').href.slice(30)}toOwner`, data => {
+        if (document.querySelector('#message-window').classList.contains('big-chat')) {
+            refreshWindowChat()
+        } else {
+            document.querySelector('#message-window .title-window .fa-comments').classList.add('alerted')
+        }
+    })
+}
 

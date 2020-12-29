@@ -230,61 +230,18 @@
                 <div class="for-adver">
                     <img src="/searchResult/adver.jpg" alt="">
                 </div>
-                {{!-- <div class="count-room">
+                <div class="count-room">
                     <h6 class="line">Top 10 khu vực với số bài viết</h6>
                     <ul>
+                        {{#each postsProvince}}
                         <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 1. Hà Nội: <span>(123)</span>
+                            <a href="#" onclick="redirectProvince(event,'{{this._id}}')">
+                                <i class="fa fa-long-arrow-right"></i> {{this.index}}. {{this._id}}: <span>({{this.totalPosts}})</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 2. Hải Phòng: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 3. Vĩnh Phúc: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 4. Hòa Bình: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 5. Đà Nẵng: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 6. Bắc Ninh: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 7. Đà Lạt: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 8. Ninh Bình: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 9. Nam Định: <span>(123)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-long-arrow-right"></i> 10. Thanh Hóa: <span>(123)</span>
-                            </a>
-                        </li>
+                        {{/each}}
                     </ul>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
