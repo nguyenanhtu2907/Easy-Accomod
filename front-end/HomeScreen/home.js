@@ -157,6 +157,30 @@ function showAddress(e, step, status) {
       e.target.innerText;
   }
 }
+document.addEventListener("mouseup", function (e) {
+  var address = document.querySelector(".address");
+  if (!address.contains(e.target)) {
+    Array.from(document.querySelectorAll(".address .option")).forEach(
+      (option) => {
+        if (!option.classList.contains("none")) {
+          option.classList.add("none");
+        }
+      }
+    );
+  }
+});
+document.addEventListener("mouseup", function (e) {
+  var price = document.querySelector(".price");
+  if (!price.contains(e.target)) {
+    Array.from(document.querySelectorAll(".price .option")).forEach(
+      (option) => {
+        if (!option.classList.contains("none")) {
+          option.classList.add("none");
+        }
+      }
+    );
+  }
+});
 function showList(e, element) {
   document.querySelector(element).classList.toggle("none");
 }
