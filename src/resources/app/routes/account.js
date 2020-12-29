@@ -21,17 +21,13 @@ router.get('/get-info/:id', accountController.getInfoById);
 
 router.post('/submit-message', accountController.submitMessage);
 
-router.post('/action-admin', accountController.restrictLogin, accountController.actionAdmin);
+router.post('/action-admin',accountController.restrictLogin, accountController.actionAdmin);
 
-router.get('/:id/manage', accountController.restrictLogin, accountController.manageAdmin);
+router.get('/:id/manage',accountController.restrictLogin, accountController.manageAdmin);
 
 router.get('/:id/get-noti',accountController.restrictLogin, accountController.getNoti);
 
 router.get('/:id/nav', accountController.profileNav);
-
-router.get('/:id/edit', accountController.restrictLogin, accountController.editProfile);
-
-router.post('/:id/edit', accountController.restrictLogin, accountController.editProfileDB);
 
 router.get('/saved', accountController.addToSavedList);
 

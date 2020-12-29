@@ -41,14 +41,14 @@ function showInfo(e, type, element) {
                 let spans = document.querySelectorAll(element + ' li span');
                 spans[0].innerText = post._id;
                 spans[1].innerText = post.authorName;
-                spans[2].innerText = post.title.length > 50 ? post.title.slice(0, 51) + '...' : post.title;
+                spans[2].innerText = post.title.length>50?post.title.slice(0,51)+'...':post.title;
                 spans[3].innerText = post.address.detail + ', ' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province;
                 spans[4].innerText = post.contact;
                 spans[5].innerText = post.createdDate;
                 spans[6].innerText = post.rentcost;
                 spans[7].innerText = post.roomtype;
                 spans[8].innerText = post.area;
-                spans[9].innerText = post.availabletime * 25000;
+                spans[9].innerText = post.availabletime*25000;
                 spans[10].innerText = post.owner;
             })
     } else {
@@ -100,6 +100,7 @@ function showInfo(e, type, element) {
                 })
                 document.querySelector('.chat-area ul').innerHTML = chatHtml;
                 document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
+
             })
     }
 }
@@ -377,7 +378,7 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title.length > 50 ? post.title.slice(0, 51) + '...' : post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
                                         <td>${post.createdDate}</td>
@@ -451,7 +452,7 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title.length > 50 ? post.title.slice(0, 51) + '...' : post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
                                         <td>${post.updatedTime}</td>
@@ -517,7 +518,7 @@ function chooseOption(bigOption, innerOption) {
                                 html += `
                                     <tr onclick="showInfo(event, 1, '#info-post')">
                                         <td>${post._id}</td>
-                                        <td>${post.title.length > 50 ? post.title.slice(0, 51) + '...' : post.title}</td>
+                                        <td>${post.title.length>50?post.title.slice(0,51)+'...':post.title}</td>
                                         <td>${post.authorName}</td>
                                         <td>${post.contact}</td>
                                         <td>${post.createdDate}</td>
@@ -572,131 +573,18 @@ function chooseOption(bigOption, innerOption) {
                         })
                         .catch(() => { })
                     break;
-                }
-                case 7: {
-                    fetch(window.location.pathname + '?option=7')
-                    .then(data => data.json())
-                    .then(data => {
-                            option.querySelector('.title h1').innerText = 'Thống kê';
-                            var htmlViewed = '';
-                            data.viewedPosts.forEach(post => {
-                                var address = post.address.detail + ', ' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province;
-                                htmlViewed += `
-                                    <tr>
-                                        <td><a href="/post/${post.slug}">${post.title.length > 20 ? post.title.slice(0, 20) + '...' : post.title}</a></td>
-                                        <td><a href="/post/${post.slug}">${address.length > 20 ? address.slice(0, 20) + '...' : address}</a></td>
-                                        <td><a href="/post/${post.slug}">${post.rentcost}</a></td>
-                                        <td><a href="/post/${post.slug}">${post.viewed}</a></td>
-                                    </tr>
-                                `
-                            })
-                            document.querySelector('#rank-viewed table tbody').innerHTML = htmlViewed;
+                } case 7: {
+                    option.querySelector('.title h1').innerText = 'Thống kê';
+                    // option.querySelector('.list-items thead tr').innerHTML = `
+                    // <th>ID bài viết</th>
+                    // <th>Tiêu đề</th>
+                    // <th>Người đăng</th>
+                    // <th>Liên hệ</th>
+                    // <th>Thời gian tạo</th>
+                    // `;
+                    console.log(option)
+                    // option.querySelector('.list-items table').scrollIntoView();
 
-                            var htmlSaved = '';
-                            data.savedPosts.forEach(post => {
-                                var address = post.address.detail + ', ' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province;
-                                htmlSaved += `
-                                    <tr>
-                                        <td><a href="/post/${post.slug}">${post.title.length > 20 ? post.title.slice(0, 20) + '...' : post.title}</a></td>
-                                        <td><a href="/post/${post.slug}">${address.length > 20 ? address.slice(0, 20) + '...' : address}</a></td>
-                                        <td><a href="/post/${post.slug}">${post.rentcost}</a></td>
-                                        <td><a href="/post/${post.slug}">${post.saved}</a></td>
-                                    </tr>
-                                `
-                            })
-                            document.querySelector('#rank-saved table tbody').innerHTML = htmlSaved;
-
-                            var htmlRankOwner = '';
-                            data.owners.forEach(owner => {
-                                htmlRankOwner += `
-                                    <tr>
-                                        <td><a href="/account/${owner._id}">${owner.username}</a></td>
-                                        <td><a href="/account/${owner._id}">${owner.fullname}</a></td>
-                                        <td><a href="/account/${owner._id}">${owner.totalPost}</a></td>
-                                    </tr>
-                                `
-                            })
-                            document.querySelector('#rank-user table tbody').innerHTML = htmlRankOwner;
-
-                            // option.querySelector('.list-items table').scrollIntoView();
-                        })
-                        .catch(() => { })
-
-                    break;
-                }
-                case 9: {
-                    fetch(window.location.pathname + '?option=9')
-                        .then(posts => posts.json())
-                        .then(posts => {
-                            option.querySelector('.title h1').innerText = 'Danh sách bài viết bị báo cáo (' + posts.length + ')';
-                            option.querySelector('.list-items thead tr').innerHTML = `
-                                <th>ID bài viết</th>
-                                <th>Tiêu đề</th>
-                                <th>Người đăng</th>
-                                <th>Liên hệ</th>
-                                <th>Thời gian tạo</th>
-                            `;
-                            posts.forEach(post => {
-                                html += `
-                                    <tr onclick="showInfo(event, 1, '#info-post')">
-                                        <td>${post._id}</td>
-                                        <td>${post.title.length > 50 ? post.title.slice(0, 51) + '...' : post.title}</td>
-                                        <td>${post.authorName}</td>
-                                        <td>${post.contact}</td>
-                                        <td>${post.createdDate}</td>
-                                    </tr>
-                                `;
-                            });
-                            option.querySelector('.list-items tbody').innerHTML = html;
-                            option.querySelector('.detail-side').innerHTML = `
-                                <h1>Thông tin bài viết</h1>
-                                <ul id="info-post">
-                                    <li>
-                                        <b>ID bài viết </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Người viết </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Tiêu đề </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Địa chỉ </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Liên hệ </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Thời gian tạo </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Giá tiền </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Loại trọ </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Diện tích </b>: <span></span>
-                                    </li>
-                                    <li>
-                                        <b>Phí đăng bài </b>: <span></span>
-                                    </li>
-                                    <li style="display:none">
-                                        <b>ID chủ trọ </b>: <span></span>
-                                    </li>
-                                </ul>
-                                <div class="button-admin">
-                                    <div onclick="actionAdmin('post', 'accept', 0, 9)" class="button accept disabled">
-                                        <span>Bỏ qua</span>
-                                    </div>
-                                    <div onclick="actionAdmin('post', 'reject', 0, 9)" class="button reject">
-                                        <span>Ẩn bài viết</span>
-                                    </div>
-                                </div>
-                            `;
-                            option.querySelector('.list-items table').scrollIntoView();
-                        })
-                        .catch(() => { })
                     break;
                 } default: {
                     option.querySelector('.title h1').innerText = 'Message';
@@ -800,6 +688,6 @@ function refreshListChat() {
 }
 
 socket.on(`5fb7e2f7662281052c43df98toAdmin`, data => {
-    refreshListChat()
+    refreshListChat()   
     document.querySelector('.fa-comment').classList.add('alerted')
 })

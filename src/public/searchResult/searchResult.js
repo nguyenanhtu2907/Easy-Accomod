@@ -27,7 +27,7 @@ function showAddress(e, step, status) {
     let address = document.querySelector('.select>span');
     if (step == 0) {
         let html = '';
-        for (city in cities) {
+        for(city in cities){
             html += `
             <li class="li-option" id="${cities[city].code}" onclick="showAddress(event, 1, 1)">${cities[city].name}<div class="fa fa-angle-right"></div></li>
             `
@@ -39,9 +39,8 @@ function showAddress(e, step, status) {
             iCity = e.target.id;
         }
         let html = '<li class="back" onclick="showAddress(event, 0, -1)"><div class="fa fa-angle-left"></div>Quay lại </li>';
-        for (district in districts) {
-            if (districts[district].parent_code == iCity) {
-                html += `
+        for(district in districts){
+            if(districts[district].parent_code==iCity){html += `
             <li class="li-option" id="${districts[district].code}" onclick="showAddress(event, 2, 1)">${districts[district].name}<div class="fa fa-angle-right"></div></li>
             `}
         }
@@ -52,8 +51,8 @@ function showAddress(e, step, status) {
             iDistrict = e.target.id;
         }
         let html = '<li class="back" onclick="showAddress(event, 1, -1)"><div class="fa fa-angle-left"></div>Quay lại </li>';
-        for (ward in wards) {
-            if (wards[ward].parent_code == iDistrict) {
+        for(ward in wards){
+            if(wards[ward].parent_code==iDistrict){
                 html += `
                 <li class="li-option" id="${wards[ward].code}" onclick="showAddress(event, 2, 0)">${wards[ward].name}<div class="fa fa-angle-right"></div></li>
                 `
@@ -181,23 +180,23 @@ document.addEventListener('mouseup', function (e) {
     }
 });
 
-function resetFilter(e) {
+function resetFilter(e){
     document.querySelector('.address>span').innerText = 'Chọn khu vực';
     document.querySelector('.address>span').innerHTML += '<div class="fa fa-angle-down"></div>';
     document.querySelector('.price>span').innerText = ' Chọn khoảng giá (tháng)';
     document.querySelector('.price>span').innerHTML += '<div class="fa fa-angle-down"></div>';
-    document.querySelector('.posts .list-posts ul').innerHTML = '';
-    document.querySelector('.posts-area .text-result h4').innerText = 'Chúng tôi sẽ mang lại thông tin các phòng trọ phù hợp nhất với tiêu chí tìm trọ của bạn. Hãy nhập các lựa chọn ở bộ tìm kiếm nâng cao ở trên!!!'
-    document.querySelectorAll('.posts-area .option-result b')[1].innerText = ''
-    url = '';
-    document.querySelector('.next_page').remove()
-    Array.from(document.querySelectorAll('input')).forEach(input => {
-        if (input.type == 'text') {
-            input.value = '';
-        } else if (input.type == 'checkbox') {
-            input.checked = false;
-        } else if (input.type == 'radio') {
-            input.checked = false;
+    document.querySelector('.posts .list-posts ul').innerHTML='';
+    document.querySelector('.posts-area .text-result h4').innerText='Chúng tôi sẽ mang lại thông tin các phòng trọ phù hợp nhất với tiêu chí tìm trọ của bạn. Hãy nhập các lựa chọn ở bộ tìm kiếm nâng cao ở trên!!!'
+    document.querySelectorAll('.posts-area .option-result b')[1].innerText=''
+    url='';
+    console.log(url)
+    Array.from(document.querySelectorAll('input')).forEach(input =>{
+        if(input.type=='text'){
+            input.value='';
+        }else if(input.type == 'checkbox'){
+            input.checked=false;
+        }else if(input.type == 'radio'){
+            input.checked=false;
         }
     })
     // location.reload();
@@ -226,7 +225,7 @@ function routePage(e) {
             liClicked.classList.add('active');
             page = e.target.innerText * 1;
         }
-    } else if (liClicked.classList.contains('last') || e.target.innerText * 1 === ulClicked.querySelector('.last').id * 1 && liClicked.id != 'current') {
+    } else if (liClicked.classList.contains('last') || e.target.innerText * 1 === ulClicked.querySelector('.last').id * 1 && liClicked.id!='current') {
         let k = ulClicked.querySelector('.last').id * 1 - 2;
         ulClicked.querySelectorAll('.num').forEach(item => {
             item.children[0].innerText = k;
@@ -266,15 +265,9 @@ function routePage(e) {
     if (page == 2) {
         document.getElementById('1').classList.add('disabled')
     }
-    document.querySelector('.option-result span b').innerText = `${page * 10 - 9}-${page * 10}`
-    url = updateQueryStringParameter(url, 'page', page - 1)
-    fetchPage(url)
-}
-function fetchPage(url) {
-    fetch(url)
+    fetch(url + '&page=' + (page - 1) + (sortQuery?sortQuery:''))
         .then(res => res.json())
         .then(data => {
-            history.replaceState({ page: 3 }, "title 3", 'http://localhost:3000/post/search' + url.slice(18))
             var html = '';
             data.posts.forEach(function (post) {
                 html += `
@@ -285,7 +278,7 @@ function fetchPage(url) {
                     <div class="props">
                         <p><a class="title" href="/post/${post.slug}">${post.title}</a></p>
 
-                        <div class="text">${post.address.detail ? post.address.detail + ', ' : ''}${post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
+                        <div class="text">${post.address.detail?post.address.detail+ ', ':'' + post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
                         <div class="equi">
                             <ul>
                                 <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
@@ -317,9 +310,12 @@ function fetchPage(url) {
 
                 `
             })
-            document.querySelector('.posts .list-posts ul').innerHTML = html;
-            window.scrollTo(0, 0)
+            document.querySelector('.posts .list-posts ul').innerHTML=html;
+            window.scrollTo(0,0)
         })
+
+
+
 }
 function saved(e) {
     e.preventDefault();
@@ -341,77 +337,34 @@ function saved(e) {
         fetch(urlPost)
         fetch(urlUser)
     }
-}
 
+}
 var url;
 var sortQuery;
-$('.search-btn').click(function (event) {
+$('.search-btn').click(function(event){
     event.preventDefault()
-    url = '/post/searchResult?' + $('.search-inputs').serialize();
+    url = '/post/searchResult?'+$('.search-inputs').serialize();
     searchFetch(url)
 })
 
-function sort(e, sortQueryPara) {
-    if (url) {
-        url = updateQueryStringParameter(url, 'sort', sortQueryPara)
-        searchFetch(url)
+function sort(e, sortQueryPara){
+    if(url){
+        sortQuery='&sort='+sortQueryPara;
+        searchFetch(url+sortQuery)
     }
 }
-function redirect(e, roomType) {
+function redirect(e, roomType){
     e.preventDefault()
-    url = '/post/searchResult?roomType=' + roomType
+    url='/post/searchResult?roomType='+roomType
     searchFetch(url)
 }
-function redirectProvince(e, province) {
-    e.preventDefault()
-    url = '/post/searchResult?province=' + province
-    searchFetch(url)
-}
-if (window.location.search) {
-    let key = window.location.search;
-    url = '/post/searchResult' + key;
-    searchFetch(url)
-
-    fetchPage(url)
-    setTimeout(() => {
-        let currentPage = url.slice(url.search('page=') + 5, url.search('page=') + 6) * 1;
-        document.querySelector('.option-result span b').innerText = `${(currentPage + 1) * 10 - 9}-${(currentPage + 1) * 10}`
-
-        let last = document.querySelector('.last').id * 1 - 1;
-        let pages = document.querySelectorAll('.page-item')
-        if (currentPage == last) {
-            pages[1].childNodes[0].innerText = last - 1
-            pages[2].childNodes[0].innerText = last
-            pages[3].childNodes[0].innerText = last + 1
-            pages[1].classList.remove('active')
-            pages[2].classList.remove('active')
-            pages[3].classList.add('active')
-        } else if (currentPage == 0) {
-            pages[1].childNodes[0].innerText = 1
-            pages[2].childNodes[0].innerText = 2
-            pages[3].childNodes[0].innerText = 3
-            pages[1].classList.add('active')
-            pages[2].classList.remove('active')
-            pages[3].classList.remove('active')
-        } else {
-            pages[1].childNodes[0].innerText = currentPage
-            pages[2].childNodes[0].innerText = currentPage + 1
-            pages[3].childNodes[0].innerText = currentPage + 2
-            pages[1].classList.remove('active')
-            pages[2].classList.add('active')
-            pages[3].classList.remove('active')
-        }
-    }, 500)
-}
-
-function searchFetch(url) {
-    history.replaceState({ page: 3 }, "title 3", 'http://localhost:3000/post/search' + url.slice(18))
+function searchFetch(url){
     fetch(url)
-        .then(data => data.json())
-        .then(data => {
-            let html = '';
-            data.posts.forEach(post => {
-                html += `
+    .then(data=>data.json())
+    .then(data=>{
+        let html ='';
+        data.posts.forEach(post=>{
+            html+=`
             <li class="line">
                 <a href="/post/${post.slug}" class="thumbnail">
                     <img src="${post.images[0]}" alt="">
@@ -419,7 +372,7 @@ function searchFetch(url) {
                 <div class="props">
                     <p><a class="title" href="/post/${post.slug}">${post.title}</a></p>
 
-                    <div class="text">${post.address.detail ? post.address.detail + ', ' : ''}${post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
+                    <div class="text">${post.address.detail?post.address.detail+ ', ':''}${post.address.ward + ', ' + post.address.district + ', ' + post.address.province}</div>
                     <div class="equi">
                         <ul>
                             <li><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-textarea"
@@ -449,16 +402,15 @@ function searchFetch(url) {
                 </div>
             </li>
             `
-
-            })
-            document.querySelector('.posts .list-posts ul').innerHTML = html;
-            window.scrollTo(0, 0)
-            let page = data.total > 10 ? Math.ceil(data.total / 10) : 1
-            if (document.querySelector('.next_page')) {
-                document.querySelector('.next_page').remove()
-            }
-            if (data.total > 10) {
-                document.querySelector('.posts').innerHTML += `
+            
+        })
+        document.querySelector('.posts .list-posts ul').innerHTML=html;
+        let page = data.total > 10 ? Math.ceil(data.total / 10) : 1
+        if(document.querySelector('.next_page')){
+            document.querySelector('.next_page').remove()
+        }
+        if(data.total>10){
+            document.querySelector('.posts').innerHTML+=`
                 <nav aria-label="page navigation example" class="next_page">
                     <ul class="pagination">
                         <li class="page-item disabled" id="1"><a class="page-link" href="#" onclick="routePage(event)"
@@ -467,9 +419,9 @@ function searchFetch(url) {
                                 href="?page=1">1</a></li>
                         <li class="page-item num " id="current"><a class="page-link" onclick="routePage(event)"
                                 href="?page=2">2</a></li>
-                        <li class="page-item num ${page == 1 || page == 2 ? 'disabled' : ''}" id="next"><a class="page-link" onclick="routePage(event)"
+                        <li class="page-item num ${page==1 || page ==2?'disabled':''}" id="next"><a class="page-link" onclick="routePage(event)"
                                 href="?page=3">3</a></li>
-                        <li class="page-item last ${page == 1 || page == 2 ? 'disabled' : ''}" id="${page}">
+                        <li class="page-item last ${page==1 || page ==2?'disabled':''}" id="${page}">
                             <a class="page-link " onclick="routePage(event)" href="#" aria-label="Next">
                                 Trang cuối <span aria-hidden="true">&raquo;</span>
                             </a>
@@ -477,24 +429,14 @@ function searchFetch(url) {
                     </ul>
                 </nav>
             `
-            }
+        }
 
-            if (data.total > 0) {
-                document.querySelector('.posts-area .text-result h4').innerText = 'Kết quả tìm kiếm:'
-                document.querySelectorAll('.posts-area .option-result b')[1].innerText = data.total
-            } else {
-                document.querySelector('.posts-area .text-result h4').innerText = 'Chúng tôi sẽ mang lại thông tin các phòng trọ phù hợp nhất với tiêu chí tìm trọ của bạn. Hãy nhập các lựa chọn ở bộ tìm kiếm nâng cao ở trên!!!'
-                document.querySelectorAll('.posts-area .option-result b')[1].innerText = ''
-            }
-        })
-}
-function updateQueryStringParameter(uri, key, value) {
-    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-    if (uri.match(re)) {
-        return uri.replace(re, '$1' + key + "=" + value + '$2');
-    }
-    else {
-        return uri + separator + key + "=" + value;
-    }
+        if(data.total>0){
+            document.querySelector('.posts-area .text-result h4').innerText='Kết quả tìm kiếm:'
+            document.querySelectorAll('.posts-area .option-result b')[1].innerText=data.total
+        }else{
+            document.querySelector('.posts-area .text-result h4').innerText='Chúng tôi sẽ mang lại thông tin các phòng trọ phù hợp nhất với tiêu chí tìm trọ của bạn. Hãy nhập các lựa chọn ở bộ tìm kiếm nâng cao ở trên!!!'
+            document.querySelectorAll('.posts-area .option-result b')[1].innerText=''
+        }
+    })
 }

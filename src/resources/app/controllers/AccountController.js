@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
 const { post } = require('../routes/account');
-const { info } = require('node-sass');
 
 class AccountController {
 
@@ -150,21 +149,16 @@ class AccountController {
                     .then(users => res.json(users))
                     .catch(() => { })
             } else if (option == 7) {
-                Post.find({ checked: 1 }).limit(5).sort({ saved: -1 })
-                    .then(savedPosts => multipleMongooseToObj(savedPosts))
-                    .then(savedPosts => {
-                        Post.find({ checked: 1 }).limit(5).sort({ viewed: -1 })
-                            .then(viewedPosts => multipleMongooseToObj(viewedPosts))
-                            .then(viewedPosts => {
-                                User.find({ level: 'owner' }).sort({ totalPost: -1 }).limit(5)
-                                    .then(owners => {
-                                        res.json({ savedPosts, viewedPosts, owners })
-                                    })
-                                    .catch(() => { })
-                            })
-                            .catch(() => { })
-                    })
+
+
+
+                User.find({ checked: 0 })
+                    .then(users => multipleMongooseToObj(users))
+                    .then(users => res.json(users))
                     .catch(() => { })
+
+
+
             } else if (option == 8) {
                 User.findOne({ _id: req.session.authUser._id })
                     .then(admin => mongooseToObj(admin))
@@ -172,87 +166,9 @@ class AccountController {
                         res.json(admin.messages)
                     })
                     .catch(() => { })
-            }else if (option == 9) {
-                Post.find({ isReported: true })
-                    .then(posts => getPostsInfo(posts))
-                    .then(users => multipleMongooseToObj(users))
-                    .then(users => res.json(users))
-                    .catch(() => { })
             } else {
-                var price1 = 0, price2 = 0, price3 = 0, price4 = 0, price5 = 0;
-                var acceptOwner = 0, waitingOwner = 0, rejectOwner = 0;
-                var rentPost = 0, availablePost = 0, waitingPost = 0, rejectPost = 0, expiredPost = 0;
-                var month = [];
-                var profit = [];
-                var owners = [];
-
-                User.find({}, (err, users) => {
-                    Post.find({}, (err, posts) => {
-                        posts.forEach(post => {
-                            if (post.checked == 0) {
-                                waitingPost++;
-                            } else if (post.checked == -1) {
-                                rejectPost++;
-                            } else if (post.checked == 1) {
-                                if (post.availabletime == 0) {
-                                    expiredPost++;
-                                } else {
-                                    availablePost++;
-                                }
-                            }
-                            if (post.rentcost >= '5.000.000') {
-                                price1++;
-                            } else if (post.rentcost >= '4.000.000' && post.rentcost < '5.000.000') {
-                                price2++;
-                            } else if (post.rentcost >= '3.000.000' && post.rentcost < '4.000.000') {
-                                price3++;
-                            } else if (post.rentcost >= '2.000.000' && post.rentcost < '3.000.000') {
-                                price4++;
-                            } else {
-                                price5++;
-                            }
-                        })
-                        users.forEach(user => {
-                            if (user.level == 'admin') {
-                                var index = user.profit.length - 1;
-                                var under = user.profit.length > 12 ? user.profit.length - 12 : 0;
-                                for (index; index >= under; index--) {
-                                    month.unshift(user.profit[index].month)
-                                    profit.unshift((user.profit[index].total / 1000000).toFixed(2))
-                                }
-                                let months = ["January", "February", "March", "April", "May", "June",
-                                    "July", "August", "September", "October", "November", "December"];
-                                let monthLength = month.length;
-                                if (monthLength < 12) {
-                                    let i = 12 - monthLength - 1;
-                                    for (i; i >= 0; i--) {
-                                        month.unshift(months[(i + 12) % 12])
-                                        profit.unshift(0)
-                                    }
-                                }
-                            } else if (user.level == 'owner') {
-                                owners.push(user);
-                            }
-                        })
-                        owners.forEach(owner => {
-                            if (owner.checked == 0) {
-                                waitingOwner++;
-                            } else if (owner.checked == 1) {
-                                acceptOwner++;
-                            } else {
-                                rejectOwner++;
-                            }
-                        })
-
-                        return res.render('manage', {
-                            layout: false,
-                            price1, price2, price3, price4, price5,
-                            waitingOwner, acceptOwner, rejectOwner,
-                            availablePost, expiredPost, waitingPost, rejectPost, rentPost,
-                            month, profit,
-                        })
-
-                    })
+                return res.render('manage', {
+                    layout: false,
                 })
             }
         } else {
@@ -328,50 +244,36 @@ class AccountController {
                 Post.findOne({ _id: req.body.id })
                     .then(post => {
                         post.checked = req.body.status;
-                        post.isReported = false;
-                        if (req.body.status == 1) {
-                            post.extendedTime = Date.now();
-                        }
                         post.save()
                             .then(() => {
                                 User.findOne({ _id: post.owner })
-                                    // .then(owner => mongooseToObj(owner))
-                                    .then(owner => {
-                                        if (req.body.status == 1) {
-                                            owner.totalPost++;
-                                        }
-                                        owner.notifications.push({
-                                            avatar: owner.avatar,
+                                    .then(user => {
+                                        user.notifications.push({
+                                            avatar: user.avatar,
                                             content: req.body.status == 1 ? 'Admin đã phê duyệt bài viết của bạn.' : 'Admin đã từ chối bài viết của bạn.'
                                         })
-                                        // owner.markModified('totalPost')
-                                        console.log(owner.totalPost)
-                                        owner.save()
+                                        user.save()
                                             .then(() => {
-                                                if (req.body.status == 1) {
-                                                    var months = ["January", "February", "March", "April", "May", "June",
-                                                        "July", "August", "September", "October", "November", "December"];
-                                                    var indexMonth = new Date().getMonth();
-                                                    var currentMonth = months[indexMonth];
-                                                    User.findOne({ level: 'admin' })
-                                                        .then(admin => {
-                                                            if (admin.profit[admin.profit.length - 1].month == currentMonth) {
-                                                                admin.profit[admin.profit.length - 1].total += post.availabletime * 25000;
-                                                            } else {
-                                                                admin.profit.push({
-                                                                    month: currentMonth,
-                                                                    total: post.availabletime * 25000
-                                                                })
-                                                            }
-                                                            admin.markModified('profit')
-                                                            admin.save()
-                                                                .then(() => {
-                                                                    return res.json(admin.level);
-                                                                })
-                                                        })
-                                                } else {
-                                                    return res.json(owner.level);
-                                                }
+                                                var months = ["January", "February", "March", "April", "May", "June",
+                                                    "July", "August", "September", "October", "November", "December"];
+                                                var indexMonth = new Date().getMonth();
+                                                var currentMonth = months[indexMonth];
+                                                User.findOne({ level: 'admin' })
+                                                    .then(admin => {
+                                                        if (admin.profit[admin.profit.length - 1].month == currentMonth) {
+                                                            admin.profit[admin.profit.length - 1].total += post.availabletime*25000;
+                                                        } else {
+                                                            admin.profit.push({
+                                                                month: currentMonth,
+                                                                total: post.availabletime*25000
+                                                            })
+                                                        }
+                                                        admin.markModified('profit')
+                                                        admin.save()
+                                                            .then(() => {
+                                                                res.json(admin.level);
+                                                            })
+                                                    })
                                             })
                                     })
                             })
@@ -565,72 +467,13 @@ class AccountController {
 
     editProfile(req, res, next) {
 
-        if (req.params.id === req.session.authUser._id && (req.query.type === 'info' || req.query.type === 'password')) {
-            User.findOne({ _id: req.params.id })
-                .then(user => mongooseToObj(user))
-                .then(user => {
-                    res.render('editProfile', {
-                        layout: false,
-                        user,
-                        type: req.query.type,
-                    })
-                })
-        } else {
-            return res.render('error', {
-                layout: false,
-            })
-        }
+    }
+    changePasswordDB(req, res, next) {
+
     }
 
-    editProfileDB(req, res, next) {
-        if (req.query.type == 'info') {
-            User.findOne({ _id: req.params.id })
-                .then(user => {
-                    if(req.body.avatar){
-                        user.avatar = req.body.avatar;
-                        req.session.authUser.avatar = req.body.avatar;
-                    }
-                    user.fullname = req.body.fullname;
-                    req.session.authUser.fullname = req.body.fullname;
-                    user.phone = req.body.phone;
-                    user.identity = req.body.identity;
-                    user.email = req.body.email;
-                    user.address = req.body.ward + ', ' + req.body.district + ', ' + req.body.province;
-                    user.user_description = req.body.user_description;
-                    user.save()
-                        .then(() => {
-                            res.render('editProfile', {
-                                layout: false,
-                                user: req.body,
-                                type: req.query.type,
-                                message: "Sửa thông tin cá nhân thành công!"
-                            })
-                        })
-                })
-        } else if (req.query.type == 'password') {
-            User.findOne({ _id: req.params.id }, function (err, user) {
-                const rs = bcrypt.compareSync(req.body.old_pass, user.password_hash);
-                if (!rs) {
-                    res.render('editProfile', {
-                        layout: false,
-                        user: req.session.authUser,
-                        type: req.query.type,
-                        message: '*Mật khẩu cũ không đúng!!!',
-                    })
-                }
-                const password_hash = bcrypt.hashSync(req.body.new_pass, 8);
-                user.password_hash = password_hash;
-    
-                user.save()
-                    .then(() => res.render('editProfile', {
-                        layout: false,
-                        user: req.session.authUser,
-                        type: req.query.type,
-                        message: 'Đổi mật khẩu thành công',
-                    }))
-                    .catch(error => { })
-            })
-        }
+    changeInfoDB(req, res, next) {
+
     }
 
     logout(req, res, next) {
