@@ -186,6 +186,10 @@ TOP BAR
   text-decoration: none;
   color: var(--color-word);
 }
+.button-back-post:focus {
+  text-decoration: none;
+  color: var(--color-word);
+}
 .button-next-post {
   padding: 0.5rem 1rem;
   background-color: #262637;
@@ -197,6 +201,10 @@ TOP BAR
   color: white;
   text-decoration: none;
   background-color: #4e4e4e;
+}
+.button-next-post:focus {
+  text-decoration: none;
+  color: white;
 }
 
 /*
