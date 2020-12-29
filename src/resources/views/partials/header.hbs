@@ -1,11 +1,11 @@
 <div class="header">
-    <div class="content-header">
+    <div class="content-header ">
         <div class="logo">
             <a href="/">
                 <img src="/image/logo/cover.png" alt="">
             </a>
         </div>
-        <div class="menu">
+        <div class="menu ">
             <ul>
                 {{#ifCond localAuthUser.level "renter"}}
                 {{else}}
@@ -16,10 +16,12 @@
                 <li>
                     <a href="/post/search">Tìm kiếm nâng cao</a>
                 </li>
-                <li>
-                    <a href="/post/rank">Thống kê phòng trọ</a>
-                </li>
                 {{#if localAuthUser}}
+                {{#ifCond localAuthUser.level "admin"}}
+                <li>
+                    <a href="/account/{{localAuthUser._id}}/manage">Thống kê</a>
+                </li>
+                {{/ifCond}}
                 {{#ifCond localAuthUser.level "owner"}}
                 <li>
                     <div class="notification">
