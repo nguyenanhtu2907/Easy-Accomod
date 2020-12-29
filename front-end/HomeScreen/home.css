@@ -110,6 +110,7 @@ input:focus {
   outline: none;
 }
 
+
 .button-search {
   background-color: lightblue;
   border-radius: 0.75rem;
@@ -441,7 +442,7 @@ HA NOI
 }
 .new-price {
   font-weight: 500;
-  color: lightgreen;
+  color: rgb(34, 212, 180);
   font-size: 1.5rem;
 }
 .rank {
@@ -473,7 +474,9 @@ HA NOI
 .rank_item {
   padding: 10px 20px;
 }
+
 .rank_item a {
+
   display: flex;
   justify-content: space-between;
   text-decoration: none;
