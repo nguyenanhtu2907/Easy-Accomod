@@ -1,0 +1,121 @@
+:root{
+    font-size: 15px;
+    font-family: Roboto sans-serif;
+  } 
+  body{
+    background-color: rgb(245,245,245);
+  }
+.container{
+    border-radius: 5px;
+    z-index: 5;
+    width: 1000px;
+    margin: auto;
+    margin-top: -110px;
+    background-color: white;
+    padding-top: 2rem ;
+    
+}
+.alert{
+    font-family: 'Open Sans', sans-serif;
+    color: red;
+    padding:0;
+    font-size: 1rem;
+    width: 70%;
+    padding: 0px !important;
+    /* margin-top: -1.3rem; */
+}
+
+#change_pass-form{
+    margin-bottom: 7rem;
+    
+}
+
+.change_pass_head{
+    width: 100%;
+    height: 200px;
+    text-align: center;
+    background-color: turquoise;
+}
+.change_pass_title{
+    font-size: 1.8rem;
+    color: white ;
+    padding-top: 25px;
+}
+.change_pass-input{
+    display: flex;
+    margin: 1rem 0;
+}
+.change_pass-input--title{
+    width: 30%;
+    text-align: right;
+    font-size: 1.1rem;
+    font-family: 'Open Sans', sans-serif;
+    margin-right: 3%;
+    padding: 5px 10px;
+}
+.change_pass-input--content{
+    border-radius: 5px;
+    width: calc(100% - 400px);
+    /* display: flex; */
+
+}
+.change_pass-input--input{
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #dfdfe1;
+    font-size: 1.1rem;
+    outline: none;
+}
+#new_togglePassword, #retype_togglePassword, #old_togglePassword{
+    cursor: pointer;
+}
+.change_pass-input--input:focus{
+    /* border-radius: 5px; */
+    border: 2px solid rgb(34, 212, 180);
+    /* border: none!important ; */
+}
+.submit_btn{
+    padding: 5px 10px;
+    width: 100px;
+    background-color: rgb(34, 212, 180);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
+.submit_btn:hover{
+    background-color: rgb(41, 199, 170);
+    color: black;
+}
+.focus{
+    border: 2px solid rgb(34, 212, 180);
+}
+
+@media screen and (max-width:1000px){
+    .change_pass-input--content{
+        width: 100%;
+        margin-right: 10px;
+    }
+    .change_pass-input{
+        display: block;
+    }
+    .change_pass-input--title{
+        text-align: left;
+        width: 100%;
+    }
+}
+
+@media (max-width: 580px){
+.container {
+    max-width: 100%;
+}
+.change_pass-input--title{
+    text-align: left;
+    padding: 0 0 0 10px;
+    width: 100%;
+}
+.change_pass-input--content{
+   
+}
+}

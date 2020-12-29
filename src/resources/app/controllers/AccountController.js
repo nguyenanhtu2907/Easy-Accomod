@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
 const { post } = require('../routes/account');
+const { info } = require('node-sass');
 
 class AccountController {
 
@@ -152,7 +153,6 @@ class AccountController {
                 Post.find({ checked: 1 }).limit(5).sort({ saved: -1 })
                     .then(savedPosts => multipleMongooseToObj(savedPosts))
                     .then(savedPosts => {
-
                         Post.find({ checked: 1 }).limit(5).sort({ viewed: -1 })
                             .then(viewedPosts => multipleMongooseToObj(viewedPosts))
                             .then(viewedPosts => {
@@ -163,18 +163,20 @@ class AccountController {
                                     .catch(() => { })
                             })
                             .catch(() => { })
-
                     })
                     .catch(() => { })
-
-
-
             } else if (option == 8) {
                 User.findOne({ _id: req.session.authUser._id })
                     .then(admin => mongooseToObj(admin))
                     .then(admin => {
                         res.json(admin.messages)
                     })
+                    .catch(() => { })
+            }else if (option == 9) {
+                Post.find({ isReported: true })
+                    .then(posts => getPostsInfo(posts))
+                    .then(users => multipleMongooseToObj(users))
+                    .then(users => res.json(users))
                     .catch(() => { })
             } else {
                 var price1 = 0, price2 = 0, price3 = 0, price4 = 0, price5 = 0;
@@ -326,6 +328,10 @@ class AccountController {
                 Post.findOne({ _id: req.body.id })
                     .then(post => {
                         post.checked = req.body.status;
+                        post.isReported = false;
+                        if (req.body.status == 1) {
+                            post.extendedTime = Date.now();
+                        }
                         post.save()
                             .then(() => {
                                 User.findOne({ _id: post.owner })
@@ -559,13 +565,72 @@ class AccountController {
 
     editProfile(req, res, next) {
 
+        if (req.params.id === req.session.authUser._id && (req.query.type === 'info' || req.query.type === 'password')) {
+            User.findOne({ _id: req.params.id })
+                .then(user => mongooseToObj(user))
+                .then(user => {
+                    res.render('editProfile', {
+                        layout: false,
+                        user,
+                        type: req.query.type,
+                    })
+                })
+        } else {
+            return res.render('error', {
+                layout: false,
+            })
+        }
     }
-    changePasswordDB(req, res, next) {
 
-    }
-
-    changeInfoDB(req, res, next) {
-
+    editProfileDB(req, res, next) {
+        if (req.query.type == 'info') {
+            User.findOne({ _id: req.params.id })
+                .then(user => {
+                    if(req.body.avatar){
+                        user.avatar = req.body.avatar;
+                        req.session.authUser.avatar = req.body.avatar;
+                    }
+                    user.fullname = req.body.fullname;
+                    req.session.authUser.fullname = req.body.fullname;
+                    user.phone = req.body.phone;
+                    user.identity = req.body.identity;
+                    user.email = req.body.email;
+                    user.address = req.body.ward + ', ' + req.body.district + ', ' + req.body.province;
+                    user.user_description = req.body.user_description;
+                    user.save()
+                        .then(() => {
+                            res.render('editProfile', {
+                                layout: false,
+                                user: req.body,
+                                type: req.query.type,
+                                message: "Sửa thông tin cá nhân thành công!"
+                            })
+                        })
+                })
+        } else if (req.query.type == 'password') {
+            User.findOne({ _id: req.params.id }, function (err, user) {
+                const rs = bcrypt.compareSync(req.body.old_pass, user.password_hash);
+                if (!rs) {
+                    res.render('editProfile', {
+                        layout: false,
+                        user: req.session.authUser,
+                        type: req.query.type,
+                        message: '*Mật khẩu cũ không đúng!!!',
+                    })
+                }
+                const password_hash = bcrypt.hashSync(req.body.new_pass, 8);
+                user.password_hash = password_hash;
+    
+                user.save()
+                    .then(() => res.render('editProfile', {
+                        layout: false,
+                        user: req.session.authUser,
+                        type: req.query.type,
+                        message: 'Đổi mật khẩu thành công',
+                    }))
+                    .catch(error => { })
+            })
+        }
     }
 
     logout(req, res, next) {

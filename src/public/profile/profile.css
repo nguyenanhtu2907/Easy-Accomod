@@ -31,6 +31,7 @@ body{
 .info-user .avatar img{
     width: 12rem;
     height: 12rem;
+    object-fit: cover;
     
 }
 .info-user p{
