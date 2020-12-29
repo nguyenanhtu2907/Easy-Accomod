@@ -82,7 +82,7 @@ ul li{
     /* top: 0; */
     opacity: 1; 
     visibility: visible;
-    height: 137px;
+    height: 181px;
 }
 .post .drop-down-option li{
     transition: 1s;
@@ -197,7 +197,7 @@ body{
 
 .table tbody tr:hover{
     cursor: pointer;
-    color: rgb(92, 126, 158);
+    color: rgb(0, 195, 160);
 }
 .list-side .detail-side{
     width: 30%;
@@ -428,10 +428,13 @@ input:focus, select:focus{
     margin-right: 3rem;
     /* text-align: center; */
 }
-.a-table{
-
+.a-table tr{
+    padding: 0.75 10px;
 }
-#rank-viewed, #rank-saved{
+#rank-viewed{
+    width: 38rem;
+}
+#rank-saved{
     width: 38rem;
 }
 #rank-user{
