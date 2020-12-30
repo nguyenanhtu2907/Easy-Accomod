@@ -119,7 +119,7 @@ function checkPrice(e) {
         min = e.target;
     } else {
         max = e.target;
-        if (min.value * 1 <= max.value * 1) {
+        if (min.value <= max.value) {
             text = min.parentNode.innerText + ' - ' + max.parentNode.innerText;
             document.querySelector('.minPrice').value = min.value;
             document.querySelector('.maxPrice').value = max.value;
@@ -156,7 +156,6 @@ function nextFilter(e) {
     lists[0].classList.add('none')
 }
 function backFilter(e) {
-    // console.log()
     e.target.parentNode.classList.add('none')
     var lists = Array.from(document.querySelectorAll('.filter .option-filter .list-option'))
     lists[0].classList.remove('none')
@@ -200,7 +199,6 @@ function resetFilter(e) {
             input.checked = false;
         }
     })
-    // location.reload();
 }
 
 function routePage(e) {
@@ -374,7 +372,7 @@ if (window.location.search) {
 
     fetchPage(url)
     setTimeout(() => {
-        let currentPage = url.slice(url.search('page=') + 5, url.search('page=') + 6) * 1;
+        let currentPage = (url.slice(url.search('page=') + 5, url.search('page=') + 6) * 1) || 0;
         document.querySelector('.option-result span b').innerText = `${(currentPage + 1) * 10 - 9}-${(currentPage + 1) * 10}`
 
         let last = document.querySelector('.last').id * 1 - 1;

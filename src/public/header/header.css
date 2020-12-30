@@ -12,7 +12,7 @@ body{
     filter: drop-shadow(0 0.1rem 0.15rem rgba(0, 0, 0, 0.767));    
     line-height: 70px;
     display: flex;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 .sticky{
     position: fixed;
@@ -65,6 +65,14 @@ a:hover{
     height: 30px;
     padding-top: 6px;
     border-radius: 50%;
+}
+.info-account{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.info-account>img{
+    margin-left: 3px;
 }
 .alerted{
     color: rgb(255, 0, 0);
@@ -307,3 +315,50 @@ a:hover{
 
 
 
+
+@media screen and (max-width:1900px) {
+    :root {font-size:15px;}    
+    
+    
+  }
+  @media screen and (max-width:1787px) {
+    :root {font-size:15px;}    
+    
+    
+  }
+  @media screen and (max-width:1450px) {
+    :root {font-size:15px;}    
+    
+  
+  }
+  
+  @media screen and (max-width:1366px) {
+    :root {font-size:15px;}    
+    .reshide{
+        display: none;
+    }
+  }
+  @media screen and (max-width:884px) {
+    
+  }
+  @media screen and (max-width:768px) {
+    :root {font-size: calc(13px + 2 * ((100vw - 768px) / 598));}
+    .info-account span{
+        display: none;
+    }
+    .info-account img{
+        margin-top: 13px
+    }
+    
+    
+  }
+  @media screen and (max-width:590px) {
+    :root {font-size: calc(11px + 2 * ((100vw - 590px) / 278));}
+    #register{
+        display: none;
+    }
+  
+  }
+  @media screen and (max-width:359px) {
+    :root {font-size: 9px;}
+  }

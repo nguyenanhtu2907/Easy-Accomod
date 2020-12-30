@@ -132,7 +132,18 @@
                     <br>
                     {{post.description}}
                 </div>
-                <div class="owner-description"></div>
+                <a href="/account/{{post.owner}}" class="owner-description">
+                    <img class="avatar-owner" src={{post.authorAvatar}} />
+                    <div class="name-owner">
+                        <p style="font-size: 1.2rem; font-weight: bold; margin: 0px">
+                            {{post.authorName}}
+                        </p>
+                    </div>
+                    <div class="contact-owner">
+                        <i class="fas fa-phone-alt" style="color: #009177; margin-right: 0.5rem"></i>
+                        {{post.contact}}
+                    </div>
+                </a>
             </div>
         </div>
         <div class="owner-article">
@@ -156,6 +167,7 @@
 
         </div>
     </div>
+
     <div class="comment-container ">
         <h2>Đánh giá của người thuê</h2>
         <div class="list-comment">
@@ -280,10 +292,10 @@
                             <span>Mời bạn nhập số ngày (chú ý số ngày phải lớn hoặc bằng
                                 7)</span>
                             <div class="extended">
-                                <input type="number" onchange="chuyendoi(event)" class="input-day-extended" placeholder="ngày" min="7" />
+                                <input type="number" onchange="chuyendoi(event)" class="input-day-extended"
+                                    placeholder="ngày" min="7" />
                                 <div class="convert-button">
-                                    <i class="fas fa-long-arrow-alt-right" style="font-size: 2rem"
-                                        ></i>
+                                    <i class="fas fa-long-arrow-alt-right" style="font-size: 2rem"></i>
                                 </div>
                                 <span class="money-extended">0 VNĐ</span>
                             </div>

@@ -1,0 +1,595 @@
+:root {
+  --width: 100vw;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  margin: 0px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+ul{
+  margin-top: 0;
+}
+a {
+  text-decoration: none;
+}
+p {
+  margin: 0px;
+}
+
+/*
+SEARCH BAR SCREEN
+*/
+
+.search-bar-container {
+  display: flex;
+  background: url(./images/bg.jpg) center no-repeat;
+  background-size: 100%;
+  flex-direction: column;
+  position: relative;
+  background-size: cover;
+  height: 30rem;
+  margin-top: -5px;
+}
+.background-search-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  flex-direction: column;
+  opacity: 0.4;
+}
+.slogan {
+  z-index: 1;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  margin-top: 7rem;
+  font-size: 2rem;
+  color: white;
+}
+
+.search-bar {
+  z-index: 1;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  height: 25%;
+  position: relative;
+}
+
+.out-search-bar {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  border-radius: 1rem;
+  padding-bottom: 2rem;
+}
+
+.in-search-bar {
+  margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+  z-index: 1;
+}
+
+.header-search {
+  color: white;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.input-search-bar {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  padding: 0.25rem;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.input-search-bar i {
+  font-size: 1.5rem;
+  margin: auto;
+  color: rgb(199, 199, 199);
+}
+.input-search-bar input {
+  display: flex;
+  width: 100%;
+  padding-left: 0.5rem;
+  border-width: 0px;
+  font-size: 1.25rem;
+}
+
+input:focus {
+  outline: none;
+}
+
+
+.button-search {
+  background-color: lightblue;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  width: 9rem;
+  padding: 0.75rem;
+  border-width: 0px;
+  cursor: pointer;
+  text-align: center;
+  color: black;
+  font-weight: 500;
+}
+.button-search:hover {
+  background-color: lightseagreen;
+  color: white;
+  outline: none;
+}
+.button-search:focus {
+  outline: none;
+}
+/*
+SELECT
+*/
+.search-area {
+  width: 100%;
+}
+.search-inputs {
+  display: flex;
+  position: relative;
+}
+input:focus,
+select:focus {
+  outline: none;
+}
+.address {
+  width: 20%;
+  padding-right: 2rem;
+  margin-right: 2rem;
+}
+.search-inputs .select {
+  color: lightblue;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.none {
+  display: none;
+}
+.option {
+  z-index: 1;
+  background-color: #ffffff;
+  color: black;
+  position: absolute;
+  top: 30px;
+  height: 20rem;
+  overflow: scroll;
+  overflow-x: hidden;
+  border: 1px solid #b1b1b1;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.option-address {
+  width: 15rem;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(170, 170, 170);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(146, 146, 146);
+}
+.list-option {
+  padding-left: 0;
+}
+.list-option li {
+  list-style: none;
+  padding: 8px;
+}
+.list-option li:hover {
+  background-color: #e0e0e0;
+  transition: 0.1s;
+}
+/* .list-option li:first-child{
+  border-top: 1px solid #878b8e;
+} */
+.select .fa-angle-down {
+  float: right;
+  margin-top: 5px;
+}
+.list-option .fa-angle-right {
+  float: right;
+  font-size: 1.3rem;
+  margin-top: 4px;
+  /* align-items: center; */
+}
+.option .list-option .fa-angle-left {
+  font-size: 1.3rem;
+  margin-top: 4px;
+  margin-right: 10px;
+}
+.back {
+  font-weight: 500;
+}
+.price {
+  padding-right: 2rem;
+}
+.option-price {
+  width: 25rem;
+  height: 20rem;
+}
+.group-price {
+  display: flex;
+}
+.group-price .list-option {
+  width: 50%;
+}
+.group-price .list-option:first-child {
+  border-right: #b1b1b1 1px solid;
+}
+.group-price .list-option li:first-child {
+  background-color: #d6d6d6;
+  font-weight: 500;
+}
+.group-price .list-option li input {
+  margin-right: 10px;
+  margin-top: 4px;
+}
+.list-option li label {
+  margin: 0;
+  padding-right: 4rem;
+  cursor: pointer;
+}
+.advanced-search {
+  margin-left: auto;
+  color: rgb(146, 146, 146);
+}
+.advanced-search:hover {
+  color: lightblue;
+}
+/*
+  CITY
+*/
+
+.body-container {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
+
+/*
+  REVIEW 2 CITY
+*/
+.review-two-cities {
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  display: flex;
+  width: 65%;
+}
+
+.text {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+.two-cities {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.two-cities {
+  position: relative;
+}
+.two-cities a {
+  width: 49%;
+  display: flex;
+}
+.two-cities .a1 {
+  margin-right: 1%;
+}
+.two-cities .a2 {
+  margin-left: 1%;
+}
+
+/* 
+  width: 80%
+*/
+
+.two-cities :hover .images {
+  filter: brightness(60%);
+  transition: filter 0.2s;
+}
+
+.ha-noi {
+  margin-left: auto;
+  width: 100%;
+  height: 10rem;
+  background-size: 140%;
+
+  border-radius: 1rem;
+  /* padding: 1rem; */
+}
+.hanoi_image {
+  /* filter: brightness(90%); */
+  background: url(./images/ha-noi.jpg) no-repeat center;
+  width: 100%;
+  height: 100%;
+  background-size: 140%;
+  border-radius: 1rem;
+
+  /* padding: 1rem; */
+}
+.images {
+  transition: filter 0.2s;
+}
+.ha-noi p {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.ho-chi-minh {
+  margin-right: auto;
+  width: 100%;
+  height: 10rem;
+  /* background: black url(./images/ho-chi-minh.jpg) center no-repeat; */
+  background-size: 140%;
+  filter: brightness(90%);
+  border-radius: 1rem;
+  /* padding: 1rem; */
+}
+
+.hcm_image {
+  background: black url(./images/ho-chi-minh.jpg) center no-repeat;
+  width: 100%;
+  /* filter: brightness(90%); */
+  height: 100%;
+  background-size: 140%;
+  border-radius: 1rem;
+  /* padding: 1rem; */
+}
+
+.ho-chi-minh p {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  font-size: 1.5rem;
+}
+
+/*
+HA NOI
+*/
+.ha-noi-news {
+  width: 65%;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+}
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  width: 100%;
+}
+.news-vs-rank {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+.news {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  flex-direction: row;
+  border-right: 2px solid #d6d6d6;
+}
+.new {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.left {
+  width: 38%;
+  height: 12rem;
+  overflow: hidden;
+}
+.left:hover > img {
+  filter: brightness(0.7);
+}
+.left > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+.right {
+  width: 60%;
+  justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+}
+.new-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: black;
+}
+.new-price {
+  font-weight: 500;
+  color: rgb(34, 212, 180);
+  font-size: 1.5rem;
+}
+.rank {
+  /* display: flex; */
+  width: 25%;
+  justify-content: center;
+}
+
+.ho-chi-minh-news {
+  width: 65%;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+}
+
+.rank_list {
+  /* margin-top:40px ; */
+  list-style-type: none;
+  padding-left: 0;
+}
+.rank_title {
+  text-align: center;
+  background-color: #f1f4f6;
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 10px 12px;
+}
+.rank_item {
+  padding: 10px 20px;
+}
+
+.rank_item a {
+
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  color: black;
+}
+.rank_item a:hover {
+  color: lightseagreen;
+}
+.rank_item-title {
+  white-space: nowrap;
+  width: calc(100% - 80px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+sup {
+  position: absolute;
+  font-size: 0.6rem;
+  /* margin-top: -.5em; */
+}
+i {
+  color: 0.888787;
+  font-size: 1.1rem;
+}
+.fa{
+  height: 25px !important;
+}
+.bed_icon {
+  margin-right: 30px;
+}
+@media screen and (min-width: 375px) {
+  :root {
+    font-size: calc(12px + 2 * ((100vw - 375px) / (1536 - 375)));
+  }
+  .search-bar {
+    width: 55%;
+  }
+}
+@media screen and (max-width: 550px) {
+  .review-two-cities {
+    display: none;
+  }
+}
+@media screen and (max-width: 763px) {
+  .body-container {
+    width: 100%;
+  }
+  .news {
+    width: 100%;
+    display: block;
+    border-right: none;
+  }
+  .new {
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .new-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: black;
+  }
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }
+  .select-zone select {
+    display: none;
+  }
+  .price {
+    display: none;
+  }
+  .search-bar {
+    width: 55%;
+  }
+  .review-two-cities {
+    width: 80%;
+  }
+  .ha-noi p,
+  .ho-chi-minh p {
+    font-size: 1rem;
+  }
+  .address {
+    display: none;
+  }
+}
+@media screen and (max-width: 1187px) {
+  .price, .address {
+    display: none;
+  }
+  .search-bar {
+    width: 50%;
+  }
+  .rank {
+    display: none;
+  }
+  .news {
+    width: 100%;
+    border-right: none;
+  }
+}
+
+@media screen and (min-width: 1536px) {
+  :root {
+    font-size: 15px;
+  }
+  .search-bar {
+    width: 50%;
+  }
+  .price {
+    width: 30%;
+  }
+}

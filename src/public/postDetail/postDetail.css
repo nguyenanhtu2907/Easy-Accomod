@@ -377,6 +377,7 @@ BODY
 .avatar-owner {
   width: 5rem;
   height: 5rem;
+  object-fit: cover;
   border-radius: 100%;
   margin-right: 1rem;
 }
@@ -408,12 +409,14 @@ BODY
   flex-direction: column;
   border: 1px gray solid;
   padding: 0.5rem;
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 5px;
   border-radius: 0.5rem;
 }
 .owner-contact {
+  position: -webkit-sticky;
+  position: sticky;
   margin-top: 0.5rem;
   border: 1px gray solid;
   padding: 0.5rem;

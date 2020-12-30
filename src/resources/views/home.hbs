@@ -1,24 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/font/css/all.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/header/header.css">
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/home/home.css" />
+    <link rel="stylesheet" href="/header/header.css" />
 </head>
+
 <body>
     {{>header}}
+    <div class="search-bar-container">
+        <div class="background-search-container"></div>
+        <p class="slogan">Đúng nhà, đúng giá, đúng thời điểm</p>
+        <div class="search-bar">
+            <div class="out-search-bar"></div>
+            <div class="in-search-bar">
+                <p class="header-search">Bộ lọc tìm kiếm</p>
+                <div class="input-search-bar">
+                    <i class="fas fa-search"></i>
+                    <input placeholder="Từ khóa, Đường, Quận, Dự Án ..." />
+                    <button class="button-search" onclick="search(event)">Tìm kiếm</button>
+                </div>
 
+                <div class="search-area">
+                    <form class="search-inputs" method="GET" action="/post/search">
+                        <div class="select address">
+                            <span onclick="showAddress(event, 0, 0)">
+                                Chọn khu vực
+                                <div class="fa fa-angle-down"></div>
+                            </span>
+                            <div class="option option-address none">
+                                <input class="none" type="text" name="province" />
+                                <ul class="list-option"></ul>
+                            </div>
+                            <div class="option option-address none">
+                                <input class="none" type="text" name="district" />
+                                <ul class="list-option"></ul>
+                            </div>
+                            <div class="option option-address none">
+                                <input class="none" type="text" name="ward" />
+                                <ul class="list-option"></ul>
+                            </div>
+                        </div>
 
+                        <div class="select price">
+                            <span onclick="showList(event, '.price .option')">
+                                Chọn khoảng giá (tháng)
+                                <div class="fa fa-angle-down"></div>
+                            </span>
+                            <div class="option option-price none">
+                                <div class="group-price">
+                                    <ul class="list-option">
+                                        <li>Giá thấp nhất</li>
+                                        <input type="text" name="minPrice" class="minPrice none" />
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="1.000.000" />1
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="2.000.000" />2
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="3.000.000" />3
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="5.000.000" />5
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="7.000.000" />7
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="10.000.000" />10
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="20.000.000" />20
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="min"
+                                                    value="50.000.000" />50
+                                                triệu
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-option">
+                                        <li>Giá cao nhất</li>
+                                        <input type="text" name="maxPrice" class="maxPrice none" />
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="2.000.000" />2
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="3.000.000" />3
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="5.000.000" />5
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="7.000.000" />7
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="10.000.000" />10
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="20.000.000" />20
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="50.000.000" />50
+                                                triệu
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label onchange="checkPrice(event)"><input type="radio" name="max"
+                                                    value="100.000.000" />100 triệu
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/post/search" class="advanced-search">Tìm kiếm nâng cao</a>
+                    </form>
+                    <div class="background-filter none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body-container">
+        <div class="review-two-cities">
+            <p class="text">Thành phố nổi bật</p>
+            <br />
+            <div class="two-cities">
+                <a class="a1" href="/post/search?province={{firstCity._id}}">
+                    <div class="ha-noi">
+                        <div class="hanoi_image images"></div>
+                        <p>
+                            Khám phá {{firstCity.totalPosts}} địa điểm <br />
+                            {{firstCity._id}}
+                        </p>
+                    </div>
+                </a>
+                <a class="a2" href="/post/search?province={{secondCity._id}}">
+                    <div class="ho-chi-minh">
+                        <div class="hcm_image images"></div>
+                        <p>
+                            Khám phá {{secondCity.totalPosts}} địa điểm <br />
+                            {{secondCity._id}}
+                        </p>
+                        <!-- <p>Hồ Chí Minh</p> -->
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="ha-noi-news">
+            <a class="title" href="/post/search?province=Hà Nội">
+                <p>Thành phố Hà Nội</p>
+            </a>
+            <div class="news-vs-rank">
+                <div class="news">
+                    {{#each hnPosts}}
+                    <a class="new" href="/post/{{this.slug}}">
+                        <div class="left">
+                            <img src="{{this.thumbnail}}" alt="" />
+                        </div>
+                        <div class="right">
+                            <p class="new-title">{{this.title}}</p>
+                            <p class="new-info">
+                                <i class="fas fa-bed bed_icon"> {{this.equipments.bedroom}} </i>
+                                <i class="fas fa-bath bath_icon"> {{this.equipments.wc}}</i>
+                            </p>
+                            <p class="new-price">{{this.rentcost}} VNĐ</p>
+                        </div>
+                    </a>
+                    {{/each}}
+                </div>
+                <div class="rank">
+                    <div class="rank_title">Bảng xếp hạng yêu thích</div>
+                    <ul class="rank_list">
+                        {{#each savedPosts}}
+                        <li class="rank_item">
+                            <a href="/post/{{this.slug}}">
+                                <div class="rank_item-title">{{this.title}}</div>
+                                <div class="rank_item-price">{{this.saved}}</div>
+                            </a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
 
+        <div style="
+          width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 3rem;
+        ">
+            <img width="100%" src="https://uet.vnu.edu.vn/wp-content/uploads/2019/02/banner_N.png" />
+        </div>
+        <div class="ho-chi-minh-news">
+            <a class="title" href="/post/search?province=Hồ Chí Minh">
+                <p>Thành phố Hồ Chí Minh</p>
+            </a>
+            <div class="news-vs-rank">
+                <div class="news">
+                    {{#each hcmPosts}}
+                    <a class="new" href="{{this.slug}}">
+                        <div class="left">
+                            <img src="{{this.thumbnail}}" alt="" />
+                        </div>
+                        <div class="right">
+                            <p class="new-title">{{this.title}}</p>
+                            <p class="new-info">
+                                <i class="fas fa-bed bed_icon"> {{this.equipments.bedroom}} </i>
+                                <i class="fas fa-bath bath_icon"> {{this.equipments.wc}}</i>
+                            </p>
+                            <p class="new-price">{{this.rentcost}} VNĐ</p>
+                        </div>
+                    </a>
+                    {{/each}}
+                </div>
+                <div class="rank">
+                    <div class="rank_title">Bảng xếp hạng lượt xem</div>
+                    <ul class="rank_list">
+                        {{#each viewedPosts}}
+                        <li class="rank_item">
+                            <a href="/post/{{this.slug}}">
+                                <div class="rank_item-title">{{this.title}}</div>
+                                <div class="rank_item-price">{{this.viewed}}</div>
+                            </a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/home/home.js"></script>
     <script src="/header/header.js"></script>
-    
 </body>
+
 </html>

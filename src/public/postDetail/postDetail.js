@@ -1,54 +1,3 @@
-// const formatNumber = (value) => {
-//   const str = value.toString();
-//   var money = "",
-//     length = str.length;
-//   if (length % 3 === 1) {
-//     money += str.charAt(0) + ".";
-//     for (let i = 1; i < length; i++) {
-//       money += str.charAt(i);
-//       if (i % 3 === 0 && i !== length - 1) money += ".";
-//     }
-//   }
-//   if (length % 3 === 2) {
-//     money += str.charAt(0) + str.charAt(1) + ".";
-//     for (let i = 2; i < length; i++) {
-//       money += str.charAt(i);
-//       if ((i - 1) % 3 === 0 && i !== length - 1) money += ".";
-//     }
-//   }
-//   if (length % 3 === 0) {
-//     for (let i = 0; i < length; i++) {
-//       if (i % 3 === 0 && i !== length - 1 && i !== 0) money += ".";
-//       money += str.charAt(i);
-//     }
-//   }
-//   return money;
-// };
-// const formatTitle = (value) => {
-//   const length = value.length;
-//   var str = "",
-//     j = 0;
-//   for (let i = 0; i < length; i++) {
-//     if (value.charAt(i) === " ") j++;
-//     if (j === 3) break;
-//     str += value.charAt(i);
-//   }
-//   str += "...";
-//   return str;
-// };
-/**
- * CÁC ĐẦU VÀO
- */
-// fetch(`/post/post-info?slug=${window.location.pathname.slice(6)}`)
-
-/**
- * KHAI TRIỂN
- */
-
-
-/**
- * BÌNH LUẬN VÀ ĐÁNH GIÁ
- */
 const rate_star = document.querySelector(".rate-star");
 var stars = 0;
 const rate = (star) => {
@@ -141,11 +90,6 @@ const send = () => {
 
   }
 };
-
-
-
-
-
 /**
  * BÁO CÁO BÀI VIẾT
  */
@@ -159,7 +103,7 @@ const sendReport = () => {
   });
   //FETCH REPORT TO SEVER
   if (report) {
-    fetch(window.location.pathname+'/report')
+    fetch(window.location.pathname + '/report')
   };
   content_reported.forEach((content) => {
     content.querySelector("input").checked = false;
@@ -169,16 +113,16 @@ const sendReport = () => {
 var extendedTime = 0;
 const chuyendoi = (e) => {
   extendedTime = e.target.value;
-  document.querySelector('.money-extended').innerText= `${e.target.value*25000} VNĐ`
+  document.querySelector('.money-extended').innerText = `${e.target.value * 25000} VNĐ`
 };
 const extendArticle = () => {
-  if (extendedTime >= 7){
+  if (extendedTime >= 7) {
     alert(`Gia hạn bài viết thành công ${extendedTime} ngày`)
-    fetch(window.location.pathname+'/extend?days='+extendedTime)
-  }else{
+    fetch(window.location.pathname + '/extend?days=' + extendedTime)
+  } else {
     alert(`Số ngày gia hạn phải lớn hơn 7 ngày`)
   }
-  
+
 };
 /**
  * HÀM TẠO RA SLIDE IMAGE
@@ -228,6 +172,10 @@ const showMoreOption = (e, element) => {
 document.addEventListener('mouseup', function (e) {
   var options = document.querySelector('.more-option');
   if (!options.contains(e.target)) {
-      document.querySelector('.options').classList.add('none')
+    document.querySelector('.options').classList.add('none')
   }
 });
+
+const deleteArticle = ()=>{
+  window.location.href='http://localhost:3000'+window.location.pathname+'/delete'
+}

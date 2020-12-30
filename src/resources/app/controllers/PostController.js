@@ -65,7 +65,7 @@ class PostController {
             equipments: equipments,
             images: images,
             infoOwner: req.body.owner == 'Yes' ? 'Chung chủ' : 'Không chung chủ',
-            key: removeVietnameseTones(address.detail + ' ' + req.body.address_description + ' ' + req.body.rent),
+            key: removeVietnameseTones(address.detail + ' ' + req.body.title + ' ' + req.body.address_description + ' ' + req.body.rent),
         }
 
         const post = new Post(entity);
@@ -80,13 +80,27 @@ class PostController {
             .catch(error => { })
     }
 
+    deletePost(req, res, next) {
+        Post.findOne({ slug: req.params.slug })
+            .then(post => {
+                if (req.session.authUser && req.session.authUser._id == post.owner && post.checked != 1) {
+                    Post.deleteOne({ slug: req.params.slug })
+                        .then(() => res.redirect(`/account/${req.session.authUser._id}`))
+                        .catch(next);
+                }else{
+                    res.render('error', {
+                        layout: false,
+                    })
+                }
+            })
+    }
+
     postDetail(req, res, next) {
         Post.findOne({ slug: req.params.slug })
             .then(post => {
                 let extendedTime = post.extendedTime || post.createdAt.getTime();
                 if (Date.now() - extendedTime >= post.availabletime * 86400000) {
                     post.availabletime = 0;
-
                     post.markModified('availabletime');
                     post.save()
                         .then(post => mongooseToObj(post))
@@ -223,7 +237,6 @@ class PostController {
                 house = number
             }
         })
-        console.log(req.query)
         setTimeout(() => {
             Post.aggregate([
                 { '$match': { checked: 1, availabletime: { $gt: 0 } } },
@@ -321,7 +334,6 @@ class PostController {
         } else {
             sort = { 'createdAt': -1 }
         }
-
         Post.find(query).limit(10).skip(10 * req.query.page || 0).sort(sort)
             .then(posts => multipleMongooseToObj(posts))
             .then(posts => getPostsInfo(posts))
