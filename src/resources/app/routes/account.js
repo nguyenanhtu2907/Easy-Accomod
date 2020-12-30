@@ -3,11 +3,11 @@ const router = express.Router();
 
 const accountController = require('../controllers/AccountController');
 
-router.get('/register', accountController.register);
+router.get('/register', accountController.restrictRegister, accountController.register);
 
 router.post('/register', accountController.registerDB);
 
-router.get('/login', accountController.login);
+router.get('/login',accountController.restrictRegister, accountController.login);
 
 router.post('/login', accountController.loginDB);
 
@@ -33,7 +33,7 @@ router.get('/:id/edit', accountController.restrictLogin, accountController.editP
 
 router.post('/:id/edit', accountController.restrictLogin, accountController.editProfileDB);
 
-router.get('/saved', accountController.addToSavedList);
+router.get('/saved', accountController.restrictLogin, accountController.addToSavedList);
 
 router.get('/:id', accountController.profile);
 

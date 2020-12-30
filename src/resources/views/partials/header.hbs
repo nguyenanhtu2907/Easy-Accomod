@@ -9,16 +9,16 @@
             <ul>
                 {{#ifCond localAuthUser.level "renter"}}
                 {{else}}
-                <li>
-                    <a href="/post/create">Đăng bài</a>
+                <li class="reshide">
+                    <a  href="/post/create">Đăng bài</a>
                 </li>
                 {{/ifCond}}
-                <li>
+                <li class="reshide">
                     <a href="/post/search">Tìm kiếm nâng cao</a>
                 </li>
                 {{#if localAuthUser}}
                 {{#ifCond localAuthUser.level "admin"}}
-                <li>
+                <li class="reshide">
                     <a href="/account/{{localAuthUser._id}}/manage">Thống kê</a>
                 </li>
                 {{/ifCond}}
@@ -80,11 +80,11 @@
                 </li>
                 {{else}}
                 <li>
-                    <a href="/account/register">Đăng ký</a>
+                    <a href="/account/register" id="register">Đăng ký</a>
                 </li>
 
                 <li>
-                    <a href="/account/login">Đăng nhập</a>
+                    <a href="/account/login" id="login">Đăng nhập</a>
                 </li>
                 {{/if}}
             </ul>

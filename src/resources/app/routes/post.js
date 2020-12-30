@@ -15,17 +15,19 @@ router.get('/searchResult', postController.searchResult)
 
 router.get('/get-info', postController.getInfo)
 
-router.get('/saved', postController.modifySaved)
+router.get('/saved',accountController.restrictLogin, postController.modifySaved)
 
-router.get('/:slug/edit', postController.editPost)
+router.get('/:slug/edit',accountController.restrictLogin, postController.editPost)
 
-router.post('/:slug/edit', postController.editPostDB)
+router.post('/:slug/edit',accountController.restrictLogin, postController.editPostDB)
 
-router.post('/:slug/add-comment', postController.addComment)
+router.post('/:slug/add-comment',accountController.restrictLogin, postController.addComment)
 
-router.get('/:slug/report', postController.reportPost)
+router.get('/:slug/report',accountController.restrictLogin, postController.reportPost)
 
-router.get('/:slug/extend', postController.extendPost)
+router.get('/:slug/extend',accountController.restrictLogin, postController.extendPost)
+
+router.get('/:slug/delete',accountController.restrictLogin, postController.deletePost)
 
 router.get('/:slug', postController.postDetail)
 
