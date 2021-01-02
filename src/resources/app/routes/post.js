@@ -29,6 +29,8 @@ router.get('/:slug/extend',accountController.restrictLogin, postController.exten
 
 router.get('/:slug/delete',accountController.restrictLogin, postController.deletePost)
 
+router.get('/:slug/change-status',accountController.restrictLogin, postController.changeStatus)
+
 router.get('/:slug', postController.postDetail)
 
 module.exports = router;

@@ -74,17 +74,21 @@
                     <div class="options none">
                         {{#ifCond post.checked 1}}
                         {{else}}
-                        <div class="option top-left" style="border-bottom: 1px solid var(--color-word)"
-                            data-toggle="modal" data-target="#deleteArticle">
+                        <div class="option" data-toggle="modal" data-target="#deleteArticle">
                             Xóa bài viết
                         </div>
-                        <div class="option bottom-left" style="border-bottom: 1px solid var(--color-word)">
+                        <div class="option">
                             <a href="/post/{{post.slug}}/edit">Chỉnh sửa bài viết</a>
                         </div>
                         {{/ifCond}}
+                        {{#ifCond post.checked 1}}
                         <div class="option" data-toggle="modal" data-target="#extendArticle">
                             Gia hạn bài viết
                         </div>
+                        <div class="option" data-toggle="modal" data-target="#changeStatus">
+                            Chỉnh sửa trạng thái
+                        </div>
+                        {{/ifCond}}
                     </div>
                 </i>
                 {{/ifCond}}
@@ -132,18 +136,25 @@
                     <br>
                     {{post.description}}
                 </div>
-                <a href="/account/{{post.owner}}" class="owner-description">
-                    <img class="avatar-owner" src={{post.authorAvatar}} />
-                    <div class="name-owner">
-                        <p style="font-size: 1.2rem; font-weight: bold; margin: 0px">
-                            {{post.authorName}}
-                        </p>
-                    </div>
-                    <div class="contact-owner">
-                        <i class="fas fa-phone-alt" style="color: #009177; margin-right: 0.5rem"></i>
-                        {{post.contact}}
-                    </div>
-                </a>
+                <div class="about-post">
+
+                    <a href="/account/{{post.owner}}" class="owner-description">
+                        <img class="avatar-owner" src={{post.authorAvatar}} />
+                        <div class="name-owner">
+                            <p style="font-size: 1.2rem; font-weight: bold; margin: 0px">
+                                {{post.authorName}}
+                            </p>
+                        </div>
+                        <div class="contact-owner">
+                            <i class="fas fa-phone-alt" style="color: #009177; margin-right: 0.5rem"></i>
+                            {{post.contact}}
+                        </div>
+                    </a>
+                    <div id="{{post._id}}"
+                        class="fa fa-heart default"
+                        onclick="saved(event)"></div>
+                </div>
+
             </div>
         </div>
         <div class="owner-article">
@@ -271,6 +282,34 @@
                                 Có
                             </button>
                             <button class="close-report" data-dismiss="modal">Không</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="modal fade" id="changeStatus" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header-new">
+                            <h4 class="modal-title-new">Xác nhận trạng thái phòng trọ</h4>
+                            <button class="close-new" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body-new">
+                            <div class="status-rent">
+                                <input type="radio" name="status" id="available" value="available" {{#if
+                                    post.statusrent}}''{{else}}checked{{/if}}><label for="available">Còn phòng</label>
+                                <input type="radio" name="status" id="unavailable" value="unavailable" {{#if
+                                    post.statusrent}}checked{{/if}}><label for="unavailable">Đã cho thuê</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer-new">
+                            <button class="send-report" data-dismiss="modal" onclick="changeStatus()">
+                                Xác nhận
+                            </button>
+                            <button class="close-report" data-dismiss="modal">Đóng</button>
                         </div>
                     </div>
                 </div>

@@ -33,6 +33,41 @@ $(document).ready(function () {
   })
 });
 
+if (document.querySelector('.header .menu .show-info-option')) {
+  let idAuthUser = (document.querySelector('.header .menu .show-info-option ul li a').href.slice(30))
+  fetch('/account/get-info/' + idAuthUser)
+    .then(user => user.json())
+    .then(data => {
+      let heart = document.querySelector('.fa-heart')
+      let className = data.saved && data.saved.indexOf(heart.id) != -1 ? 'checked' : 'default'
+      heart.classList.remove('default')
+      heart.classList.remove('checked')
+      heart.classList.add(className)
+    })
+
+}
+
+function saved(e) {
+  e.preventDefault();
+  if (document.querySelector('.header .menu .info-account')) {
+    let btn = e.target;
+    let urlUser = '';
+    let urlPost = '';
+    if (btn.classList.contains('default')) {
+      btn.classList.add('checked')
+      btn.classList.remove('default')
+      urlUser = `/account/saved?post=${btn.id}&key=saved`
+      urlPost = `/post/saved?post=${btn.id}&key=saved`
+    } else {
+      btn.classList.add('default')
+      btn.classList.remove('checked')
+      urlUser = `/account/saved?post=${btn.id}&key=unsaved`
+      urlPost = `/post/saved?post=${btn.id}&key=unsaved`
+    }
+    fetch(urlPost)
+    fetch(urlUser)
+  }
+}
 document.querySelector('.list-comment').scrollTop = document.querySelector('.list-comment').scrollHeight;
 const input_comment = document.querySelector(".input-comment");
 const send = () => {
@@ -176,6 +211,17 @@ document.addEventListener('mouseup', function (e) {
   }
 });
 
-const deleteArticle = ()=>{
-  window.location.href='http://localhost:3000'+window.location.pathname+'/delete'
+const deleteArticle = () => {
+  window.location.href = 'http://localhost:3000' + window.location.pathname + '/delete'
+}
+const changeStatus = () => {
+  Array.from(document.querySelectorAll('input[name="status"]')).forEach(input => {
+    if (input.checked) {
+      fetch(window.location.pathname + '/change-status?status=' + input.value)
+        .then(data => data.json())
+        .then(data => {
+          document.querySelector('.rent-status').innerText = data ? 'Đã cho thuê' : 'Vẫn còn phòng';
+        })
+    }
+  })
 }

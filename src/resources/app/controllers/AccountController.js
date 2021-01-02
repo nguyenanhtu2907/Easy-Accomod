@@ -1,10 +1,7 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
-var mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { mongooseToObj, multipleMongooseToObj } = require('../util/mongooseToObj');
-const { post } = require('../routes/account');
-const { info } = require('node-sass');
 
 class AccountController {
 
@@ -32,7 +29,6 @@ class AccountController {
             address: req.body.address,
             phone: req.body.phone,
             email: req.body.email,
-            checked: req.body.checked * 1,
             password_hash,
             level: req.body.level, //renter, owner
         }
@@ -58,6 +54,7 @@ class AccountController {
                         .catch(error => { })
                 } else {
                     const user = new User(entity);
+                    user.checked=-2;
                     user.save()
                         .then(() => res.redirect('/account/login'))
                         .catch(error => { })
@@ -139,21 +136,21 @@ class AccountController {
                     .catch(() => { })
             } else if (option == 5) {
                 Post.find({ checked: 1 })
-                    .then(users => multipleMongooseToObj(users))
+                    .then(posts => multipleMongooseToObj(posts))
                     .then(posts => getPostsInfo(posts))
-                    .then(users => res.json(users))
+                    .then(posts => res.json(posts))
                     .catch(() => { })
             } else if (option == 6) {
                 Post.find({ checked: -1 })
                     .then(posts => getPostsInfo(posts))
-                    .then(users => multipleMongooseToObj(users))
-                    .then(users => res.json(users))
+                    .then(posts => multipleMongooseToObj(posts))
+                    .then(posts => res.json(posts))
                     .catch(() => { })
             } else if (option == 7) {
-                Post.find({ checked: 1 }).limit(5).sort({ saved: -1 })
+                Post.find({ checked: 1, availabletime: { $gt: 0 } }).limit(5).sort({ saved: -1 })
                     .then(savedPosts => multipleMongooseToObj(savedPosts))
                     .then(savedPosts => {
-                        Post.find({ checked: 1 }).limit(5).sort({ viewed: -1 })
+                        Post.find({ checked: 1, availabletime: { $gt: 0 } }).limit(5).sort({ viewed: -1 })
                             .then(viewedPosts => multipleMongooseToObj(viewedPosts))
                             .then(viewedPosts => {
                                 User.find({ level: 'owner' }).sort({ totalPost: -1 }).limit(5)
@@ -172,7 +169,7 @@ class AccountController {
                         res.json(admin.messages)
                     })
                     .catch(() => { })
-            }else if (option == 9) {
+            } else if (option == 9) {
                 Post.find({ isReported: true })
                     .then(posts => getPostsInfo(posts))
                     .then(users => multipleMongooseToObj(users))
@@ -311,7 +308,7 @@ class AccountController {
     }
 
     actionAdmin(req, res, next) {
-        if (req.session.authUser._id == '5fb7e2f7662281052c43df98') {
+        if (req.session.authUser.level == 'admin') {
             if (req.body.type == 'user') {
                 User.findOne({ _id: req.body.id })
                     .then(user => {
@@ -401,6 +398,7 @@ class AccountController {
                 res.json(user)
             })
     }
+
     getNoti(req, res, next) {
         User.findOne({ _id: req.params.id })
             .then(user => {
@@ -408,97 +406,95 @@ class AccountController {
             })
             .catch(() => { })
     }
+
     profile(req, res, next) {
-        if (req.session.authUser && req.session.authUser._id == req.params.id && req.session.authUser.level == 'renter') {
-            res.redirect('/')
-        } else {
-            var userTarget;
-            var posted;
-            var waiting;
-            var saved;
-            var expired;
-            User.findOne({ _id: req.params.id }, function (err, user) {
-                if (!user) {
-                    return res.render('error', {
-                        layout: false
-                    })
-                } else {
-                    userTarget = user;
-                    let numberExpired = 0;
-                    Post.count({ owner: req.params.id, availabletime: 0, checked: 1 }, function (err, num) {
-                        if (num) {
-                            numberExpired = num
-                        }
-                    })
-                    let numberWaiting = 0;
-                    Post.count({ owner: req.params.id, checked: 0 }, function (err, num) {
-                        if (num) {
-                            numberWaiting = num
-                        }
-                    })
-                    let numberPosted = 0;
-                    Post.count({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }, function (err, num) {
-                        if (num) {
-                            numberPosted = num
-                        }
-                    })
+        var userTarget;
+        var posted;
+        var waiting;
+        var saved;
+        var expired;
+        User.findOne({ _id: req.params.id }, function (err, user) {
+            if (!user) {
+                return res.render('error', {
+                    layout: false
+                })
+            } else {
+                userTarget = user;
+                let numberExpired = 0;
+                Post.count({ owner: req.params.id, availabletime: 0, checked: 1 }, function (err, num) {
+                    if (num) {
+                        numberExpired = num
+                    }
+                })
+                let numberWaiting = 0;
+                Post.count({ owner: req.params.id, checked: 0 }, function (err, num) {
+                    if (num) {
+                        numberWaiting = num
+                    }
+                })
+                let numberPosted = 0;
+                Post.count({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }, function (err, num) {
+                    if (num) {
+                        numberPosted = num
+                    }
+                })
 
-                    Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1, statusrent: false }).limit(7).sort({ 'viewed': -1 })
-                        .then(posts => multipleMongooseToObj(posts))
-                        .then(posts => getPostsInfo(posts))
-                        .then(posts => {
-                            if (userTarget) {
-                                if (req.session.authUser) {
-                                    expired = {
-                                        totalPosts: numberExpired,
-                                        page: (numberExpired > 10 ? Math.ceil(numberExpired / 10) : 1),
-                                        showPage: numberExpired > 10 ? 1 : 0,
-                                        showTab: req.session.authUser._id == req.params.id ? 1 : 0,
-                                    }
-                                    waiting = {
-                                        totalPosts: numberWaiting,
-                                        page: (numberWaiting > 10 ? Math.ceil(numberWaiting / 10) : 1),
-                                        showPage: numberWaiting > 10 ? 1 : 0,
-                                        showTab: req.session.authUser._id == req.params.id ? 1 : 0,
-                                    }
-                                    saved = {
-                                        totalPosts: req.session.authUser.saved.length,
-                                        page: (req.session.authUser.saved.length > 10 ? Math.ceil(req.session.authUser.saved.length / 10) : 1),
-                                        showPage: req.session.authUser.saved.length > 10 ? 1 : 0,
-                                        showTab: req.session.authUser._id == req.params.id ? 1 : 0,
-                                    }
+                Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }).limit(7).sort({ 'viewed': -1 })
+                    .then(posts => multipleMongooseToObj(posts))
+                    .then(posts => getPostsInfo(posts))
+                    .then(posts => {
+                        if (userTarget) {
+                            if (req.session.authUser) {
+                                expired = {
+                                    totalPosts: numberExpired,
+                                    page: (numberExpired > 10 ? Math.ceil(numberExpired / 10) : 1),
+                                    showPage: numberExpired > 10 ? 1 : 0,
+                                    showTab: req.session.authUser._id == req.params.id && req.session.authUser.level != 'renter' ? 1 : 0,
                                 }
-                                posted = {
-                                    totalPosts: numberPosted,
-                                    page: (numberPosted > 10 ? Math.ceil(numberPosted / 10) : 1),
-                                    showPage: numberPosted > 10 ? 1 : 0,
+                                waiting = {
+                                    totalPosts: numberWaiting,
+                                    page: (numberWaiting > 10 ? Math.ceil(numberWaiting / 10) : 1),
+                                    showPage: numberWaiting > 10 ? 1 : 0,
+                                    showTab: req.session.authUser._id == req.params.id && req.session.authUser.level != 'renter' ? 1 : 0,
                                 }
-
-                                return res.render('profile', {
-                                    layout: false,
-                                    userTarget: mongooseToObj(userTarget),
-                                    posted,
-                                    waiting,
-                                    saved,
-                                    expired,
-                                    posts,
-                                    query: req.query.tab ? req.query.tab : 'posted',
-                                })
-                            } else {
-                                return res.render('error', {
-                                    layout: false
-                                })
+                                saved = {
+                                    totalPosts: req.session.authUser.saved.length,
+                                    page: (req.session.authUser.saved.length > 10 ? Math.ceil(req.session.authUser.saved.length / 10) : 1),
+                                    showPage: req.session.authUser.saved.length > 10 ? 1 : 0,
+                                    showTab: req.session.authUser._id == req.params.id ? 1 : 0,
+                                }
                             }
-                        }) //render profile page
-                        .catch(() => { res.send(error) }) //reder error
-                }
-            })
-        }
+                            posted = {
+                                totalPosts: numberPosted,
+                                page: (numberPosted > 10 ? Math.ceil(numberPosted / 10) : 1),
+                                showPage: numberPosted > 10 ? 1 : 0,
+                            }
+
+                            return res.render('profile', {
+                                layout: false,
+                                userTarget: mongooseToObj(userTarget),
+                                posted,
+                                waiting,
+                                saved,
+                                expired,
+                                posts,
+                                query: req.query.tab ? req.query.tab : 'posted',
+                            })
+                        } else {
+                            return res.render('error', {
+                                layout: false
+                            })
+                        }
+                    }) //render profile page
+                    .catch(() => { }) //reder error
+            }
+        })
+
     }
 
     profileNav(req, res, next) {
         if (req.query.tab == 'expired') {
-            Post.find({ owner: req.params.id, availabletime: 0, checked: 1, statusrent: false }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
+            Post.find({ owner: req.params.id, availabletime: 0, checked: 1 }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
                 .then(posts => multipleMongooseToObj(posts))
                 .then(posts => getPostsInfo(posts))
                 .then(posts => res.json({
@@ -531,7 +527,7 @@ class AccountController {
                     })
                 })
         } else {
-            Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1, statusrent: false }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
+            Post.find({ owner: req.params.id, availabletime: { $gt: 0 }, checked: 1 }).limit(10).skip(req.query.page * 10 || 0).sort({ 'createdAt': -1 })
                 .then(posts => multipleMongooseToObj(posts))
                 .then(posts => getPostsInfo(posts))
                 .then(posts => res.json({
@@ -586,7 +582,7 @@ class AccountController {
         if (req.query.type == 'info') {
             User.findOne({ _id: req.params.id })
                 .then(user => {
-                    if(req.body.avatar){
+                    if (req.body.avatar) {
                         user.avatar = req.body.avatar;
                         req.session.authUser.avatar = req.body.avatar;
                     }
@@ -620,7 +616,7 @@ class AccountController {
                 }
                 const password_hash = bcrypt.hashSync(req.body.new_pass, 8);
                 user.password_hash = password_hash;
-    
+
                 user.save()
                     .then(() => res.render('editProfile', {
                         layout: false,

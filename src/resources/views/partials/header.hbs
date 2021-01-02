@@ -10,7 +10,7 @@
                 {{#ifCond localAuthUser.level "renter"}}
                 {{else}}
                 <li class="reshide">
-                    <a  href="/post/create">Đăng bài</a>
+                    <a href="/post/create">Đăng bài</a>
                 </li>
                 {{/ifCond}}
                 <li class="reshide">
@@ -47,6 +47,10 @@
                         <div class="show-info-option none">
                             <ul>
                                 {{#ifCond localAuthUser.level "renter"}}
+                                <li>
+                                    <a href="/account/{{localAuthUser._id}}"> <i class="fa fa-long-arrow-right"></i>
+                                        Trang cá nhân</a>
+                                </li>
                                 {{else}}
                                 <li>
                                     <a href="/account/{{localAuthUser._id}}"> <i class="fa fa-long-arrow-right"></i> Bài
@@ -91,64 +95,65 @@
         </div>
 
     </div>
-    
+
 
 </div>
 {{#ifCond localAuthUser.level 'owner'}}
-    <div id="message-window" class="small-chat">
-        <div class="title-window" onclick="toggleChatWindow(event)">
-           <i class="fa fa-comments "></i> <span>Message</span>
-        </div>
-        <div class="body-window none" >
-            <div class="close-window" onclick="toggleChatWindow(event)"><span>Chat với admin</span> <i class="fa fa-window-minimize"></i></div>
-
-            <div class="chat-window">
-            </div>
-
-            <div class="input-window">
-                <input type="text" onkeydown="getEnterWindowChat(event)" placeholder="Nhập tin nhắn của bạn.">
-                <i class="fa fa-paper-plane" onclick="submitMessageWindowChat(event)"></i>
-            </div>
-        </div>
-        
-
+<div id="message-window" class="small-chat">
+    <div class="title-window" onclick="toggleChatWindow(event)">
+        <i class="fa fa-comments "></i> <span>Message</span>
     </div>
-    {{/ifCond}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
-        integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
-        crossorigin="anonymous"></script>
-    <script>
-        function updateNoti(id) {
-            fetch(`/account/${id}/get-noti`)
-                .then(notis => notis.json())
-                .then(notis => {
-                    let html = '<h3>Thông báo</h3>';
-                    notis.forEach((noti, index) => {
-                        html += `
+    <div class="body-window none">
+        <div class="close-window" onclick="toggleChatWindow(event)"><span>Chat với admin</span> <i
+                class="fa fa-window-minimize"></i></div>
+
+        <div class="chat-window">
+        </div>
+
+        <div class="input-window">
+            <input type="text" onkeydown="getEnterWindowChat(event)" placeholder="Nhập tin nhắn của bạn.">
+            <i class="fa fa-paper-plane" onclick="submitMessageWindowChat(event)"></i>
+        </div>
+    </div>
+
+
+</div>
+{{/ifCond}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+    integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+    crossorigin="anonymous"></script>
+<script>
+    function updateNoti(id) {
+        fetch(`/account/${id}/get-noti`)
+            .then(notis => notis.json())
+            .then(notis => {
+                let html = '<h3>Thông báo</h3>';
+                notis.forEach((noti, index) => {
+                    html += `
                             <li>
                                 <div class="avatar">
                                     <img src="${noti.avatar}" alt="">
                                 </div>
                                 <span class="text-noti"> ${noti.content} </span>
-                                <i class="fa fa-circle ${index==0?'':'hidden'}"></i>
+                                <i class="fa fa-circle ${index == 0 ? '' : 'hidden'}"></i>
                             </li>
                         `;
-                    })
-                    document.querySelector('.show-noti ul').innerHTML = html;
                 })
-        }
-        {{#ifCond localAuthUser.level 'owner'}}
-        updateNoti('{{localAuthUser._id}}')
-        {{/ifCond}}
+                document.querySelector('.show-noti ul').innerHTML = html;
+            })
+    }
+    {{#ifCond localAuthUser.level 'owner' }}
+    updateNoti('{{localAuthUser._id}}')
+    {{/ifCond}}
 
-        var socket = io('http://localhost:3000');
-       
-        socket.on('{{localAuthUser._id}}noti', function (data) {
-            updateNoti(`{{localAuthUser._id}}`)
-            document.querySelector('.notification .fa-bell').classList.add('alerted')
+            var socket = io('http://localhost:3000');
 
-        });
+            socket.on('{{localAuthUser._id}}noti', function (data) {
+                updateNoti(`{{localAuthUser._id}}`)
+                document.querySelector('.notification .fa-bell').classList.add('alerted')
+
+            });
 
 
 
-    </script>
+</script>
