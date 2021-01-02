@@ -15,7 +15,7 @@ const Post = new Schema({
     electric: { type: String, default: '' },
     water: { type: String, default: '' },
     roomtype: { type: String, default: '' },
-    area: { type: String, default: '' },
+    area: { type: Number, default: 0 },
     infoOwner: { type: String, default: '' },
     thumbnail: { type: String, default: '' },
     equipments: { type: Object, default: [] },

@@ -15,6 +15,7 @@ function changeList(e, element) {
     document.querySelector('.title-option span').innerHTML += '<div class="fa fa-angle-down"></div>'
     document.querySelector('.title-option ul').classList.add('none');
 }
+var keyDetail=''
 function showInfo(e, type, element) {
     let items = e.target.parentNode;
     let url = '';
@@ -32,6 +33,7 @@ function showInfo(e, type, element) {
                 spans[5].innerText = user.email;
                 spans[6].innerText = user.identity;
                 spans[7].innerText = user.address;
+                keyDetail=`/account/${user._id}`
             })
     } else if (type == 1) {
         url = `/post/get-info?key=${items.querySelectorAll('td')[0].innerText}`
@@ -50,6 +52,7 @@ function showInfo(e, type, element) {
                 spans[8].innerText = post.area;
                 spans[9].innerText = post.availabletime * 25000;
                 spans[10].innerText = post.owner;
+                keyDetail=`/post/${post.slug}`
             })
     } else {
         let li = e.target;
@@ -89,7 +92,7 @@ function showInfo(e, type, element) {
                 spans[5].innerText = user.email;
                 spans[6].innerText = user.identity;
                 spans[7].innerText = user.address;
-
+                keyDetail=`/account/${user._id}`
                 let chatHtml = '';
                 user.messages.forEach(message => {
                     chatHtml += `
@@ -101,6 +104,11 @@ function showInfo(e, type, element) {
                 document.querySelector('.chat-area ul').innerHTML = chatHtml;
                 document.querySelector('.chat-area').scrollTop = document.querySelector('.chat-area').scrollHeight;
             })
+    }
+}
+const detail = ()=>{
+    if(keyDetail){
+        window.location.href='http://localhost:3000'+keyDetail
     }
 }
 function chooseOption(bigOption, innerOption) {
@@ -237,6 +245,11 @@ function chooseOption(bigOption, innerOption) {
                                         <b>Địa chỉ </b>: <span></span>
                                     </li>
                                 </ul>
+                                <div class="button-admin">
+                                    <div onclick="detail()" class="button accept disabled">
+                                        <span>Chi tiết</span>
+                                    </div>
+                                </div>
                             `;
                             option.querySelector('.list-items table').scrollIntoView();
                         })
@@ -496,6 +509,11 @@ function chooseOption(bigOption, innerOption) {
                                         <b>ID chủ trọ </b>: <span></span>
                                     </li>
                                 </ul>
+                                <div class="button-admin">
+                                    <div onclick="detail()" class="button accept disabled">
+                                        <span>Chi tiết</span>
+                                    </div>
+                                </div>
                             `;
                             option.querySelector('.list-items table').scrollIntoView();
                         })
@@ -575,8 +593,8 @@ function chooseOption(bigOption, innerOption) {
                 }
                 case 7: {
                     fetch(window.location.pathname + '?option=7')
-                    .then(data => data.json())
-                    .then(data => {
+                        .then(data => data.json())
+                        .then(data => {
                             option.querySelector('.title h1').innerText = 'Thống kê';
                             var htmlViewed = '';
                             data.viewedPosts.forEach(post => {
@@ -726,6 +744,11 @@ function chooseOption(bigOption, innerOption) {
                         <li>
                             <b>Địa chỉ </b>: <span></span>
                         </li>
+                        <div class="button-admin">
+                            <div onclick="detail()" class="button accept disabled">
+                                <span>Chi tiết</span>
+                            </div>
+                        </div>
                     `;
                     refreshListChat();
                     break;

@@ -48,10 +48,13 @@
     <div class="content">
         <div class="posts ">
             <ul class="nav nav-tabs" role="tablist">
+                {{#ifCond userTarget.level 'renter'}}
+                {{else}}
                 <li class="nav-item">
                     <a onclick="showTab(event, 'posted')" class="nav-link active" data-toggle="tab" href="#posted">Đã
                         đăng</a>
                 </li>
+                {{/ifCond}}
                 {{#if waiting.showTab}}
                 <li class="nav-item">
                     <a onclick="showTab(event, 'waiting')" class="nav-link" data-toggle="tab" href="#waiting">Chờ
@@ -212,7 +215,7 @@
 
         </div>
         <div class="news">
-            <h6 class="line" style="margin: 10px 0; font-size: 1.2rem;">Bài viết có lượt xem cao nhất của Nguyễn Anh Tú
+            <h6 class="line" style="margin: 10px 0; font-size: 1.2rem;">Bài viết có lượt xem cao nhất của {{userTarget.fullname}}
             </h6>
             <div class="list-news">
                 <ul>

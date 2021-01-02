@@ -18,6 +18,7 @@
 }
 :root {
   --color-word: #5a646e;
+  --color-border: #bcbcbd;
   --color-bg: rgb(238, 238, 238);
 }
 
@@ -141,6 +142,7 @@ TOP BAR
 */
 .top-bar-container {
   width: 100%;
+  margin-top: -5px;
   display: flex;
   flex-direction: row;
   padding: 0.75rem 0rem;
@@ -288,25 +290,27 @@ BODY
   color: lightseagreen;
 }
 .options {
-  left: -9.5rem;
+  left: -11.5rem;
   font-size: 1.25rem;
   position: absolute;
-  width: 11rem;
-  border: 1px solid var(--color-word);
-  border-top-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+  width: 13rem;
+  border: 1px solid var(--color-border);
   background: white;
+  border-radius: 5px;
+  border-bottom: none;
+  filter: drop-shadow(0 0.1rem 0.15rem rgba(141, 141, 141, 0.767));
 }
 .option {
   text-align: right;
   color: var(--color-word);
   margin: 0px;
   padding: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
 }
 .option a {
   color: var(--color-word);
   text-decoration: none;
+  font-size: 1.25rem;
 }
 .option:hover,
 .option a:hover {
@@ -321,9 +325,6 @@ BODY
 .bottom-left:hover {
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
-}
-.none {
-  display: none;
 }
 .price-intro {
   color: lightseagreen;
@@ -363,6 +364,27 @@ BODY
 .description-article {
   margin-top: 2rem;
   width: 100%;
+}
+.about-post{
+  display: flex;
+}
+.about-post a{
+  margin-right: 1rem;
+}
+.about-post .fa-heart{
+  display: inline;
+    cursor: pointer;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    margin-left: 20px;
+    font-size: 1.5rem;
+    position: relative;
+    top: 2.7rem;
+}
+.default{
+  color: #fff;
+}
+.checked{
+  color: #ff6262;
 }
 .content-description {
   font-size: 1.2rem;
@@ -668,4 +690,12 @@ Extend Modal
   border-radius: 0.5rem;
   border: 1px solid var(--color-word);
   padding: 0.5rem;
+}
+.status-rent{
+  display: flex;
+}
+.status-rent input{
+  margin-left: 6rem;
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
 }

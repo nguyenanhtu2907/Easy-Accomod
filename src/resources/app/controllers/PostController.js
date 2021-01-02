@@ -87,7 +87,7 @@ class PostController {
                     Post.deleteOne({ slug: req.params.slug })
                         .then(() => res.redirect(`/account/${req.session.authUser._id}`))
                         .catch(next);
-                }else{
+                } else {
                     res.render('error', {
                         layout: false,
                     })
@@ -117,7 +117,9 @@ class PostController {
 
                         })
                 } else {
-                    post.viewed += 1;
+                    if (post.checked == 1) {
+                        post.viewed += 1;
+                    }
                     post.save()
                         .then(post => mongooseToObj(post))
                         .then(post => getPostInfo(post))
@@ -170,6 +172,21 @@ class PostController {
             })
     }
 
+    changeStatus(req, res, next) {
+        Post.findOne({ slug: req.params.slug })
+            .then(post => {
+                if (req.session.authUser._id == post.owner && post.checked == 1) {
+                    post.statusrent = req.query.status == 'available' ? false : true;
+                    post.save()
+                        .then(() => res.json(post.statusrent))
+                } else {
+                    res.json("ERROR")
+                }
+
+
+            })
+    }
+
     extendPost(req, res, next) {
         Post.findOne({ slug: req.params.slug })
             .then(post => {
@@ -217,29 +234,29 @@ class PostController {
         var miniApartment = 0;
         var motel = 0;
         var house = 0;
-        Post.count({ roomtype: 'Chung cư', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Chung cư', availabletime: { $gt: 0 }, checked: 1, statusrent: false }, function (err, number) {
             if (number) {
                 apartment = number
             }
         })
-        Post.count({ roomtype: 'Chung cư mini', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Chung cư mini', availabletime: { $gt: 0 }, checked: 1, statusrent: false }, function (err, number) {
             if (number) {
                 miniApartment = number
             }
         })
-        Post.count({ roomtype: 'Phòng trọ', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Phòng trọ', availabletime: { $gt: 0 }, checked: 1, statusrent: false }, function (err, number) {
             if (number) {
                 motel = number
             }
         })
-        Post.count({ roomtype: 'Nhà nguyên căn', availabletime: { $gt: 0 }, checked: 1 }, function (err, number) {
+        Post.count({ roomtype: 'Nhà nguyên căn', availabletime: { $gt: 0 }, checked: 1, statusrent: false }, function (err, number) {
             if (number) {
                 house = number
             }
         })
         setTimeout(() => {
             Post.aggregate([
-                { '$match': { checked: 1, availabletime: { $gt: 0 } } },
+                { '$match': { checked: 1, availabletime: { $gt: 0 }, statusrent: false } },
                 {
                     '$group': {
                         '_id': '$address.province',
@@ -268,7 +285,6 @@ class PostController {
     searchResult(req, res, next) {
         var query = {
             checked: 1,
-            statusrent: false,
             availabletime: { $gt: 0 }
         }
         if (req.query.province) {
@@ -284,20 +300,20 @@ class PostController {
             query.roomtype = req.query.roomType;
         }
         if (req.query.maxPrice && req.query.minPrice) {
-            query.rentcost = { $gt: req.query.minPrice, $lt: req.query.maxPrice }
+            query.rentcost = { $gte: req.query.minPrice, $lte: req.query.maxPrice }
         }
 
         if (req.query.area) {
             if (req.query.area.length == 33) {
-                query.area = { $lt: 20 }
+                query.area = { $lte: 20 }
             } else if (req.query.area.length == 8) {
-                query.area = { $gt: req.query.area.slice(0, 2) * 1, $lt: req.query.area.slice(-3, -1) * 1 }
+                query.area = { $gte: req.query.area.slice(0, 2) * 1, $lte: req.query.area.slice(-3, -1) * 1 }
             } else if (req.query.area.length == 5) {
-                query.area = { $gt: 50 }
+                query.area = { $gte: 50 }
             }
         }
         if (req.query.bedrooms) {
-            query["equipments.bedroom"] = { $lt: req.query.bedrooms.slice(0, 1) * 1 }
+            query["equipments.bedroom"] = { $lte: req.query.bedrooms.slice(0, 1) * 1 }
         }
         if (req.query.tulanh) {
             query["equipments.freazer"] = 'Có'
@@ -360,6 +376,7 @@ class PostController {
                 }
             })
     }
+
     editPostDB(req, res, next) {
         Post.findOne({ slug: req.params.slug })
             .then(post => {
